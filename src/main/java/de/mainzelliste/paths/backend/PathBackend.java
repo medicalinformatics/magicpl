@@ -4,7 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
-import de.mainzelliste.paths.configuration.*;
+
+import javax.ws.rs.WebApplicationException;
+
+import de.mainzelliste.paths.configuration.Paths;
+import de.mainzelliste.paths.configuration.Paths.Path;
 
 /**
  * Backend for managing path implementations.
@@ -17,26 +21,18 @@ public class PathBackend {
 	
 	/** Initialize backend for path processing. In the web application, an
 	 * instance should be retreived via {@link Controller#getPathBackend()}. */
-	public PathBackend(/* TODO: Konfiguration übergeben */) {
-		// Create Mockup implementations for paths "foo" and "bar"
-		Paths pathConfig = new Paths();
-		pathImplementations = new HashMap<>();
+	public PathBackend(Paths configuration) {
 		
-		pathImplementations.put("foo", new Function<String, String>() {
-
-			@Override
-			public String apply(String t) {
-				return "Result of applying foo to input " + t;
-			}
-		}); 
-				
-		pathImplementations.put("bar", new Function<String, String>() {
-
-			@Override
-			public String apply(String t) {
-				return "Result of applying bar to input " + t;
-			}
-		}); 
+		try {
+			pathImplementations = new HashMap<>();
+			// Suche für jeden konfigurierten Pfad die zuständige Java-Klasse und instanziiere sie
+			 for (Path path : configuration.getPaths()) {
+				 Function<String, String> thisImplementation = (Function<String, String>) Class.forName(path.getImplementation()).newInstance();
+				 pathImplementations.put(path.getName(), thisImplementation);
+			 }
+		} catch (Exception e) {
+			throw new WebApplicationException(e);
+		}
 	}
 	
 	/**
