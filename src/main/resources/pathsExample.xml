@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tns:paths xmlns:tns="http://www.example.org/Pfade" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/Pfade paths.xsd ">
   <tns:path>
-    <tns:name>foo</tns:name>
-    <tns:implementation>FooPath</tns:implementation>
+    <tns:name>toUpper</tns:name>
+    <tns:implementation>de.mainzelliste.paths.implementations.UpperCase</tns:implementation>
   </tns:path>
   <tns:path>
-    <tns:name>bar</tns:name>
-    <tns:implementation>BarPath</tns:implementation>
+    <tns:name>toLower</tns:name>
+    <tns:implementation>de.mainzelliste.paths.implementations.LowerCase</tns:implementation>
   </tns:path>
 </tns:paths>
