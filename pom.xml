@@ -38,7 +38,7 @@
 					<!-- The package of your generated sources -->
 					<packageName>de.mainzelliste.paths.configuration</packageName>
 					<sources>
-						<source>src/main/resources</source>
+						<source>src/main/resources/paths.xsd</source>
 					</sources>
 				</configuration>
 			</plugin>
