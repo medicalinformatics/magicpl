@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/Pfade"
-	xmlns:tns="http://www.example.org/Pfade" elementFormDefault="qualified">
+	xmlns:tns="http://www.example.org/Pfade" elementFormDefault="qualified"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.1">
 
 	<element name="paths">
 		<complexType>
 			<sequence>
 				<element name="path" maxOccurs="unbounded">
+					<!--  -->
+					<annotation>
+						<appinfo>
+							<jaxb:property name="paths" />
+						</appinfo>
+					</annotation>
 					<complexType>
 						<sequence>
 							<element name="name" type="string"></element>
