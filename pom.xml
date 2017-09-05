@@ -22,26 +22,26 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jaxb2-maven-plugin</artifactId>
-				<version>2.2</version>
-				<executions>
-					<execution>
-						<id>xjc</id>
-						<goals>
-							<goal>xjc</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<!-- The package of your generated sources -->
-					<packageName>de.mainzelliste.paths.configuration</packageName>
-					<sources>
-						<source>src/main/resources/paths.xsd</source>
-					</sources>
-				</configuration>
-			</plugin>
+			<!-- <plugin> -->
+			<!-- <groupId>org.codehaus.mojo</groupId> -->
+			<!-- <artifactId>jaxb2-maven-plugin</artifactId> -->
+			<!-- <version>2.2</version> -->
+			<!-- <executions> -->
+<!-- <execution> -->
+			<!-- <id>xjc</id> -->
+			<!-- <goals> -->
+			<!-- <goal>xjc</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- <configuration> -->
+			<!-- <packageName>de.mainzelliste.paths.configuration</packageName> -->
+			<!-- <sources> -->
+			<!-- <source>src/main/resources/paths.xsd</source> -->
+			<!-- </sources> -->
+			<!-- <xjbSources>src/main/resources/bindings.xjb</xjbSources> -->
+			<!-- </configuration> -->
+			<!-- </plugin> -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
