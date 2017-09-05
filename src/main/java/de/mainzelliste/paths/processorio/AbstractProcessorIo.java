@@ -1,15 +1,15 @@
-package de.mainzelliste.paths.implementations;
+package de.mainzelliste.paths.processorio;
 import java.util.*;
 
 /**
  * Immutable input or output (I/O) for Processors.
  */
-public abstract class ProcessorIo implements List<Object> {
+public abstract class AbstractProcessorIo implements List<Object> {
 	private ArrayList<Object> contentList;
 
 	abstract List<Class<?>> getContentTypes();
 
-	public ProcessorIo(Object... content) throws ClassCastException {
+	public AbstractProcessorIo(Object... content) throws ClassCastException {
 		this.contentList = new ArrayList<>(content.length);
 		Iterator<Class<?>> typeIterator = this.getContentTypes().iterator();
 		for (Object item : content) {
