@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<paths xmlns="http://www.example.org/Pfade" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/Pfade ../../main/resources/paths.xsd ">
+  <path>
+    <name>pathWithParameters</name>
+    <implementation>org.example.PathWithParameters</implementation>
+  	<parameters>
+  		<parameter name="param1">valueOfParam1</parameter>
+  		<parameter name="param2">valueOfParam2</parameter>
+  	</parameters>  
+  </path>  
+  <path>
+    <name>pathWithoutParameters</name>
+    <implementation>org.example.PathWithoutParameters</implementation>
+  </path>  
+  <path>
+    <name>pathWithEmptyParameters</name>
+    <implementation>org.example.PathWithEmptyParameters</implementation>
+    <parameters></parameters>
+  </path>  
+</paths>
