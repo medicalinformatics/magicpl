@@ -8,10 +8,8 @@ import javax.xml.bind.JAXBContext;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 
-import de.mainzelliste.paths.configuration.ParameterMap;
-import de.mainzelliste.paths.configuration.Paths;
-import de.mainzelliste.paths.configuration.Paths.Path;
-import de.mainzelliste.paths.configuration.Paths.Path.Parameters.Parameter;
+import de.mainzelliste.paths.configuration.*;
+import de.mainzelliste.paths.configuration.Path.Parameters.Parameter;
 import de.samply.config.util.JAXBUtil;
 
 /** Test for reading path parameters from configuration file. Needs
@@ -21,12 +19,13 @@ public class PathParameterTest {
 	private static final String testConfigurationFile = "/testParameters.xml";
 	
 	@Test
-	public void testPathParameters() {
+	public void testPathParameters() throws Exception {
 		InputStream testConfiguration = this.getClass().getResourceAsStream(testConfigurationFile);
 		if (testConfiguration == null)
 			fail("Test configuration file " + testConfigurationFile + " not found.");
 		
 		Paths configuration;
+		
 		try {
 			configuration = JAXBUtil.unmarshall(testConfiguration,
 					JAXBContext.newInstance(de.mainzelliste.paths.configuration.ObjectFactory.class), Paths.class);
@@ -35,9 +34,9 @@ public class PathParameterTest {
 			return;
 		}
 		
-		for (Path thisPath : configuration.getPaths()) {
+		for (Path thisPath : configuration.getPathOrMultipath()) {
 			if (thisPath.getName().equals("pathWithParameters")) {
-				ParameterMap thisPathParameters = thisPath.getParameters();
+				ParameterMap thisPathParameters = new ParameterMapAdapter().unmarshal(thisPath.getParameters());
 				for (int i = 1; i <= 2; i++) {
 					String thisParameterName = "param" + i;
 					assertTrue(thisPathParameters.containsKey(thisParameterName),

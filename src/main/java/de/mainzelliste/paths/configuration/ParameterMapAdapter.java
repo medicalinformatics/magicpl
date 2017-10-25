@@ -5,10 +5,10 @@ import java.util.Map.Entry;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-import de.mainzelliste.paths.configuration.Paths.Path.Parameters;
-import de.mainzelliste.paths.configuration.Paths.Path.Parameters.Parameter;
+import de.mainzelliste.paths.configuration.Path.Parameters;
+import de.mainzelliste.paths.configuration.Path.Parameters.Parameter;
 
-public class ParameterMapAdapter extends XmlAdapter<Parameters, ParameterMap>{
+public class ParameterMapAdapter extends XmlAdapter<Parameters, ParameterMap> {
 
 	@Override
 	public ParameterMap unmarshal(Parameters v) throws Exception {
@@ -24,14 +24,12 @@ public class ParameterMapAdapter extends XmlAdapter<Parameters, ParameterMap>{
 		Parameters result = new Parameters();
 		result.parameter = new LinkedList<>();
 		for (Entry<String, Parameter> entry : v.entrySet()) {
-			Parameter p = new Parameter();			
+			Parameter p = new Parameter();
 			p.setName(entry.getKey());
 			p.setValue(entry.getValue().value);
 			result.parameter.add(p);
 		}
 		return result;
 	}
-	
-	
-	
+
 }

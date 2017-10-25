@@ -9,7 +9,7 @@ public class UpperCase implements Function<String, String> {
 
 	@Override
 	public String apply(String t) {
-		return t == null ? null : t.toUpperCase(); 
+		return t == null ? null : t.toUpperCase();
 	}
 
 }

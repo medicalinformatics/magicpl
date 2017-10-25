@@ -1,4 +1,5 @@
 package de.mainzelliste.paths.processorio;
+
 import java.util.*;
 
 /**
@@ -7,7 +8,7 @@ import java.util.*;
 public abstract class AbstractProcessorIo implements List<Object> {
 	private ArrayList<Object> contentList;
 
-	abstract List<Class<?>> getContentTypes();
+	public abstract List<Class<?>> getContentTypes();
 
 	public AbstractProcessorIo(Object... content) throws ClassCastException {
 		this.contentList = new ArrayList<>(content.length);
@@ -15,16 +16,15 @@ public abstract class AbstractProcessorIo implements List<Object> {
 		for (Object item : content) {
 			Class<?> type = typeIterator.next();
 			if (!type.isAssignableFrom(item.getClass()))
-				throw new ClassCastException(String.format("%s cannot be cast into %s",
-						item.getClass().getSimpleName(),
+				throw new ClassCastException(String.format("%s cannot be cast into %s", item.getClass().getSimpleName(),
 						type.getSimpleName()));
 			contentList.add(item);
 		}
 	}
 
 	/**
-	 * Rather than extending ArrayList<?>, we implement the List interface.
-	 * This makes sure that we are immutable.
+	 * Rather than extending ArrayList<?>, we implement the List interface. This
+	 * makes sure that we are immutable.
 	 */
 
 	@Override

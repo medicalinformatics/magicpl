@@ -4,37 +4,73 @@
 	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.1">
 
 	<element name="paths">
+		<annotation>
+			<documentation>
+				Lists all available paths. Each can either be a simple path ("path" or a
+				chain of simple paths "multipath").
+			</documentation>
+		</annotation>
 		<complexType>
 			<sequence>
-				<element name="path" maxOccurs="unbounded">
-					<annotation>
-						<appinfo>
-							<jaxb:property name="paths" />
-						</appinfo>
-					</annotation>
-					<complexType>
-						<sequence>
-							<element name="name" type="string"></element>
-							<element name="implementation" type="string"></element>
-							<element name="parameters" minOccurs="0">
-								<complexType>
-									<sequence>
-										<element name="parameter" minOccurs="0" maxOccurs="unbounded">
-											<complexType>
-												<simpleContent>
-													<extension base="string">
-														<attribute name="name" type="token"></attribute>
-													</extension>
-												</simpleContent>
-											</complexType>
-										</element>
-									</sequence>
-								</complexType>
-							</element>
-						</sequence>
-					</complexType>
-				</element>
+				<choice maxOccurs="unbounded">
+					<element name="path" type="tns:simplePath" />
+					<element name="multipath" type="tns:multiPath" />
+				</choice>
 			</sequence>
 		</complexType>
 	</element>
+
+	<complexType name="path">
+		<annotation>
+			<documentation>Base type for paths</documentation>
+		</annotation>
+		<sequence>
+			<element name="name" type="string"></element>
+			<element name="parameters" minOccurs="0">
+				<complexType>
+					<sequence>
+						<element name="parameter" minOccurs="0" maxOccurs="unbounded">
+							<complexType>
+								<simpleContent>
+									<extension base="string">
+										<attribute name="name" type="token"></attribute>
+									</extension>
+								</simpleContent>
+							</complexType>
+						</element>
+					</sequence>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="simplePath">
+		<annotation>
+			<documentation>Type definition for simple paths, i.e. those that are
+				directly implemented
+				by a Java class
+			</documentation>
+		</annotation>
+		<complexContent>
+			<extension base="tns:path">
+				<sequence>
+					<element name="implementation" type="string"></element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="multiPath">
+		<annotation>
+			<documentation>Multipaths, i.e. chains of simple paths
+			</documentation>
+		</annotation>
+		<complexContent>
+			<extension base="tns:path">
+				<sequence>
+					<element name="path" type="tns:simplePath" maxOccurs="unbounded"></element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
 </schema>

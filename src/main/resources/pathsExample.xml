@@ -2,15 +2,31 @@
 <paths xmlns="http://www.example.org/Pfade" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.example.org/Pfade paths.xsd ">
 	<path>
-		<name>toUpper</name>
-		<implementation>de.mainzelliste.paths.implementations.UpperCase</implementation>
-		<parameters>
-			<parameter name="foo">fooValue</parameter>
-			<parameter name="bar">barValue</parameter>
-		</parameters>
+		<name>toLower</name>
+		<parameters></parameters>
+ 		<implementation>de.mainzelliste.paths.implementations.LowerCase</implementation> 
 	</path>
 	<path>
-		<name>toLower</name>
-		<implementation>de.mainzelliste.paths.implementations.LowerCase</implementation>
+		<name>getCn</name>
+		<parameters></parameters>
+		<implementation>de.mainzelliste.paths.implementations.CngClient</implementation>
 	</path>
+	<path>
+		<name>getTkt</name>
+		<parameters></parameters>
+		<implementation>de.mainzelliste.paths.implementations.MainzellisteClient</implementation>
+	</path>
+	<multipath>
+	<name>getCnTkt</name>
+		<path>
+			<name>getCn</name>
+			<parameters></parameters>
+			<implementation>de.mainzelliste.paths.implementations.CngClient</implementation>
+		</path>
+		<path>
+			<name>getTkt</name>
+			<parameters></parameters>
+			<implementation>de.mainzelliste.paths.implementations.MainzellisteClient</implementation>
+		</path>
+	</multipath>
 </paths>

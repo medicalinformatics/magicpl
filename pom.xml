@@ -22,12 +22,31 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<version>0.13.1</version>
+				<executions>
+					<execution>
+						<id>generate</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+
+				<configuration>
+					<generatePackage>de.mainzelliste.paths.configuration</generatePackage>
+					<schemaDirectory>src/main/resources/</schemaDirectory>
+					<generateDirectory>${project.build.directory}/generated-sources/jaxb</generateDirectory>
+				</configuration>
+			</plugin>
 			<!-- <plugin> -->
 			<!-- <groupId>org.codehaus.mojo</groupId> -->
 			<!-- <artifactId>jaxb2-maven-plugin</artifactId> -->
 			<!-- <version>2.2</version> -->
 			<!-- <executions> -->
-<!-- <execution> -->
+			<!-- <execution> -->
 			<!-- <id>xjc</id> -->
 			<!-- <goals> -->
 			<!-- <goal>xjc</goal> -->
