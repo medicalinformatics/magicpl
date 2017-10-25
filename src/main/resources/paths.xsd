@@ -6,8 +6,9 @@
 	<element name="paths">
 		<annotation>
 			<documentation>
-				Lists all available paths. Each can either be a simple path ("path" or a
-				chain of simple paths "multipath").
+				Lists all available paths. Each can either be a simple
+				path ("path") or a
+				chain of simple paths ("multipath").
 			</documentation>
 		</annotation>
 		<complexType>
@@ -54,7 +55,10 @@
 		<complexContent>
 			<extension base="tns:path">
 				<sequence>
-					<element name="implementation" type="string"></element>
+					<choice>
+						<element name="implementation" type="string"></element>
+						<element name="selector" type="tns:selector"></element>
+					</choice>
 				</sequence>
 			</extension>
 		</complexContent>
@@ -73,4 +77,30 @@
 			</extension>
 		</complexContent>
 	</complexType>
+
+	<complexType name="selector">
+		<sequence>
+			<element name="case" maxOccurs="unbounded" type="tns:guardedCaseType">
+			</element>
+			<element name="default" minOccurs="0" maxOccurs="1"
+				type="tns:defaultCaseType" />
+		</sequence>
+		<attribute name="class" type="string" use="required"></attribute>
+	</complexType>
+
+	<complexType name="defaultCaseType">
+		<choice>
+			<element name="path" type="tns:simplePath" />
+			<element name="multipath" type="tns:multiPath" />
+		</choice>
+	</complexType>
+
+	<complexType name="guardedCaseType">
+		<complexContent>
+			<extension base="tns:defaultCaseType">
+				<attribute name="value" type="string" use="required" />
+			</extension>
+		</complexContent>
+	</complexType>
+
 </schema>

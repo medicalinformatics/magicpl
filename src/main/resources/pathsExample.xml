@@ -4,7 +4,7 @@
 	<path>
 		<name>toLower</name>
 		<parameters></parameters>
- 		<implementation>de.mainzelliste.paths.implementations.LowerCase</implementation> 
+		<implementation>de.mainzelliste.paths.implementations.LowerCase</implementation>
 	</path>
 	<path>
 		<name>getCn</name>
@@ -17,7 +17,7 @@
 		<implementation>de.mainzelliste.paths.implementations.MainzellisteClient</implementation>
 	</path>
 	<multipath>
-	<name>getCnTkt</name>
+		<name>getCnTkt</name>
 		<path>
 			<name>getCn</name>
 			<parameters></parameters>
@@ -29,4 +29,31 @@
 			<implementation>de.mainzelliste.paths.implementations.MainzellisteClient</implementation>
 		</path>
 	</multipath>
+
+	<path>
+		<name>selectorPath</name>
+		<parameters></parameters>
+		<selector class="selectorClass">
+			<case value="foo">
+				<path>
+					<name>fooPath</name>
+					<implementation></implementation>
+				</path>
+			</case>
+			<default>
+				<multipath>
+					<name>defaultMultiPath</name>
+					<parameters></parameters>
+					<path>
+						<name>defaultMulti1</name>
+						<implementation></implementation>
+					</path>
+					<path>
+						<name>defaultMulti2</name>
+						<implementation></implementation>
+					</path>
+				</multipath>
+			</default>
+		</selector>
+	</path>
 </paths>
