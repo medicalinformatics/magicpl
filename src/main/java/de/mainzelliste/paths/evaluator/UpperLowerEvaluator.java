@@ -4,6 +4,10 @@ import java.util.Arrays;
 
 import de.mainzelliste.paths.processorio.AbstractProcessorIo;
 
+/**
+ * Simple example of an evaluator. Checks if a string contains only lower case
+ * characters ("lower"), only upper case characters ("upper") or both ("mixed").
+ */
 public class UpperLowerEvaluator extends AbstractEvaluator {
 
 	@Override

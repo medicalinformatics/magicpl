@@ -30,6 +30,9 @@ public class PathBackend {
 	/**
 	 * Initialize backend for path processing. In the web application, an
 	 * instance should be retreived via {@link Controller#getPathBackend()}.
+	 * 
+	 * @param configuration
+	 *            Configuration of the paths to be served by this instance.
 	 */
 	public PathBackend(Paths configuration) {
 
@@ -66,6 +69,13 @@ public class PathBackend {
 		return pathImplementations.get(pathName);
 	}
 
+	/**
+	 * Instantiate a processor from a given path definition. The method calls itself recursively if needed, e.g.
+	 * for sub paths of a multipath or the case-based paths inside a &lt;switch&gt; element.
+	 * @param pathDefinition Configuration of the path to instantiate. 
+	 * @return A processor object implementing the given path.
+	 * @throws Exception If something goes wrong. //FIXME: Genauere Fehlerbehandlung
+	 */
 	private AbstractProcessor<AbstractProcessorIo, AbstractProcessorIo> instantiateProcessor(Path pathDefinition)
 			throws Exception {
 		if (pathDefinition instanceof SimplePath) {
