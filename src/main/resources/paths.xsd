@@ -14,8 +14,7 @@
 		<complexType>
 			<sequence>
 				<choice maxOccurs="unbounded">
-					<element name="path" type="tns:simplePath" />
-					<element name="multipath" type="tns:multiPath" />
+					<group ref="tns:pathChoice"></group>
 				</choice>
 			</sequence>
 		</complexType>
@@ -90,8 +89,7 @@
 
 	<complexType name="defaultCaseType">
 		<choice>
-			<element name="path" type="tns:simplePath" />
-			<element name="multipath" type="tns:multiPath" />
+			<group ref="tns:pathChoice"></group>
 		</choice>
 	</complexType>
 
@@ -103,4 +101,10 @@
 		</complexContent>
 	</complexType>
 
+	<group name="pathChoice">
+		<choice>
+			<element name="path" type="tns:simplePath" />
+			<element name="multipath" type="tns:multiPath" />
+		</choice>
+	</group>
 </schema>
