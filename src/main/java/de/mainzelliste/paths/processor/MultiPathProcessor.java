@@ -54,7 +54,9 @@ public class MultiPathProcessor extends AbstractProcessor<AbstractProcessorIo, A
 
 	/**
 	 * Add a path (processor) to the end of the chain.
-	 * @param processor The processor to add.
+	 * 
+	 * @param processor
+	 *            The processor to add.
 	 */
 	public void addProcessor(AbstractProcessor<AbstractProcessorIo, AbstractProcessorIo> processor) {
 		paths.add(processor);
