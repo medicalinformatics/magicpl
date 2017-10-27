@@ -33,7 +33,7 @@
 	<path>
 		<name>selectorPath</name>
 		<parameters></parameters>
-		<selector class="selectorClass">
+		<switch evaluator="evaluatorClass">
 			<case value="foo">
 				<path>
 					<name>fooPath</name>
@@ -54,6 +54,6 @@
 					</path>
 				</multipath>
 			</default>
-		</selector>
+		</switch>
 	</path>
 </paths>
