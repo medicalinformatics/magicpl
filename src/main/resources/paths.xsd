@@ -57,7 +57,7 @@
 				<sequence>
 					<choice>
 						<element name="implementation" type="string"></element>
-						<element name="selector" type="tns:selector"></element>
+						<element name="switch" type="tns:switch"></element>
 					</choice>
 				</sequence>
 			</extension>
@@ -78,14 +78,14 @@
 		</complexContent>
 	</complexType>
 
-	<complexType name="selector">
+	<complexType name="switch">
 		<sequence>
 			<element name="case" maxOccurs="unbounded" type="tns:guardedCaseType">
 			</element>
 			<element name="default" minOccurs="0" maxOccurs="1"
 				type="tns:defaultCaseType" />
 		</sequence>
-		<attribute name="class" type="string" use="required"></attribute>
+		<attribute name="evaluator" type="string" use="required"></attribute>
 	</complexType>
 
 	<complexType name="defaultCaseType">
