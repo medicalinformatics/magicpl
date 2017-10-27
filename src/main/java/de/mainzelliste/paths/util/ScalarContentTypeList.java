@@ -1,4 +1,4 @@
-package de.mainzelliste.paths.implementations;
+package de.mainzelliste.paths.util;
 
 import java.util.AbstractList;
 
@@ -6,7 +6,7 @@ import de.mainzelliste.paths.processorio.AbstractProcessorIo;
 
 /**
  * Utility class to construct a list containing a given number of equal class
- * objects. Used to ease implementations of {@link AbstractProcessorIo} in cases
+ * objects. Used to ease processor of {@link AbstractProcessorIo} in cases
  * where only a single content type is used.
  */
 public class ScalarContentTypeList extends AbstractList<Class<?>> {

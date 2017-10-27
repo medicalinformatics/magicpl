@@ -1,4 +1,4 @@
-package de.mainzelliste.paths.implementations;
+package de.mainzelliste.paths.processor;
 
 import java.util.Collections;
 import java.util.function.Function;
@@ -9,7 +9,7 @@ import de.mainzelliste.paths.configuration.Path.Parameters.Parameter;
 import de.mainzelliste.paths.processorio.AbstractProcessorIo;
 
 /**
- * Base class for path implementations.
+ * Base class for path processor.
  * 
  * @param <IN>
  *            Input type of this path.

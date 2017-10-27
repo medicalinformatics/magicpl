@@ -1,4 +1,4 @@
-package de.mainzelliste.paths.implementations;
+package de.mainzelliste.paths.processor;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -6,6 +6,7 @@ import java.util.List;
 
 import de.mainzelliste.paths.configuration.Path;
 import de.mainzelliste.paths.processorio.AbstractProcessorIo;
+import de.mainzelliste.paths.util.ScalarContentTypeList;
 
 /** Example implementation of a path. Converts input to lower case. */
 public class LowerCase extends AbstractProcessor<AbstractProcessorIo, AbstractProcessorIo> {

@@ -1,4 +1,4 @@
-package de.mainzelliste.paths.implementations;
+package de.mainzelliste.paths.processor;
 
 import java.util.Arrays;
 import java.util.LinkedList;

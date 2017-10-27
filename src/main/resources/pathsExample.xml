@@ -4,29 +4,29 @@
 	<path>
 		<name>toLower</name>
 		<parameters></parameters>
-		<implementation>de.mainzelliste.paths.implementations.LowerCase</implementation>
+		<implementation>de.mainzelliste.paths.processor.LowerCase</implementation>
 	</path>
 	<path>
 		<name>getCn</name>
 		<parameters></parameters>
-		<implementation>de.mainzelliste.paths.implementations.CngClient</implementation>
+		<implementation>de.mainzelliste.paths.processor.CngClient</implementation>
 	</path>
 	<path>
 		<name>getTkt</name>
 		<parameters></parameters>
-		<implementation>de.mainzelliste.paths.implementations.MainzellisteClient</implementation>
+		<implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
 	</path>
 	<multipath>
 		<name>getCnTkt</name>
 		<path>
 			<name>getCn</name>
 			<parameters></parameters>
-			<implementation>de.mainzelliste.paths.implementations.CngClient</implementation>
+			<implementation>de.mainzelliste.paths.processor.CngClient</implementation>
 		</path>
 		<path>
 			<name>getTkt</name>
 			<parameters></parameters>
-			<implementation>de.mainzelliste.paths.implementations.MainzellisteClient</implementation>
+			<implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
 		</path>
 	</multipath>
 

@@ -10,8 +10,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import de.mainzelliste.paths.backend.Controller;
-import de.mainzelliste.paths.implementations.AbstractProcessor;
-import de.mainzelliste.paths.implementations.ScalarContentTypeList;
+import de.mainzelliste.paths.processor.AbstractProcessor;
+import de.mainzelliste.paths.util.ScalarContentTypeList;
 import de.mainzelliste.paths.processorio.AbstractProcessorIo;
 
 @Path("/paths")
