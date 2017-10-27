@@ -1,10 +1,12 @@
-package de.mainzelliste.paths.implementations;
+package de.mainzelliste.paths.processor;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import de.mainzelliste.paths.configuration.Path;
 import de.mainzelliste.paths.processorio.AbstractProcessorIo;
+import de.mainzelliste.paths.util.ScalarContentTypeList;
+
 /** Dummy implementation of control number generator client */
 public class CngClient extends AbstractProcessor<AbstractProcessorIo, AbstractProcessorIo> {
 

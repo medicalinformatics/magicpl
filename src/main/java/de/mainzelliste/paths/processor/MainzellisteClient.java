@@ -1,10 +1,11 @@
-package de.mainzelliste.paths.implementations;
+package de.mainzelliste.paths.processor;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import de.mainzelliste.paths.configuration.Path;
 import de.mainzelliste.paths.processorio.AbstractProcessorIo;
+import de.mainzelliste.paths.util.ScalarContentTypeList;
 
 /** Dummy implementation of Mainzelliste Client */
 public class MainzellisteClient extends AbstractProcessor<AbstractProcessorIo, AbstractProcessorIo> {

@@ -3,7 +3,6 @@ package de.mainzelliste.paths.backend;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 
 import javax.ws.rs.WebApplicationException;
 
@@ -11,15 +10,15 @@ import de.mainzelliste.paths.configuration.SimplePath;
 import de.mainzelliste.paths.configuration.MultiPath;
 import de.mainzelliste.paths.configuration.Path;
 import de.mainzelliste.paths.configuration.Paths;
-import de.mainzelliste.paths.implementations.AbstractProcessor;
-import de.mainzelliste.paths.implementations.MultiPathProcessor;
+import de.mainzelliste.paths.processor.AbstractProcessor;
+import de.mainzelliste.paths.processor.MultiPathProcessor;
 import de.mainzelliste.paths.processorio.AbstractProcessorIo;
 
-/** Backend for managing path implementations. */
+/** Backend for managing path processor. */
 public class PathBackend {
 
 	// Realisierung als Function<String, String> nur vorläufig für Prototypen!
-	/** Map of path implementations */
+	/** Map of path processor */
 	private Map<String, AbstractProcessor<?, ?>> pathImplementations;
 
 	/**

@@ -1,4 +1,4 @@
-package de.mainzelliste.paths.implementations;
+package de.mainzelliste.paths.util;
 
 import java.util.AbstractList;
 
