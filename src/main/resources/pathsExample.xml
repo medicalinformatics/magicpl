@@ -31,29 +31,21 @@
 	</multipath>
 
 	<path>
-		<name>selectorPath</name>
+		<name>changeCase</name>
 		<parameters></parameters>
-		<switch evaluator="evaluatorClass">
-			<case value="foo">
+		<switch evaluator="de.mainzelliste.paths.evaluator.UpperLowerEvaluator">
+			<case value="upper">
 				<path>
-					<name>fooPath</name>
-					<implementation></implementation>
+					<name>toLower</name>
+					<implementation>de.mainzelliste.paths.processor.LowerCase</implementation>
 				</path>
 			</case>
-			<default>
-				<multipath>
-					<name>defaultMultiPath</name>
-					<parameters></parameters>
-					<path>
-						<name>defaultMulti1</name>
-						<implementation></implementation>
-					</path>
-					<path>
-						<name>defaultMulti2</name>
-						<implementation></implementation>
-					</path>
-				</multipath>
-			</default>
+			<case value="lower">
+				<path>
+					<name>toUpper</name>
+					<implementation>de.mainzelliste.paths.processor.UpperCase</implementation>
+				</path>
+			</case>
 		</switch>
 	</path>
 </paths>
