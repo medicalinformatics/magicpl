@@ -9,7 +9,7 @@ import de.mainzelliste.paths.configuration.Path.Parameters.Parameter;
 import de.mainzelliste.paths.processorio.AbstractProcessorIo;
 
 /**
- * Base class for path processor.
+ * Base class for processor implementations.
  * 
  * @param <IN>
  *            Input type of this path.
