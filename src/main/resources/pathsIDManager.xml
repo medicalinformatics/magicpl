@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<paths xmlns="http://www.example.org/Pfade" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/Pfade paths.xsd ">
+
+	<!-- /paths/getId
+      * Schritte 1-8 in DSK
+      * Zuständige Komponentente: Lokale PSD
+      * Pfad-Typ: Selector
+      * Input: IDAT, DKTK eigewilligt (DKTK_Type: true/false) (1 in DSK)
+      * Output: ID (DKTK_ID/Lokal_ID)
+    -->
+	<path>
+		<name>getId</name>
+		<parameters></parameters>
+		<switch evaluator="evaluatorClass">
+			<case value="true">
+				<!--
+				  * Schritte 2a-7 in DSK
+				   * Pfad-Typ: Multipfad
+				   * Teilpfade: /paths/getKN
+				   *            /paths/getTkt
+				   *            /paths/generateId
+				   * Input: IDAT (2a)
+				   * Output: DKTK_ID (7)
+				-->
+				<multipath>
+					<name>getDKTKId</name>
+					<parameters></parameters>
+					<path>
+						<!-- /paths/getKN
+						 * Schritt 2a in DSK
+						 * Zuständige Komponente: Zentrale PSD
+						 * Input: IDAT
+						 * Output: KN
+						-->
+						<name>getKN</name>
+						<parameters>zentral</parameters>
+						<implementation>de.mainzelliste.paths.processor.CngClient</implementation>
+					</path>
+					<path>
+						<!-- /paths/getTkt
+						 * Schritt 4 in DSK
+						 * Zuständige Komponenta: Mainzelliste
+						 * Input: -
+						 * Output: KNTKT
+						-->
+						<name>getTkt</name>
+						<parameters></parameters>
+						<implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
+					</path>
+					<path>
+						<!-- /paths/generateId
+						 * Schritte 5-7 in DSK
+						 * Zuständige Komponente: Mainzelliste (RL)
+						 * Input: KNTKT
+						 * Output: DKTK_ID
+						-->
+						<name>generateId</name>
+						<parameters></parameters>
+						<implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
+					</path>
+				</multipath>
+			</case>
+			<default>
+				<!--
+				  * Schritte 2b-7 in DSK
+				  * Zuständige Komponente: Lokales Identitätsmanagement
+				   * Pfad-Typ: Multipfad
+				   * Teilpfade: /paths/getKN
+				   *            /paths/generateId
+				   * Input: IDAT (2b)
+				   * Output: Lokal_ID (7)
+				-->
+				<multipath>
+					<name>getLocalId</name>
+					<parameters></parameters>
+					<path>
+                        <!-- /paths/getKN
+                         * Schritt 2b in DSK
+                         * Zuständige Komponente: Lokale PSD
+                         * Input: IDAT
+                         * Output: KN
+                        -->
+						<name>getKN</name>
+						<parameters>lokal</parameters>
+						<implementation>de.mainzelliste.paths.processor.CngClient</implementation>
+					</path>
+					<path>
+                        <!-- /paths/generateId
+                         * Schritte 5-7 in DSK
+                         * Zuständige Komponente: Mainzelliste (RL)
+                         * Input: KN
+                         * Output: Lokal_ID
+                        -->
+						<name>generateId</name>
+						<parameters></parameters>
+						<implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
+					</path>
+				</multipath>
+			</default>
+		</switch>
+	</path>
+</paths>
