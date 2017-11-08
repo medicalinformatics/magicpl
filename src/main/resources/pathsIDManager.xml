@@ -100,4 +100,16 @@
 			</default>
 		</switch>
 	</path>
+
+	<path>
+		<!-- /paths/getExportIds
+          * (IDManager: Ressource for requesting encrypted export Ids)
+          * Input: lokale ID
+          * Output: Export ID
+        -->
+        <name>getExportIds</name>
+        <parameters></parameters>
+        <implementation>de.mainzelliste.paths.processor.CngClient</implementation>
+	</path>
+
 </paths>
