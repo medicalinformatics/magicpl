@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://www.example.org/Pfade paths.xsd ">
 
 	<!-- /paths/getId
-      * Schritte 1-8 in DSK
+      * Schritte 1,8 in DSK
       * Zuständige Komponentente: Lokale PSD
       * Pfad-Typ: Selector
       * Input: IDAT, DKTK eigewilligt (DKTK_Type: true/false) (1 in DSK)
@@ -12,10 +12,12 @@
 	<path>
 		<name>getId</name>
 		<parameters></parameters>
+		<input>IDAT</input>
+		<output>ID</output>
 		<switch evaluator="evaluatorClass">
 			<case value="true">
 				<!--
-				  * Schritte 2a-7 in DSK
+				  * Schritte 2a,4,5,7 in DSK
 				   * Pfad-Typ: Multipfad
 				   * Teilpfade: /paths/getKN
 				   *            /paths/getTkt
@@ -26,39 +28,30 @@
 				<multipath>
 					<name>getDKTKId</name>
 					<parameters></parameters>
-					<path>
+                    <input>IDAT</input>
+                    <output>DKTK_ID</output>
+					<step>
 						<!-- /paths/getKN
-						 * Schritt 2a in DSK
-						 * Zuständige Komponente: Zentrale PSD
+						 * Schritt 2a,4 in DSK
 						 * Input: IDAT
-						 * Output: KN
-						-->
-						<name>getKN</name>
-						<parameters>zentral</parameters>
-						<implementation>de.mainzelliste.paths.processor.CngClient</implementation>
-					</path>
-					<path>
-						<!-- /paths/getTkt
-						 * Schritt 4 in DSK
-						 * Zuständige Komponenta: Mainzelliste
-						 * Input: -
 						 * Output: KNTKT
 						-->
-						<name>getTkt</name>
-						<parameters></parameters>
-						<implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
-					</path>
-					<path>
+						<name>getKNTKT</name>
+						<implementation>de.mainzelliste.paths.processor.CngClient</implementation>
+					</step>
+					<step>
 						<!-- /paths/generateId
-						 * Schritte 5-7 in DSK
+						 * Schritte 5,7 in DSK
 						 * Zuständige Komponente: Mainzelliste (RL)
 						 * Input: KNTKT
 						 * Output: DKTK_ID
 						-->
-						<name>generateId</name>
+						<name>getDKTKId</name>
 						<parameters></parameters>
+                        <input>KNTKT</input>
+                        <output>DKTK_ID</output>
 						<implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
-					</path>
+					</step>
 				</multipath>
 			</case>
 			<default>
