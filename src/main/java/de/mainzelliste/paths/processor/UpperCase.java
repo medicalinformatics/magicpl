@@ -11,6 +11,7 @@ import de.mainzelliste.paths.util.ScalarContentTypeList;
 /** Example implementation of a path. Converts input to upper case. */
 public class UpperCase extends AbstractProcessor<AbstractProcessorIo, AbstractProcessorIo> {
 
+	//TODO: Kann man das weglassen?
 	public UpperCase(Path configuration) {
 		super(configuration);
 	}
@@ -33,7 +34,6 @@ public class UpperCase extends AbstractProcessor<AbstractProcessorIo, AbstractPr
 		}
 
 		return new AbstractProcessorIo(output.toArray()) {
-
 			@Override
 			public List<Class<?>> getContentTypes() {
 				return new ScalarContentTypeList(String.class, output.size());
