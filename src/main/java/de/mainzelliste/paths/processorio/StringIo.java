@@ -1,10 +1,7 @@
 package de.mainzelliste.paths.processorio;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-
-import de.mainzelliste.paths.util.ScalarContentTypeList;
 
 public class StringIo extends AbstractProcessorIo {
 
@@ -26,7 +23,7 @@ public class StringIo extends AbstractProcessorIo {
 
 	@Override
 	public String marshal() {
-		if (this.size() > 0)
+		if (this.size() == 0)
 			return "";
 		else
 			return this.get(0).toString();

@@ -1,13 +1,11 @@
 package de.mainzelliste.paths.backend;
 
-import java.io.File;
 import java.io.InputStream;
 
 import javax.ws.rs.WebApplicationException;
 import javax.xml.bind.JAXBContext;
 
 import de.mainzelliste.paths.configuration.Paths;
-import de.samply.config.util.FileFinderUtil;
 import de.samply.config.util.JAXBUtil;
 
 public enum Controller {

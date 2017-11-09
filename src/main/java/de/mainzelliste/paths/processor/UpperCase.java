@@ -2,11 +2,9 @@ package de.mainzelliste.paths.processor;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
-
 import de.mainzelliste.paths.configuration.Path;
 import de.mainzelliste.paths.processorio.AbstractProcessorIo;
-import de.mainzelliste.paths.util.ScalarContentTypeList;
+import de.mainzelliste.paths.processorio.StringIo;
 
 /** Example implementation of a path. Converts input to upper case. */
 public class UpperCase extends AbstractProcessor<AbstractProcessorIo, AbstractProcessorIo> {
@@ -33,12 +31,6 @@ public class UpperCase extends AbstractProcessor<AbstractProcessorIo, AbstractPr
 			}
 		}
 
-		return new AbstractProcessorIo(output.toArray()) {
-			@Override
-			public List<Class<?>> getContentTypes() {
-				return new ScalarContentTypeList(String.class, output.size());
-			}
-		};
+		return new StringIo(output.toArray(new String[output.size()]));
 	}
-
 }

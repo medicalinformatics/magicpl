@@ -9,40 +9,40 @@
 
 		<implementation>de.mainzelliste.paths.processor.LowerCase</implementation>
 	</path>
-	<path>
-		<name>getCn</name>
-		<parameters></parameters>
-		<input>de.mainzelliste.paths.processorio.StringIo</input>
-		<output>de.mainzelliste.paths.processorio.StringIo</output>
-		<implementation>de.mainzelliste.paths.processor.CngClient</implementation>
-	</path>
-	<path>
-		<name>getTkt</name>
-		<parameters></parameters>
-		<input>de.mainzelliste.paths.processorio.StringIo</input>
-		<output>de.mainzelliste.paths.processorio.StringIo</output>
-		<implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
-	</path>
-	<multipath>
-		<name>getCnTkt</name>
-		<parameters></parameters>
-		<input>de.mainzelliste.paths.processorio.StringIo</input>
-		<output>de.mainzelliste.paths.processorio.StringIo</output>
-		<path>
-			<name>getCn</name>
-			<parameters></parameters>
-			<input>de.mainzelliste.paths.processorio.StringIo</input>
-			<output>de.mainzelliste.paths.processorio.StringIo</output>
-			<implementation>de.mainzelliste.paths.processor.CngClient</implementation>
-		</path>
-		<path>
-			<name>getTkt</name>
-			<parameters></parameters>
-			<input>de.mainzelliste.paths.processorio.StringIo</input>
-			<output>de.mainzelliste.paths.processorio.StringIo</output>
-			<implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
-		</path>
-	</multipath>
+<!-- 	<path> -->
+<!-- 		<name>getCn</name> -->
+<!-- 		<parameters></parameters> -->
+<!-- 		<input>de.mainzelliste.paths.processorio.StringIo</input> -->
+<!-- 		<output>de.mainzelliste.paths.processorio.StringIo</output> -->
+<!-- 		<implementation>de.mainzelliste.paths.processor.CngClient</implementation> -->
+<!-- 	</path> -->
+<!-- 	<path> -->
+<!-- 		<name>getTkt</name> -->
+<!-- 		<parameters></parameters> -->
+<!-- 		<input>de.mainzelliste.paths.processorio.StringIo</input> -->
+<!-- 		<output>de.mainzelliste.paths.processorio.StringIo</output> -->
+<!-- 		<implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation> -->
+<!-- 	</path> -->
+<!-- 	<multipath> -->
+<!-- 		<name>getCnTkt</name> -->
+<!-- 		<parameters></parameters> -->
+<!-- 		<input>de.mainzelliste.paths.processorio.StringIo</input> -->
+<!-- 		<output>de.mainzelliste.paths.processorio.StringIo</output> -->
+<!-- 		<path> -->
+<!-- 			<name>getCn</name> -->
+<!-- 			<parameters></parameters> -->
+<!-- 			<input>de.mainzelliste.paths.processorio.StringIo</input> -->
+<!-- 			<output>de.mainzelliste.paths.processorio.StringIo</output> -->
+<!-- 			<implementation>de.mainzelliste.paths.processor.CngClient</implementation> -->
+<!-- 		</path> -->
+<!-- 		<path> -->
+<!-- 			<name>getTkt</name> -->
+<!-- 			<parameters></parameters> -->
+<!-- 			<input>de.mainzelliste.paths.processorio.StringIo</input> -->
+<!-- 			<output>de.mainzelliste.paths.processorio.StringIo</output> -->
+<!-- 			<implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation> -->
+<!-- 		</path> -->
+<!-- 	</multipath> -->
 
 	<path>
 		<name>changeCase</name>

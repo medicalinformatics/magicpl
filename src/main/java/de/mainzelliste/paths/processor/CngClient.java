@@ -1,11 +1,10 @@
 package de.mainzelliste.paths.processor;
 
 import java.util.LinkedList;
-import java.util.List;
 
 import de.mainzelliste.paths.configuration.Path;
 import de.mainzelliste.paths.processorio.AbstractProcessorIo;
-import de.mainzelliste.paths.util.ScalarContentTypeList;
+import de.mainzelliste.paths.processorio.StringIo;
 
 /** Dummy implementation of control number generator client */
 public class CngClient extends AbstractProcessor<AbstractProcessorIo, AbstractProcessorIo> {
@@ -25,12 +24,6 @@ public class CngClient extends AbstractProcessor<AbstractProcessorIo, AbstractPr
 			String controlNumber = "cn(" + thisItem + ")";
 			result.add(controlNumber);
 		}
-		return new AbstractProcessorIo(result.toArray()) {
-
-			@Override
-			public List<Class<?>> getContentTypes() {
-				return new ScalarContentTypeList(String.class, result.size());
-			}
-		};
+		return new StringIo(result.toArray(new String[result.size()]));
 	}
 }

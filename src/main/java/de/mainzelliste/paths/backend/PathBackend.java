@@ -25,7 +25,7 @@ public class PathBackend {
 
 	// Realisierung als Function<String, String> nur vorläufig für Prototypen!
 	/** Map of path processor */
-	private Map<String, AbstractProcessor<?, ?>> pathImplementations;
+	private Map<String, AbstractProcessor<AbstractProcessorIo, ?>> pathImplementations;
 
 	/**
 	 * Initialize backend for path processing. In the web application, an

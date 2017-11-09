@@ -17,7 +17,7 @@ import de.mainzelliste.paths.processorio.AbstractProcessorIo;
  *            Output type of this path.
  */
 public abstract class AbstractProcessor<IN extends AbstractProcessorIo, OUT extends AbstractProcessorIo>
-		implements Function<AbstractProcessorIo, AbstractProcessorIo> {
+		implements Function<IN, OUT> {
 
 	private String pathName;
 	private ParameterMap parameters;
