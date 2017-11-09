@@ -28,7 +28,7 @@ public class LowerCase extends AbstractProcessor<AbstractProcessorIo, AbstractPr
 					throw new IllegalArgumentException("Input " + thisValue + " is of class " + thisValue.getClass()
 							+ ", but String is required.");
 				}
-				output.add((String) thisValue);
+				output.add(((String) thisValue).toLowerCase());
 			}
 		}
 
