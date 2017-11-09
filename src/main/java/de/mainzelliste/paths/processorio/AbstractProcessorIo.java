@@ -21,6 +21,27 @@ public abstract class AbstractProcessorIo implements List<Object> {
 			contentList.add(item);
 		}
 	}
+	
+	/**
+	 * Create an instance from serialized data.
+	 * @param data The serialized data.
+	 */
+	public AbstractProcessorIo(String data) {
+		super();
+		this.unmarshal(data);
+	}
+	
+	/**
+	 * De-serialize (unmarshal) content from a given string.
+	 * @param data The serialized data.
+	 */
+	public abstract void unmarshal(String data);
+	
+	/**
+	 * Serialize (marshal) content to a string.
+	 * @return The serialized content
+	 */
+	public abstract String marshal();
 
 	/**
 	 * Rather than extending ArrayList<?>, we implement the List interface. This
