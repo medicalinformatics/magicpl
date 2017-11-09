@@ -41,6 +41,8 @@
 					</sequence>
 				</complexType>
 			</element>
+			<element name="input" type="string" />
+			<element name="output" type="string" />
 		</sequence>
 	</complexType>
 
