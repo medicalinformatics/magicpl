@@ -12,9 +12,9 @@
 	<path>
 		<name>getId</name>
 		<parameters></parameters>
-		<input>IDAT</input>
-		<output>ID</output>
-		<switch evaluator="evaluatorClass">
+		<input>de.mainzelliste.paths.processorio.IDATConsentIo</input>
+		<output>de.mainzelliste.paths.processorio.IDIo</output>
+		<switch evaluator="IsConsentedEvaluator">
 			<case value="true">
 				<!--
 				  * Schritte 2a,4,5,7 in DSK
@@ -28,8 +28,8 @@
 				<multipath>
 					<name>getDKTKId</name>
 					<parameters></parameters>
-                    <input>IDAT</input>
-                    <output>DKTK_ID</output>
+                    <input>de.mainzelliste.paths.processorio.IDATConsentIo</input>
+                    <output>de.mainzelliste.paths.processorio.IDIo</output>
 					<step>
 						<!-- /paths/getKN
 						 * Schritt 2a,4 in DSK
@@ -48,8 +48,8 @@
 						-->
 						<name>getDKTKId</name>
 						<parameters></parameters>
-                        <input>KNTKT</input>
-                        <output>DKTK_ID</output>
+                        <input>de.mainzelliste.paths.processorio.ControlNumberIo</input>
+                        <output>de.mainzelliste.paths.processorio.IDIo</output>
 						<implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
 					</step>
 				</multipath>

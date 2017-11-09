@@ -7,7 +7,7 @@ import de.mainzelliste.paths.processorio.AbstractProcessorIo;
  * and returns an evaluation in the form of a string. The string can then used, for example,
  * in a switch-case XML.
  */
-public abstract class AbstractEvaluator {
+public abstract class AbstractEvaluator<IN extends AbstractProcessorIo> {
     /**
      * Checks if the given string is a valid evaluation result of this Evaluator.
      *
@@ -22,5 +22,5 @@ public abstract class AbstractEvaluator {
      * @param io ProcessorIo to evaluate.
      * @return evaluation result
      */
-    public abstract String evaluate(AbstractProcessorIo io);
+    public abstract String evaluate(IN io);
 }

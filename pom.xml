@@ -115,6 +115,11 @@
 			<version>6.10</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>de.pseudonymisierung</groupId>
+			<artifactId>mainzelliste-client</artifactId>
+			<version>1.1.0</version>
+		</dependency>
 	</dependencies>
 	<properties>
 		<jersey.version>2.25.1</jersey.version>
