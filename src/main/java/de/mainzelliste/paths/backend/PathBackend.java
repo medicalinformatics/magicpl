@@ -109,7 +109,7 @@ public class PathBackend {
 		} else if (pathDefinition instanceof MultiPath) {
 			MultiPath multiPath = (MultiPath) pathDefinition;
 			MultiPathProcessor thisImplementation = new MultiPathProcessor(pathDefinition);
-			for (Path thisPath : multiPath.getPath()) {
+			for (Path thisPath : multiPath.getStep()) {
 				thisImplementation.addProcessor(instantiateProcessor(thisPath));
 			}
 			return thisImplementation;

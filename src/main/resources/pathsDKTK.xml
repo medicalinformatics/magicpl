@@ -75,12 +75,12 @@
 
     <iodefinitions>
         <iorecord name="IDAT">
-            <iosingle name="vorname" />
-            <iosingle name="nachname" />
-            <iosingle name="geburtsdatum" />
+            <iosingle name="vorname"/>
+            <iosingle name="nachname"/>
+            <iosingle name="geburtsdatum"/>
         </iorecord>
-        <iosingle name="Einwilligungsstatus" type="boolean" />
-        <iosingle name="DKTK#ID" />
+        <iosingle name="Einwilligungsstatus" type="boolean"/>
+        <iosingle name="DKTK#ID"/>
         <iosingle name="KNTKT" />
     </iodefinitions>
 

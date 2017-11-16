@@ -38,6 +38,7 @@
 			<element name="iosingle" type="tns:iosingle" maxOccurs="unbounded"/> <!-- TODO: Soll ein bestehendes iosingle referenzieren! -->
 		</sequence>
 		<attribute name="name" type="string" use="required" />
+		<attribute name="adapter" type="string" default="ImmutableMapAdapter"/>
 	</complexType>
 
 	<complexType name="iosingle">
@@ -49,6 +50,7 @@
 		</annotation>
 		<attribute name="name" type="string" use="required"/>
 		<attribute name="type" type="string" default="string"/>
+		<attribute name="adapter" type="string" default="StringAdapter"/>
 	</complexType>
 
 	<element name="paths">
