@@ -6,7 +6,6 @@ import java.util.function.Function;
 import de.mainzelliste.paths.configuration.ParameterMap;
 import de.mainzelliste.paths.configuration.Path;
 import de.mainzelliste.paths.configuration.Path.Parameters.Parameter;
-import de.mainzelliste.paths.processorio.AbstractProcessorIo;
 
 /**
  * Base class for processor implementations.
@@ -16,8 +15,8 @@ import de.mainzelliste.paths.processorio.AbstractProcessorIo;
  * @param <OUT>
  *            Output type of this path.
  */
-public abstract class AbstractProcessor<IN extends AbstractProcessorIo, OUT extends AbstractProcessorIo>
-		implements Function<AbstractProcessorIo, AbstractProcessorIo> {
+public abstract class AbstractProcessor<IN, OUT>
+		implements Function<IN, OUT> {
 
 	private String pathName;
 	private ParameterMap parameters;

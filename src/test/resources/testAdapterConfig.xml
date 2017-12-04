@@ -5,17 +5,17 @@
     <paths>
 
         <path>
-            <name>getId</name>
-            <parameters></parameters>
+            <name>getCN</name>
+            <parameters>
+                <parameter name="passphrase">"alrfigkja"</parameter>
+            </parameters>
             <input>
                 <iorecord ref="IDAT" />
-                <iosingle ref="Einwilligungsstatus" />
             </input>
             <output>
-                <iosingle/>
-                <iorecord/>
+                <iorecord ref="ControlNumbers"/>
             </output>
-            <implementation/>
+            <implementation>CNGeneratorProcessor</implementation>
         </path>
     </paths>
 
@@ -25,9 +25,11 @@
             <iosingle name="nachname"/>
             <iosingle name="geburtsdatum"/>
         </iorecord>
-        <iosingle name="Einwilligungsstatus" type="boolean"/>
-        <iosingle name="DKTK#ID"/>
-        <iosingle name="KNTKT" />
+        <iorecord name="ControlNumbers">
+            <iosingle name="vorname" adapter="ControlNumberAdapter"/>
+            <iosingle name="nachname" adapter="ControlNumberAdapter"/>
+            <iosingle name="geburtsdatum" adapter="ControlNumberAdapter"/>
+        </iorecord>
     </iodefinitions>
 
 </pathconfig>
