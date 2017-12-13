@@ -26,9 +26,9 @@
             <iosingle name="geburtsdatum"/>
         </iorecord>
         <iorecord name="ControlNumbers">
-            <iosingle name="vorname" adapter="ControlNumberAdapter"/>
-            <iosingle name="nachname" adapter="ControlNumberAdapter"/>
-            <iosingle name="geburtsdatum" adapter="ControlNumberAdapter"/>
+            <iosingle name="vorname" type="ControlNumber"/>
+            <iosingle name="nachname" type="ControlNumber"/>
+            <iosingle name="geburtsdatum" type="ControlNumber"/>
         </iorecord>
     </iodefinitions>
 

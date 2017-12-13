@@ -9,11 +9,14 @@ import java.lang.reflect.InvocationTargetException;
 public class AdapterFactory {
 
     public static Adapter getAdapter(Iosingle config) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-        String adapterName = config.getAdapter();
+        // e.g. StringAdapter (data type, per default String + Adapter)
+        String adapterName = config.getType() + "Adapter";
 
         if (!adapterName.contains(".")) {
-            adapterName = "de.mainzelliste.paths.adapters." + adapterName;
+            adapterName = Adapter.class.getPackage().getName() + "." + adapterName;
         }
+
+        System.out.print("adapterName: " + adapterName + "\n");
 
         Class<?> clazz = Class.forName(adapterName);
 
@@ -23,27 +26,12 @@ public class AdapterFactory {
             return (Adapter) object;
         }
 
-        throw new IllegalArgumentException("The class" + config.getAdapter() + " is not a adapter");
+        throw new IllegalArgumentException("The class" + config.getType() + "Adapter is not a adapter");
     }
 
     public static Adapter getAdapter(Iorecord config) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
-        String adapterName = config.getAdapter();
-
-        if(! adapterName.contains(".")){
-            adapterName = "de.mainzelliste.paths.adapters." + adapterName;
-        }
-
-        Class<?> clazz = Class.forName(adapterName);
-
-        Constructor<?> constructor = clazz.getConstructor(Iorecord.class);
-
-        Object object = constructor.newInstance(config);
-
-        if (object instanceof Adapter) {
-            return (Adapter) object;
-        }
-
-        throw new IllegalArgumentException("The class" + config.getAdapter() + " is not a adapter");
+        // Iorecord supports only default Adapter: ImmutableMapAdapter
+        Object object = new ImmutableMapAdapter(config);
+        return (Adapter) object;
     }
-
 }
