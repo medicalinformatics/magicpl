@@ -1,6 +1,5 @@
 package de.mainzelliste.paths.processor;
 
-import de.mainzelliste.paths.adapters.Adapter;
 import de.mainzelliste.paths.configuration.Path;
 import de.pseudonymisierung.controlnumbers.ControlNumber;
 import de.pseudonymisierung.controlnumbers.ControlNumberGenerator;
@@ -15,11 +14,20 @@ public class CNGeneratorProcessor extends AbstractProcessor<ImmutableMap<String,
 
     public CNGeneratorProcessor(Path configuration) {
         super(configuration);
+        final String passphrase = "passphrase";
+        if(configuration.getParameters().getParameter().size() != 1){
+            throw new IllegalArgumentException("This processor requires exactly one parameter called " + passphrase
+                                               + ". Please check your path config.");
+        }
 
-    }
+        Path.Parameters.Parameter parameter = configuration.getParameters().getParameter().get(0);
 
-    public void setPassphrase(String passphrase){
-        this.controlNumberGenerator = EncryptedControlNumberGenerator.builder(passphrase).build();
+        if(! passphrase.equals(parameter.getName())){
+            throw new IllegalArgumentException("Paratername is wrong. It should be " + passphrase
+                                               + " Please check your path config.");
+        }
+
+        this.controlNumberGenerator = EncryptedControlNumberGenerator.builder(parameter.getValue()).build();
     }
 
     @Override
