@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/Pfade"
-		xmlns:tns="http://www.example.org/Pfade" elementFormDefault="qualified">
+	xmlns:tns="http://www.example.org/Pfade" elementFormDefault="qualified">
 
 	<element name="pathconfig">
 		<complexType>
@@ -27,17 +27,30 @@
 		</complexType>
 	</element>
 
+	<complexType name="ioabstracttype" abstract="true">
+		<annotation>
+			<documentation>
+				Base type for IO definitions (iosingle / iorecord).
+			</documentation>
+		</annotation>
+		<attribute name="name" type="string" use="required" />
+	</complexType>
+
 	<complexType name="iorecord">
 		<annotation>
 			<documentation>
-				A convenient record of several iosingles. Implementations
+				A convenient record of several iosingles.
+				Implementations
 				will expand an iorecord to its contained iosingles.
 			</documentation>
 		</annotation>
-		<sequence>
-			<element name="iosingle" type="tns:iosingle" maxOccurs="unbounded"/> <!-- TODO: Soll ein bestehendes iosingle referenzieren! -->
-		</sequence>
-		<attribute name="name" type="string" use="required" />
+		<complexContent>
+			<extension base="tns:ioabstracttype">
+				<sequence>
+					<element name="iosingle" type="tns:iosingle" maxOccurs="unbounded" /> <!-- TODO: Soll ein bestehendes iosingle referenzieren! -->
+				</sequence>
+			</extension>
+		</complexContent>
 	</complexType>
 
 	<complexType name="iosingle">
@@ -47,8 +60,11 @@
 				(usually both a string).
 			</documentation>
 		</annotation>
-		<attribute name="name" type="string" use="required"/>
-		<attribute name="type" type="string" default="String"/>
+		<complexContent>
+			<extension base="tns:ioabstracttype">
+				<attribute name="type" type="string" default="String" />
+			</extension>
+		</complexContent>
 	</complexType>
 
 	<element name="paths">
@@ -67,12 +83,20 @@
 		</complexType>
 	</element>
 
+	<complexType name="ioabstractref" abstract="true">
+		<attribute name="ref" type="string" />
+	</complexType>
+
 	<complexType name="iorecordref">
-		<attribute name="ref" type="string"/>
+		<complexContent>
+			<extension base="tns:ioabstractref"></extension>
+		</complexContent>
 	</complexType>
 
 	<complexType name="iosingleref">
-		<attribute name="ref" type="string"/>
+		<complexContent>
+			<extension base="tns:ioabstractref"></extension>
+		</complexContent>
 	</complexType>
 
 	<complexType name="path">
@@ -98,7 +122,7 @@
 			</element>
 			<element name="input">
 				<complexType>
-					<sequence maxOccurs="unbounded" >
+					<sequence maxOccurs="unbounded">
 						<choice>
 							<group ref="tns:ioRefChoice" />
 						</choice>
@@ -107,7 +131,7 @@
 			</element>
 			<element name="output">
 				<complexType>
-					<sequence maxOccurs="unbounded" >
+					<sequence maxOccurs="unbounded">
 						<choice>
 							<group ref="tns:ioRefChoice" />
 						</choice>
@@ -138,7 +162,9 @@
 
 	<complexType name="multiPath">
 		<annotation>
-			<documentation>Multipaths, i.e. chains of simple path invocations called "steps"</documentation>
+			<documentation>Multipaths, i.e. chains of simple path invocations
+				called "steps"
+			</documentation>
 		</annotation>
 		<complexContent>
 			<extension base="tns:path">
@@ -154,7 +180,7 @@
 			<element name="case" maxOccurs="unbounded" type="tns:guardedCaseType">
 			</element>
 			<element name="default" minOccurs="0" maxOccurs="1"
-					 type="tns:defaultCaseType" />
+				type="tns:defaultCaseType" />
 		</sequence>
 		<attribute name="evaluator" type="string" use="required"></attribute>
 	</complexType>
@@ -182,15 +208,15 @@
 
 	<group name="ioDefChoice">
 		<choice>
-			<element name="iosingle" type="tns:iosingle"/>
-			<element name="iorecord" type="tns:iorecord"/>
+			<element name="iosingle" type="tns:iosingle" />
+			<element name="iorecord" type="tns:iorecord" />
 		</choice>
 	</group>
 
 	<group name="ioRefChoice">
 		<choice>
-			<element name="iosingle" type="tns:iosingleref"/> <!-- TODO: Hier soll tatsächlich referenziert werden! -->
-			<element name="iorecord" type="tns:iorecordref"/> <!-- TODO: Hier soll tatsächlich referenziert werden! -->
+			<element name="iosingle" type="tns:iosingleref" /> <!-- TODO: Hier soll tatsächlich referenziert werden! -->
+			<element name="iorecord" type="tns:iorecordref" /> <!-- TODO: Hier soll tatsächlich referenziert werden! -->
 		</choice>
 	</group>
 </schema>
