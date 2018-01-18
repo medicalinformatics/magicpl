@@ -1,71 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<paths xmlns="http://www.example.org/Pfade" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<pathconfig xmlns="http://www.example.org/Pfade" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.example.org/Pfade paths.xsd ">
-	<path>
-		<name>toLower</name>
-		<parameters></parameters>
-		<input>de.mainzelliste.paths.processorio.StringIo</input>
-		<output>de.mainzelliste.paths.processorio.StringIo</output>
 
-		<implementation>de.mainzelliste.paths.processor.LowerCase</implementation>
-	</path>
-	<path>
-		<name>getCn</name>
-		<parameters></parameters>
-		<input>de.mainzelliste.paths.processorio.StringIo</input>
-		<output>de.mainzelliste.paths.processorio.StringIo</output>
-		<implementation>de.mainzelliste.paths.processor.CngClient</implementation>
-	</path>
-	<path>
-		<name>getTkt</name>
-		<parameters></parameters>
-		<input>de.mainzelliste.paths.processorio.StringIo</input>
-		<output>de.mainzelliste.paths.processorio.StringIo</output>
-		<implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
-	</path>
-	<multipath>
-		<name>getCnTkt</name>
-		<parameters></parameters>
-		<input>de.mainzelliste.paths.processorio.StringIo</input>
-		<output>de.mainzelliste.paths.processorio.StringIo</output>
+	<paths>
+		<path>
+			<name>toLower</name>
+			<parameters></parameters>
+			<input>
+				<iosingle />
+			</input>
+			<output>
+				<iosingle />
+			</output>
+			<implementation>de.mainzelliste.paths.processor.LowerCase</implementation>
+		</path>
 		<path>
 			<name>getCn</name>
 			<parameters></parameters>
-			<input>de.mainzelliste.paths.processorio.StringIo</input>
-			<output>de.mainzelliste.paths.processorio.StringIo</output>
+			<input>
+				<iosingle />
+			</input>
+			<output>
+				<iosingle />
+			</output>
 			<implementation>de.mainzelliste.paths.processor.CngClient</implementation>
 		</path>
 		<path>
 			<name>getTkt</name>
 			<parameters></parameters>
-			<input>de.mainzelliste.paths.processorio.StringIo</input>
-			<output>de.mainzelliste.paths.processorio.StringIo</output>
+			<input>
+				<iosingle />
+			</input>
+			<output>
+				<iosingle />
+			</output>
 			<implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
 		</path>
-	</multipath>
+		<multipath>
+			<name>getCnTkt</name>
+			<parameters></parameters>
+			<input>
+				<iosingle />
+			</input>
+			<output>
+				<iosingle />
+			</output>
+			<step>
+				<name>getCn</name>
+				<parameters></parameters>
+				<input>
+					<iosingle />
+				</input>
+				<output>
+					<iosingle />
+				</output>
+				<implementation>de.mainzelliste.paths.processor.CngClient</implementation>
+			</step>
+			<step>
+				<name>getTkt</name>
+				<parameters></parameters>
+				<input>
+					<iosingle />
+				</input>
+				<output>
+					<iosingle />
+				</output>
+				<implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
+			</step>
+		</multipath>
 
-	<path>
-		<name>changeCase</name>
-		<parameters></parameters>
-		<input>de.mainzelliste.paths.processorio.StringIo</input>
-		<output>de.mainzelliste.paths.processorio.StringIo</output>
-		<switch evaluator="de.mainzelliste.paths.evaluator.UpperLowerEvaluator">
-			<case value="upper">
-				<path>
-					<name>toLower</name>
-					<input>de.mainzelliste.paths.processorio.StringIo</input>
-					<output>de.mainzelliste.paths.processorio.StringIo</output>
-					<implementation>de.mainzelliste.paths.processor.LowerCase</implementation>
-				</path>
-			</case>
-			<case value="lower">
-				<path>
-					<name>toUpper</name>
-					<input>de.mainzelliste.paths.processorio.StringIo</input>
-					<output>de.mainzelliste.paths.processorio.StringIo</output>
-					<implementation>de.mainzelliste.paths.processor.UpperCase</implementation>
-				</path>
-			</case>
-		</switch>
-	</path>
-</paths>
+		<path>
+			<name>changeCase</name>
+			<parameters></parameters>
+			<input>
+				<iosingle />
+			</input>
+			<output>
+				<iosingle />
+			</output>
+			<switch evaluator="de.mainzelliste.paths.evaluator.UpperLowerEvaluator">
+				<case value="upper">
+					<path>
+						<name>toLower</name>
+						<input>
+							<iosingle />
+						</input>
+						<output>
+							<iosingle />
+						</output>
+						<implementation>de.mainzelliste.paths.processor.LowerCase</implementation>
+					</path>
+				</case>
+				<case value="lower">
+					<path>
+						<name>toUpper</name>
+						<input>
+							<iosingle />
+						</input>
+						<output>
+							<iosingle />
+						</output>
+						<implementation>de.mainzelliste.paths.processor.UpperCase</implementation>
+					</path>
+				</case>
+			</switch>
+		</path>
+	</paths>
+	<iodefinitions>
+		<iosingle name="eingabe" type="String" />
+	</iodefinitions>
+</pathconfig>
