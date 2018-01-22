@@ -5,16 +5,15 @@ import java.util.Map;
 
 import de.mainzelliste.paths.configuration.Path;
 import de.mainzelliste.paths.evaluator.AbstractEvaluator;
-import de.mainzelliste.paths.processorio.AbstractProcessorIo;
 
 /**
  * Implementation of switch control structure in path definitions.
  */
-public class SwitchProcessor extends AbstractProcessor<AbstractProcessorIo, AbstractProcessorIo> {
+public class SwitchProcessor extends AbstractProcessor {
 
 	private AbstractEvaluator evaluator;
-	private Map<String, AbstractProcessor<AbstractProcessorIo, AbstractProcessorIo>> processors;
-	private AbstractProcessor<AbstractProcessorIo, AbstractProcessorIo> defaultProcessor;
+	private Map<String, AbstractProcessor> processors;
+	private AbstractProcessor defaultProcessor;
 
 	/**
 	 * Create an instance with the given configuration and evaluator.
@@ -39,7 +38,7 @@ public class SwitchProcessor extends AbstractProcessor<AbstractProcessorIo, Abst
 	 * @param processor
 	 *            Processor to process this case.
 	 */
-	public void setCase(String value, AbstractProcessor<AbstractProcessorIo, AbstractProcessorIo> processor) {
+	public void setCase(String value, AbstractProcessor processor) {
 		this.processors.put(value, processor);
 	}
 
@@ -51,14 +50,14 @@ public class SwitchProcessor extends AbstractProcessor<AbstractProcessorIo, Abst
 	 *            The processor to use for the default case or null to disable
 	 *            the default case.
 	 */
-	public void setDefaultCase(AbstractProcessor<AbstractProcessorIo, AbstractProcessorIo> processor) {
+	public void setDefaultCase(AbstractProcessor processor) {
 		this.defaultProcessor = processor;
 	}
 
 	@Override
-	public AbstractProcessorIo apply(AbstractProcessorIo t) {
+	public Map<String, Object> apply(Map<String, Object> t) {
 		String value = evaluator.evaluate(t);
-		AbstractProcessor<AbstractProcessorIo, AbstractProcessorIo> processor = processors.get(value);
+		AbstractProcessor processor = processors.get(value);
 		if (processor == null) {
 			if (defaultProcessor != null) {
 				return defaultProcessor.apply(t);

@@ -9,7 +9,7 @@ import jersey.repackaged.com.google.common.collect.ImmutableMap;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CNGeneratorProcessor extends AbstractProcessor<ImmutableMap<String, Object>, ImmutableMap<String, ControlNumber>> {
+public class CNGeneratorProcessor extends AbstractProcessor {
     private ControlNumberGenerator controlNumberGenerator;
 
     public CNGeneratorProcessor(Path configuration) {
@@ -31,7 +31,7 @@ public class CNGeneratorProcessor extends AbstractProcessor<ImmutableMap<String,
     }
 
     @Override
-    public ImmutableMap<String, ControlNumber> apply(ImmutableMap<String, Object> input) {
+    public Map<String, Object> apply(Map<String, Object> input) {
         HashMap<String, ControlNumber> output = new HashMap<>();
 
 

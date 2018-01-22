@@ -1,6 +1,6 @@
 package de.mainzelliste.paths.evaluator;
 
-import de.mainzelliste.paths.processorio.AbstractProcessorIo;
+import java.util.Map;
 
 /**
  * Base class for an Evaluator. An Evaluator considers a given ProcessorIo (usually an input)
@@ -22,5 +22,5 @@ public abstract class AbstractEvaluator {
      * @param io ProcessorIo to evaluate.
      * @return evaluation result
      */
-    public abstract String evaluate(AbstractProcessorIo io);
+    public abstract String evaluate(Map<String, Object> io);
 }

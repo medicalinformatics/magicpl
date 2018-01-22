@@ -1,6 +1,8 @@
 package de.mainzelliste.paths.webservice;
 
 import java.util.List;
+import java.util.Map;
+
 import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -9,30 +11,35 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import com.google.gson.Gson;
+
 import de.mainzelliste.paths.backend.Controller;
+import de.mainzelliste.paths.backend.PathBackend;
 import de.mainzelliste.paths.processor.AbstractProcessor;
-import de.mainzelliste.paths.util.ScalarContentTypeList;
-import de.mainzelliste.paths.processorio.AbstractProcessorIo;
 
 @Path("/paths")
 public class PathsResource {
 
+	private PathBackend backend = Controller.instance.getPathBackend();
+	private Gson gson = new Gson();
+	
+	
 	@POST
 	@Path("/{pathName}")
 	public Response executePath(@PathParam("pathName") String pathName, String data) {
-		AbstractProcessor<?, ?> implementation = Controller.instance.getPathBackend().getPathImplementation(pathName);
+		AbstractProcessor implementation = Controller.instance.getPathBackend().getPathImplementation(pathName);
 		if (implementation == null)
 			throw new WebApplicationException(
 					Response.status(Status.NOT_IMPLEMENTED).entity("Path " + pathName + " not implemented!").build());
-		AbstractProcessorIo dataObject = new AbstractProcessorIo(data) {
+		
+		Map<String, Object> inputMap = backend.unmarshal(data);
+		
+		AbstractProcessor pathImplementation = backend.getPathImplementation(pathName);
 
-			@Override
-			public List<Class<?>> getContentTypes() {
-				// TODO Auto-generated method stub
-				return new ScalarContentTypeList(String.class, 1);
-			}
-		};
-		return Response.ok(implementation.apply(dataObject).get(0)).build();
+		Map<String, Object> outputMap = implementation.apply(inputMap);
+		String outputData = backend.marshal(outputMap);
+		
+		return Response.ok(outputData).build();
 	}
 
 	/**

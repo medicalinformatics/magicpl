@@ -1,6 +1,7 @@
 package de.mainzelliste.paths.processor;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.function.Function;
 
 import de.mainzelliste.paths.configuration.ParameterMap;
@@ -15,8 +16,9 @@ import de.mainzelliste.paths.configuration.Path.Parameters.Parameter;
  * @param <OUT>
  *            Output type of this path.
  */
-public abstract class AbstractProcessor<IN, OUT>
-		implements Function<IN, OUT> {
+//public abstract class AbstractProcessor<IN, OUT>
+//		implements Function<IN, OUT> {
+public abstract class AbstractProcessor implements Function<Map<String, Object>, Map<String, Object>> {
 
 	private String pathName;
 	private ParameterMap parameters;

@@ -1,33 +1,35 @@
 package de.mainzelliste.paths.processor;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import de.mainzelliste.paths.configuration.Path;
-import de.mainzelliste.paths.processorio.AbstractProcessorIo;
+import jersey.repackaged.com.google.common.collect.ImmutableMap;
 
 /**
- * Implementation of multipaths, i.e. chains of several paths executed one after
+ * Implementation of multipaths, i.e. chains of several steps executed one after
  * another.
  */
-public class MultiPathProcessor extends AbstractProcessor<AbstractProcessorIo, AbstractProcessorIo> {
+public class MultiPathProcessor extends AbstractProcessor {
 
-	private List<AbstractProcessor<AbstractProcessorIo, AbstractProcessorIo>> paths;
+	private List<AbstractProcessor> steps;
 
 	/**
-	 * Construct an instance with the given configuratio (name and parameters)
-	 * and paths.
+	 * Construct an instance with the given configuration (name and parameters)
+	 * and steps.
 	 * 
 	 * @param configuration
 	 *            Configuration object.
-	 * @param paths
-	 *            Paths in the order in which they should be applied.
+	 * @param steps
+	 *            Steps in the order in which they should be applied.
 	 */
 	public MultiPathProcessor(Path configuration,
-			AbstractProcessor<AbstractProcessorIo, AbstractProcessorIo>... paths) {
+			AbstractProcessor... steps) {
 		super(configuration);
-		this.paths = Arrays.asList(paths);
+		this.steps = Arrays.asList(steps);
 	}
 
 	/**
@@ -39,17 +41,17 @@ public class MultiPathProcessor extends AbstractProcessor<AbstractProcessorIo, A
 	 */
 	public MultiPathProcessor(Path configuration) {
 		super(configuration);
-		this.paths = new LinkedList<>();
+		this.steps = new LinkedList<>();
 	}
 
 	@Override
-	public AbstractProcessorIo apply(AbstractProcessorIo t) {
-		AbstractProcessorIo result = t;
-		for (AbstractProcessor<AbstractProcessorIo, AbstractProcessorIo> thisProcessor : paths) {
+	public Map<String, Object> apply(Map<String, Object> t) {
+	Map<String, Object> result = new HashMap<String, Object>();
+		for (AbstractProcessor thisProcessor : steps) {
 			result = thisProcessor.apply(result);
 		}
 
-		return result;
+		return ImmutableMap.copyOf(result);
 	}
 
 	/**
@@ -58,7 +60,7 @@ public class MultiPathProcessor extends AbstractProcessor<AbstractProcessorIo, A
 	 * @param processor
 	 *            The processor to add.
 	 */
-	public void addProcessor(AbstractProcessor<AbstractProcessorIo, AbstractProcessorIo> processor) {
-		paths.add(processor);
+	public void addProcessor(AbstractProcessor processor) {
+		steps.add(processor);
 	}
 }
