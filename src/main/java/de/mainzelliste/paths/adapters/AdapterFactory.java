@@ -1,5 +1,6 @@
 package de.mainzelliste.paths.adapters;
 
+import de.mainzelliste.paths.configuration.Ioabstracttype;
 import de.mainzelliste.paths.configuration.Iorecord;
 import de.mainzelliste.paths.configuration.Iosingle;
 
@@ -26,12 +27,22 @@ public class AdapterFactory {
             return (Adapter) object;
         }
 
-        throw new IllegalArgumentException("The class" + config.getType() + "Adapter is not a adapter");
+        throw new IllegalArgumentException("The class " + adapterName + "Adapter is not a adapter");
     }
 
     public static Adapter getAdapter(Iorecord config) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         // Iorecord supports only default Adapter: ImmutableMapAdapter
         Object object = new ImmutableMapAdapter(config);
         return (Adapter) object;
+    }
+    
+    public static Adapter getAdapter(Ioabstracttype config) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+    	if (config instanceof Iosingle) {
+    		return getAdapter((Iosingle) config);
+    	} else if (config instanceof Iorecord) {
+    		return getAdapter((Iorecord) config);
+    	} else {
+    		throw new Error("Can't handle object of class " + config.getClass());
+    	}
     }
 }
