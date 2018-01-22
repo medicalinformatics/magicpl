@@ -15,98 +15,127 @@
 			<implementation>de.mainzelliste.paths.processor.LowerCase</implementation>
 		</path>
 		<path>
-			<name>getCn</name>
-			<parameters></parameters>
+			<name>getCN</name>
+			<parameters>
+				<parameter name="passphrase">dktk-test-1234</parameter>
+			</parameters>
 			<input>
-				<iosingle />
+				<iorecord ref="IDAT" />
+				<!-- <iosingle ref="Einwilligungsstatus" /> -->
 			</input>
 			<output>
-				<iosingle />
+				<!-- <iosingle /> -->
+				<iorecord ref="Kontrollnummern" />
 			</output>
-			<implementation>de.mainzelliste.paths.processor.CngClient</implementation>
+			<implementation>de.mainzelliste.paths.processor.CNGeneratorProcessor</implementation>
 		</path>
-		<path>
-			<name>getTkt</name>
-			<parameters></parameters>
-			<input>
-				<iosingle />
-			</input>
-			<output>
-				<iosingle />
-			</output>
-			<implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
-		</path>
-		<multipath>
-			<name>getCnTkt</name>
-			<parameters></parameters>
-			<input>
-				<iosingle />
-			</input>
-			<output>
-				<iosingle />
-			</output>
-			<step>
-				<name>getCn</name>
-				<parameters></parameters>
-				<input>
-					<iosingle />
-				</input>
-				<output>
-					<iosingle />
-				</output>
-				<implementation>de.mainzelliste.paths.processor.CngClient</implementation>
-			</step>
-			<step>
-				<name>getTkt</name>
-				<parameters></parameters>
-				<input>
-					<iosingle />
-				</input>
-				<output>
-					<iosingle />
-				</output>
-				<implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
-			</step>
-		</multipath>
+		<!-- <path> -->
+		<!-- <name>getCn</name> -->
+		<!-- <parameters></parameters> -->
+		<!-- <input> -->
+		<!-- <iosingle /> -->
+		<!-- </input> -->
+		<!-- <output> -->
+		<!-- <iosingle /> -->
+		<!-- </output> -->
+		<!-- <implementation>de.mainzelliste.paths.processor.CngClient</implementation> -->
+		<!-- </path> -->
+		<!-- <path> -->
+		<!-- <name>getTkt</name> -->
+		<!-- <parameters></parameters> -->
+		<!-- <input> -->
+		<!-- <iosingle /> -->
+		<!-- </input> -->
+		<!-- <output> -->
+		<!-- <iosingle /> -->
+		<!-- </output> -->
+		<!-- <implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation> -->
+		<!-- </path> -->
+		<!-- <multipath> -->
+		<!-- <name>getCnTkt</name> -->
+		<!-- <parameters></parameters> -->
+		<!-- <input> -->
+		<!-- <iosingle /> -->
+		<!-- </input> -->
+		<!-- <output> -->
+		<!-- <iosingle /> -->
+		<!-- </output> -->
+		<!-- <step> -->
+		<!-- <name>getCn</name> -->
+		<!-- <parameters></parameters> -->
+		<!-- <input> -->
+		<!-- <iosingle /> -->
+		<!-- </input> -->
+		<!-- <output> -->
+		<!-- <iosingle /> -->
+		<!-- </output> -->
+		<!-- <implementation>de.mainzelliste.paths.processor.CngClient</implementation> -->
+		<!-- </step> -->
+		<!-- <step> -->
+		<!-- <name>getTkt</name> -->
+		<!-- <parameters></parameters> -->
+		<!-- <input> -->
+		<!-- <iosingle /> -->
+		<!-- </input> -->
+		<!-- <output> -->
+		<!-- <iosingle /> -->
+		<!-- </output> -->
+		<!-- <implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation> -->
+		<!-- </step> -->
+		<!-- </multipath> -->
 
-		<path>
-			<name>changeCase</name>
-			<parameters></parameters>
-			<input>
-				<iosingle />
-			</input>
-			<output>
-				<iosingle />
-			</output>
-			<switch evaluator="de.mainzelliste.paths.evaluator.UpperLowerEvaluator">
-				<case value="upper">
-					<path>
-						<name>toLower</name>
-						<input>
-							<iosingle />
-						</input>
-						<output>
-							<iosingle />
-						</output>
-						<implementation>de.mainzelliste.paths.processor.LowerCase</implementation>
-					</path>
-				</case>
-				<case value="lower">
-					<path>
-						<name>toUpper</name>
-						<input>
-							<iosingle />
-						</input>
-						<output>
-							<iosingle />
-						</output>
-						<implementation>de.mainzelliste.paths.processor.UpperCase</implementation>
-					</path>
-				</case>
-			</switch>
-		</path>
+		<!-- <path> -->
+		<!-- <name>changeCase</name> -->
+		<!-- <parameters></parameters> -->
+		<!-- <input> -->
+		<!-- <iosingle /> -->
+		<!-- </input> -->
+		<!-- <output> -->
+		<!-- <iosingle /> -->
+		<!-- </output> -->
+		<!-- <switch evaluator="de.mainzelliste.paths.evaluator.UpperLowerEvaluator"> -->
+		<!-- <case value="upper"> -->
+		<!-- <path> -->
+		<!-- <name>toLower</name> -->
+		<!-- <input> -->
+		<!-- <iosingle /> -->
+		<!-- </input> -->
+		<!-- <output> -->
+		<!-- <iosingle /> -->
+		<!-- </output> -->
+		<!-- <implementation>de.mainzelliste.paths.processor.LowerCase</implementation> -->
+		<!-- </path> -->
+		<!-- </case> -->
+		<!-- <case value="lower"> -->
+		<!-- <path> -->
+		<!-- <name>toUpper</name> -->
+		<!-- <input> -->
+		<!-- <iosingle /> -->
+		<!-- </input> -->
+		<!-- <output> -->
+		<!-- <iosingle /> -->
+		<!-- </output> -->
+		<!-- <implementation>de.mainzelliste.paths.processor.UpperCase</implementation> -->
+		<!-- </path> -->
+		<!-- </case> -->
+		<!-- </switch> -->
+		<!-- </path> -->
 	</paths>
 	<iodefinitions>
 		<iosingle name="eingabe" type="String" />
+
+		<iorecord name="IDAT">
+			<iosingle name="vorname" />
+			<iosingle name="nachname" />
+			<iosingle name="geburtsdatum" />
+		</iorecord>
+
+		<iorecord name="Kontrollnummern">
+			<iosingle name="kn_vorname" type="ControlNumber" />
+			<iosingle name="kn_nachname" type="ControlNumber" />
+			<iosingle name="kn_geburtsdatum" type="ControlNumber" />
+		</iorecord>
+
+		<iosingle name="Einwilligungsstatus" type="Boolean" />
 	</iodefinitions>
 </pathconfig>
