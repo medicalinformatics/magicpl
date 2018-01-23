@@ -112,7 +112,12 @@ public class PathBackend {
 	public String marshal(Map<String, Object> data) {
 		HashMap<String, String> output = new HashMap<>();
 		for (Entry<String, Object> entry : data.entrySet()) {
-			output.put(entry.getKey(), adapters.get(entry.getKey()).marshal(entry.getValue()));
+			try {
+				Adapter adapter = AdapterFactory.getAdapter(entry.getValue().getClass());
+				output.put(entry.getKey(), adapter.marshal(entry.getValue()));
+			} catch (Exception e) {
+				throw new WebApplicationException(e);
+			}			
 		}
 		return gson.toJson(output);
 	}

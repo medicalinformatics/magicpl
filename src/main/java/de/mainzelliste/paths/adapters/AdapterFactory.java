@@ -45,4 +45,23 @@ public class AdapterFactory {
     		throw new Error("Can't handle object of class " + config.getClass());
     	}
     }
+    
+    public static <T> Adapter<T> getAdapter(Class<T> clazz) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+        String adapterName = clazz.getSimpleName() + "Adapter";
+
+        if (!adapterName.contains(".")) {
+            adapterName = Adapter.class.getPackage().getName() + "." + adapterName;
+        }
+
+        Class<?> adapterClazz = Class.forName(adapterName);
+
+        Object object = adapterClazz.newInstance();
+
+        if(object instanceof Adapter){
+            return (Adapter) object;
+        }
+
+        throw new IllegalArgumentException("The class " + adapterName + "Adapter is not a adapter");
+
+    }
 }
