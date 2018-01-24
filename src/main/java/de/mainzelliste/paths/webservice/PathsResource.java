@@ -33,6 +33,7 @@ public class PathsResource {
 					Response.status(Status.NOT_IMPLEMENTED).entity("Path " + pathName + " not implemented!").build());
 		
 		Map<String, Object> inputMap = backend.unmarshal(data);
+		inputMap = backend.filterPathInput(pathName, inputMap);
 		
 		AbstractProcessor pathImplementation = backend.getPathImplementation(pathName);
 

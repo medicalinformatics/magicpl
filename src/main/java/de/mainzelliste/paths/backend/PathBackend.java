@@ -122,6 +122,12 @@ public class PathBackend {
 		return gson.toJson(output);
 	}
 	
+	public Map<String, Object> filterPathInput(String pathName, Map<String, Object> allInput) {
+		HashMap<String, Object> result = new HashMap<>(allInput);
+		result.keySet().retainAll(Controller.instance.getConfigurationBackend().getPathInputs(pathName).keySet());
+		return result;
+	}
+	
 	/**
 	 * Instantiate a processor from a given path definition. The method calls itself recursively if needed, e.g.
 	 * for sub paths of a multipath or the case-based paths inside a &lt;switch&gt; element.
