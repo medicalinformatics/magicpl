@@ -5,7 +5,7 @@ import de.pseudonymisierung.controlnumbers.ControlNumber;
 public class ControlNumberAdapter implements Adapter<ControlNumber> {
     @Override
     public ControlNumber unmarshal(String data) {
-        return null;
+        return ControlNumber.fromBitString(data);
     }
 
     @Override
