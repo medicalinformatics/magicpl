@@ -29,6 +29,10 @@ public class ConfigurationBackend {
 			for (Ioabstractref thisIoRef : thisPath.getInput().getIosingleOrIorecord()) {
 				if (thisIoRef instanceof Iosingleref) {
 					thisPathSingleInputs.put(thisIoRef.getRef(), singleInputDefinitions.get(thisIoRef.getRef()));
+				} else if (thisIoRef instanceof Iorecordref) {
+					for (Iosingle thisIoSingle : recordInputDefinitions.get(thisIoRef.getRef()).getIosingle()) {
+						thisPathSingleInputs.put(thisIoSingle.getName(), thisIoSingle);
+					}
 				}
 			}
 			singleInputsByPath.put(thisPath.getName(), thisPathSingleInputs);
