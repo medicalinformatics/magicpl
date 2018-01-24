@@ -5,7 +5,6 @@ import de.mainzelliste.paths.adapters.AdapterFactory;
 import de.mainzelliste.paths.adapters.ImmutableMapAdapter;
 import de.mainzelliste.paths.configuration.*;
 import de.samply.config.util.JAXBUtil;
-import jersey.repackaged.com.google.common.collect.ImmutableMap;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -75,7 +74,7 @@ public class CNGeneratorProcessorTest {
             fail("No record found");
         }
 
-        Adapter adapter = AdapterFactory.getAdapter(iorecord);
+        ImmutableMapAdapter adapter = (ImmutableMapAdapter) AdapterFactory.getAdapter(iorecord);
 
         Object output = processor.apply(adapter.unmarshal(testData));
 
