@@ -1,6 +1,5 @@
 package de.mainzelliste.paths.backend;
 
-import java.io.File;
 import java.io.InputStream;
 
 import javax.ws.rs.WebApplicationException;
