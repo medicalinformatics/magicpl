@@ -27,7 +27,7 @@ public class PathsResource {
 	@POST
 	@Path("/{pathName}")
 	public Response executePath(@PathParam("pathName") String pathName, String data) {
-		AbstractProcessor implementation = Controller.instance.getPathBackend().getPathImplementation(pathName);
+		AbstractProcessor implementation = backend.getPathImplementation(pathName);
 		if (implementation == null)
 			throw new WebApplicationException(
 					Response.status(Status.NOT_IMPLEMENTED).entity("Path " + pathName + " not implemented!").build());
