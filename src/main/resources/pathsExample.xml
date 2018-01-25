@@ -29,6 +29,47 @@
 			</output>
 			<implementation>de.mainzelliste.paths.processor.CNGeneratorProcessor</implementation>
 		</path>
+
+		<path>
+			<name>testEvaluator</name>
+			<input>
+				<iorecord ref="IDAT" />
+				<iosingle ref="Einwilligungsstatus" />
+			</input>
+			<output>
+				<iorecord />
+			</output>
+			<switch evaluator="de.mainzelliste.paths.evaluator.IsConsentedEvaluator">
+				<case value="true">
+					<path>
+						<name>consentTrue</name>
+						<parameters>
+							<parameter name="passphrase">dktk-test-1234</parameter>
+						</parameters>
+						<input>
+							<iorecord ref="IDAT" />
+						</input>
+						<output>
+							<iorecord />
+						</output>
+						<implementation>de.mainzelliste.paths.processor.CNGeneratorProcessor</implementation>
+					</path>
+				</case>
+				<default>
+					<path>
+						<name>consentFalse</name>
+						<input>
+							<iorecord ref="IDAT" />
+						</input>
+						<output>
+							<iorecord />
+						</output>
+						<implementation>de.mainzelliste.paths.processor.LowerCase</implementation>
+					</path>
+				</default>
+			</switch>
+		</path>
+
 		<!-- <path> -->
 		<!-- <name>getCn</name> -->
 		<!-- <parameters></parameters> -->
