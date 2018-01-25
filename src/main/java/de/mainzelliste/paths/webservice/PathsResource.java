@@ -35,8 +35,6 @@ public class PathsResource {
 		Map<String, Object> inputMap = backend.unmarshal(data);
 		inputMap = backend.filterPathInput(pathName, inputMap);
 		
-		AbstractProcessor pathImplementation = backend.getPathImplementation(pathName);
-
 		Map<String, Object> outputMap = implementation.apply(inputMap);
 		String outputData = backend.marshal(outputMap);
 		
