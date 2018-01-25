@@ -157,7 +157,12 @@ public class PathBackend {
 						// This should never happen, as the underlying XML would
 						// be invalid and an error at unmarshalling be thrown.
 						throw new Error("Case " + caseDefinition.getValue() + " does not define a path.");
-					}
+					}					
+				}
+				Optional<Path> defaultCasePath = Arrays.asList(switchDefinition.getDefault().getPath(), switchDefinition.getDefault().getMultipath())
+						.stream().filter(s -> s != null).findFirst();
+				if (defaultCasePath.isPresent()) {
+					switchProcessor.setDefaultCase(instantiateProcessor(defaultCasePath.get()));
 				}
 				return switchProcessor;
 			} else {
