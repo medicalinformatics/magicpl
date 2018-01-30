@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pathconfig xmlns="http://www.example.org/Pfade" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.example.org/Pfade paths.xsd ">
+
+    <paths>
+        <!-- /paths/getId
+          * Schritte 1,10 im DSK
+          * Zuständige Komponentente: Lokales ID-Mgmt
+        -->
+        <path>
+            <name>getId</name>
+            <parameters></parameters>
+            <input>
+                <iorecord ref="IDAT" />
+                <iosingle ref="Einwilligungsstatus" />
+            </input>
+            <output>
+                <iosingle/>
+                <iorecord/>
+            </output>
+            <switch evaluator="IsConsentedEvaluator">
+                <case value="true">
+                    <!--
+                       * Schritte 2,5,6,8 GRÜN in DSK
+                       * Teilpfade: /paths/getKNTKT
+                       *            /paths/getDKTKId
+                    -->
+                    <multipath>
+                        <name>getDKTKId</name>
+                        <parameters></parameters>
+                        <input>
+                            <iorecord ref="IDAT" />
+                            <iosingle ref="Einwilligungsstatus" />
+                        </input>
+                        <output>
+                            <iosingle ref="DKTK#ID" />
+                        </output>
+                        <step>
+                            <!-- /paths/getKNTKT
+                             * Schritt 2,5 GRÜN in DSK
+                             * Zuständige Komponente: Zentraler KNE
+                            -->
+                            <name>getKNTKT</name>
+                            <input>
+                                <iorecord ref="IDAT" />
+                            </input>
+                            <output>
+                                <iosingle ref="KNTKT" />
+                            </output>
+                            <implementation>de.mainzelliste.paths.processor.CngClient</implementation>
+                        </step>
+                        <step>
+                            <!-- /paths/generateId
+                             * Schritte 6,8 GRÜN in DSK
+                             * Zuständige Komponente: Mainzelliste (RL)
+                            -->
+                            <name>getDKTKId</name>
+                            <parameters></parameters>
+                            <input>
+                                <iosingle ref="KNTKT" />
+                            </input>
+                            <output>
+                                <iosingle ref="DKTK#ID" />
+                            </output>
+                            <implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
+                        </step>
+                    </multipath>
+                </case>
+<!--                <default>
+                      * TODO: Hier die Schritte für nicht eingewilligt (ROT) ergänzen.
+                </default>-->
+            </switch>
+        </path>
+    </paths>
+
+    <iodefinitions>
+        <iorecord name="IDAT">
+            <iosingle name="vorname"/>
+            <iosingle name="nachname"/>
+            <iosingle name="geburtsdatum"/>
+        </iorecord>
+        <iosingle name="Einwilligungsstatus" type="boolean"/>
+        <iosingle name="DKTK#ID"/>
+        <iosingle name="KNTKT" />
+    </iodefinitions>
+
+</pathconfig>

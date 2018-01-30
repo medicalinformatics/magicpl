@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pathconfig xmlns="http://www.example.org/Pfade" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.example.org/Pfade paths.xsd ">
+
+    <paths>
+
+        <path>
+            <name>getCN</name>
+            <parameters>
+                <parameter name="passphrase">"alrfigkja"</parameter>
+            </parameters>
+            <input>
+                <iorecord ref="IDAT" />
+            </input>
+            <output>
+                <iorecord ref="ControlNumbers"/>
+            </output>
+            <implementation>CNGeneratorProcessor</implementation>
+        </path>
+    </paths>
+
+    <iodefinitions>
+        <iorecord name="IDAT">
+            <iosingle name="vorname"/>
+            <iosingle name="nachname"/>
+            <iosingle name="geburtsdatum"/>
+        </iorecord>
+        <iorecord name="ControlNumbers">
+            <iosingle name="vorname" type="ControlNumber"/>
+            <iosingle name="nachname" type="ControlNumber"/>
+            <iosingle name="geburtsdatum" type="ControlNumber"/>
+        </iorecord>
+    </iodefinitions>
+
+</pathconfig>

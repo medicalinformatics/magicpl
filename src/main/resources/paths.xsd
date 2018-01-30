@@ -1,14 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/Pfade"
-	xmlns:tns="http://www.example.org/Pfade" elementFormDefault="qualified"
-	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.1">
+	xmlns:tns="http://www.example.org/Pfade" elementFormDefault="qualified">
+
+	<element name="pathconfig">
+		<complexType>
+			<sequence>
+				<element ref="tns:paths" />
+				<element ref="tns:iodefinitions" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="iodefinitions">
+		<annotation>
+			<documentation>
+				Optional. Allows to defines iosingles and iorecords
+				for use in the following schema.
+			</documentation>
+		</annotation>
+		<complexType>
+			<sequence maxOccurs="unbounded">
+				<choice>
+					<group ref="tns:ioDefChoice" />
+				</choice>
+			</sequence>
+		</complexType>
+	</element>
+
+	<complexType name="ioabstracttype" abstract="true">
+		<annotation>
+			<documentation>
+				Base type for IO definitions (iosingle / iorecord).
+			</documentation>
+		</annotation>
+		<attribute name="name" type="string" use="required" />
+	</complexType>
+
+	<complexType name="iorecord">
+		<annotation>
+			<documentation>
+				A convenient record of several iosingles.
+				Implementations
+				will expand an iorecord to its contained iosingles.
+			</documentation>
+		</annotation>
+		<complexContent>
+			<extension base="tns:ioabstracttype">
+				<sequence>
+					<element name="iosingle" type="tns:iosingle" maxOccurs="unbounded" /> <!-- TODO: Soll ein bestehendes iosingle referenzieren! -->
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="iosingle">
+		<annotation>
+			<documentation>
+				A single input/output data type with a key and a value
+				(usually both a string).
+			</documentation>
+		</annotation>
+		<complexContent>
+			<extension base="tns:ioabstracttype">
+				<attribute name="type" type="string" default="String" />
+			</extension>
+		</complexContent>
+	</complexType>
 
 	<element name="paths">
 		<annotation>
 			<documentation>
 				Lists all available paths. Each can either be a simple
-				path ("path") or a
-				chain of simple paths ("multipath").
+				path ("path") or a chain of simple paths ("multipath").
 			</documentation>
 		</annotation>
 		<complexType>
@@ -19,6 +82,22 @@
 			</sequence>
 		</complexType>
 	</element>
+
+	<complexType name="ioabstractref" abstract="true">
+		<attribute name="ref" type="string" />
+	</complexType>
+
+	<complexType name="iorecordref">
+		<complexContent>
+			<extension base="tns:ioabstractref"></extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="iosingleref">
+		<complexContent>
+			<extension base="tns:ioabstractref"></extension>
+		</complexContent>
+	</complexType>
 
 	<complexType name="path">
 		<annotation>
@@ -41,16 +120,32 @@
 					</sequence>
 				</complexType>
 			</element>
-			<element name="input" type="string" />
-			<element name="output" type="string" />
+			<element name="input">
+				<complexType>
+					<sequence maxOccurs="unbounded">
+						<choice>
+							<group ref="tns:ioRefChoice" />
+						</choice>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="output">
+				<complexType>
+					<sequence maxOccurs="unbounded">
+						<choice>
+							<group ref="tns:ioRefChoice" />
+						</choice>
+					</sequence>
+				</complexType>
+			</element>
 		</sequence>
 	</complexType>
 
 	<complexType name="simplePath">
 		<annotation>
-			<documentation>Type definition for simple paths, i.e. those that are
-				directly implemented
-				by a Java class
+			<documentation>
+				Type definition for simple paths, i.e. those that are
+				directly implemented by a Java class.
 			</documentation>
 		</annotation>
 		<complexContent>
@@ -67,13 +162,14 @@
 
 	<complexType name="multiPath">
 		<annotation>
-			<documentation>Multipaths, i.e. chains of simple paths
+			<documentation>Multipaths, i.e. chains of simple path invocations
+				called "steps"
 			</documentation>
 		</annotation>
 		<complexContent>
 			<extension base="tns:path">
 				<sequence>
-					<element name="path" type="tns:simplePath" maxOccurs="unbounded"></element>
+					<element name="step" type="tns:simplePath" maxOccurs="unbounded"></element>
 				</sequence>
 			</extension>
 		</complexContent>
@@ -107,6 +203,20 @@
 		<choice>
 			<element name="path" type="tns:simplePath" />
 			<element name="multipath" type="tns:multiPath" />
+		</choice>
+	</group>
+
+	<group name="ioDefChoice">
+		<choice>
+			<element name="iosingle" type="tns:iosingle" />
+			<element name="iorecord" type="tns:iorecord" />
+		</choice>
+	</group>
+
+	<group name="ioRefChoice">
+		<choice>
+			<element name="iosingle" type="tns:iosingleref" /> <!-- TODO: Hier soll tatsächlich referenziert werden! -->
+			<element name="iorecord" type="tns:iorecordref" /> <!-- TODO: Hier soll tatsächlich referenziert werden! -->
 		</choice>
 	</group>
 </schema>

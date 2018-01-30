@@ -1,8 +1,7 @@
 package de.mainzelliste.paths.evaluator;
 
 import java.util.Arrays;
-
-import de.mainzelliste.paths.processorio.AbstractProcessorIo;
+import java.util.Map;
 
 /**
  * Simple example of an evaluator. Checks if a string contains only lower case
@@ -16,7 +15,7 @@ public class UpperLowerEvaluator extends AbstractEvaluator {
 	}
 
 	@Override
-	public String evaluate(AbstractProcessorIo io) {
+	public String evaluate(Map<String, Object> io) {
 		String input = io.get(0).toString();
 		if (input.equals(input.toUpperCase()))
 			return "upper";
