@@ -105,21 +105,7 @@
 		</annotation>
 		<sequence>
 			<element name="name" type="string"></element>
-			<element name="parameters" minOccurs="0">
-				<complexType>
-					<sequence>
-						<element name="parameter" minOccurs="0" maxOccurs="unbounded">
-							<complexType>
-								<simpleContent>
-									<extension base="string">
-										<attribute name="name" type="token"></attribute>
-									</extension>
-								</simpleContent>
-							</complexType>
-						</element>
-					</sequence>
-				</complexType>
-			</element>
+			<element name="parameters" minOccurs="0" type="tns:parameters"/>
 			<element name="input">
 				<complexType>
 					<sequence maxOccurs="unbounded">
@@ -177,12 +163,20 @@
 
 	<complexType name="switch">
 		<sequence>
+			<element name="evaluator">
+				<complexType>
+					<sequence>
+						<element name="parameters" type="tns:parameters" minOccurs="0"/>
+					</sequence>
+					<attribute name="name" type="string" use="required"/>
+				</complexType>
+			</element>
 			<element name="case" maxOccurs="unbounded" type="tns:guardedCaseType">
 			</element>
 			<element name="default" minOccurs="0" maxOccurs="1"
 				type="tns:defaultCaseType" />
 		</sequence>
-		<attribute name="evaluator" type="string" use="required"></attribute>
+
 	</complexType>
 
 	<complexType name="defaultCaseType">
@@ -197,6 +191,20 @@
 				<attribute name="value" type="string" use="required" />
 			</extension>
 		</complexContent>
+	</complexType>
+
+	<complexType name="parameters">
+		<sequence>
+			<element name="parameter" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<simpleContent>
+						<extension base="string">
+							<attribute name="name" type="token"></attribute>
+						</extension>
+					</simpleContent>
+				</complexType>
+			</element>
+		</sequence>
 	</complexType>
 
 	<group name="pathChoice">

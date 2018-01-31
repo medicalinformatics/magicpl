@@ -18,7 +18,8 @@
                 <iosingle/>
                 <iorecord/>
             </output>
-            <switch evaluator="IsConsentedEvaluator">
+            <switch>
+                <evaluator name="IsConsentedEvaluator"/>
                 <case value="true">
                     <!--
                        * Schritte 2,5,6,8 GRÜN in DSK

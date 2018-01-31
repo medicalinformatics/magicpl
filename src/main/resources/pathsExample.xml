@@ -39,7 +39,8 @@
 			<output>
 				<iorecord />
 			</output>
-			<switch evaluator="de.mainzelliste.paths.evaluator.IsConsentedEvaluator">
+			<switch>
+				<evaluator name="de.mainzelliste.paths.evaluator.IsConsentedEvaluator"/>
 				<case value="true">
 					<path>
 						<name>consentTrue</name>

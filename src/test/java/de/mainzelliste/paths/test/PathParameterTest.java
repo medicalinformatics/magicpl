@@ -9,7 +9,7 @@ import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 
 import de.mainzelliste.paths.configuration.*;
-import de.mainzelliste.paths.configuration.Path.Parameters.Parameter;
+import de.mainzelliste.paths.configuration.Parameters.Parameter;
 import de.samply.config.util.JAXBUtil;
 
 /** Test for reading path parameters from configuration file. Needs

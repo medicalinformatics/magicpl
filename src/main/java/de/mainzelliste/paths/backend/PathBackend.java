@@ -145,7 +145,7 @@ public class PathBackend {
 						.newInstance(pathDefinition);
 			} else if (simplePathDefinition.getSwitch() != null) {
 				Switch switchDefinition = simplePathDefinition.getSwitch();
-				AbstractEvaluator thisEvaluator = (AbstractEvaluator) Class.forName(switchDefinition.getEvaluator())
+				AbstractEvaluator thisEvaluator = (AbstractEvaluator) Class.forName(switchDefinition.getEvaluator().getName())
 						.newInstance();
 				SwitchProcessor switchProcessor = new SwitchProcessor(simplePathDefinition, thisEvaluator);
 				for (GuardedCaseType caseDefinition : switchDefinition.getCase()) {

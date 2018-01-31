@@ -6,7 +6,7 @@ import java.util.function.Function;
 
 import de.mainzelliste.paths.configuration.ParameterMap;
 import de.mainzelliste.paths.configuration.Path;
-import de.mainzelliste.paths.configuration.Path.Parameters.Parameter;
+import de.mainzelliste.paths.configuration.Parameters.Parameter;
 
 /**
  * Base class for processor implementations.

@@ -1,6 +1,7 @@
 package de.mainzelliste.paths.processor;
 
 import de.mainzelliste.paths.configuration.Path;
+import de.mainzelliste.paths.configuration.Parameters;
 import de.pseudonymisierung.controlnumbers.ControlNumber;
 import de.pseudonymisierung.controlnumbers.ControlNumberGenerator;
 import de.pseudonymisierung.controlnumbers.EncryptedControlNumberGenerator;
@@ -20,7 +21,7 @@ public class CNGeneratorProcessor extends AbstractProcessor {
                                                + ". Please check your path config.");
         }
 
-        Path.Parameters.Parameter parameter = configuration.getParameters().getParameter().get(0);
+        Parameters.Parameter parameter = configuration.getParameters().getParameter().get(0);
 
         if(! passphrase.equals(parameter.getName())){
             throw new IllegalArgumentException("Paratername is wrong. It should be " + passphrase

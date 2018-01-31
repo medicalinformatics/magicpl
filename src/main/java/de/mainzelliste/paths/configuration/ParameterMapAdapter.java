@@ -5,8 +5,8 @@ import java.util.Map.Entry;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-import de.mainzelliste.paths.configuration.Path.Parameters;
-import de.mainzelliste.paths.configuration.Path.Parameters.Parameter;
+import de.mainzelliste.paths.configuration.Parameters;
+import de.mainzelliste.paths.configuration.Parameters.Parameter;
 
 public class ParameterMapAdapter extends XmlAdapter<Parameters, ParameterMap> {
 
