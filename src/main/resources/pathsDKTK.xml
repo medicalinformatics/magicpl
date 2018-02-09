@@ -9,7 +9,7 @@
         -->
         <path>
             <name>getId</name>
-            <parameters></parameters>
+            <parameters/>
             <input>
                 <iorecord ref="IDAT" />
                 <iosingle ref="Einwilligungsstatus" />
@@ -28,7 +28,7 @@
                     -->
                     <multipath>
                         <name>getDKTKId</name>
-                        <parameters></parameters>
+                        <parameters/>
                         <input>
                             <iorecord ref="IDAT" />
                             <iosingle ref="Einwilligungsstatus" />
@@ -56,7 +56,7 @@
                              * Zuständige Komponente: Mainzelliste (RL)
                             -->
                             <name>getDKTKId</name>
-                            <parameters></parameters>
+                            <parameters/>
                             <input>
                                 <iosingle ref="KNTKT#ID" />
                             </input>
@@ -75,7 +75,7 @@
                     -->
                     <multipath>
                         <name>getDKTKId</name>
-                        <parameters></parameters>
+                        <parameters/>
                         <input>
                             <iorecord ref="IDAT"/>
                             <iosingle ref="Einwilligungsstatus"/>
@@ -103,14 +103,14 @@
                              * Zuständige Komponente: Mainzelliste (RL)
                             -->
                             <name>getDKTKId</name>
-                            <parameters></parameters>
+                            <parameters/>
                             <input>
                                 <iosingle ref="KN"/>
                             </input>
                             <output>
                                 <iosingle ref="KNTKT#ID"/>
                             </output>
-                            <implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
+                            <implementation>de.mainzelliste.paths.processor.MainzellisteKNTicketClient</implementation>
                         </step>
                         <step>
                             <!-- /paths/generateId
@@ -118,7 +118,7 @@
                              * Zuständige Komponente: Mainzelliste (RL)
                             -->
                             <name>getDKTKId</name>
-                            <parameters></parameters>
+                            <parameters/>
                             <input>
                                 <iosingle ref="KNTKT#ID"/>
                             </input>
