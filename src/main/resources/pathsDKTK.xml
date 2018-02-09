@@ -46,7 +46,7 @@
                                 <iorecord ref="IDAT" />
                             </input>
                             <output>
-                                <iosingle ref="KNTKT" />
+                                <iosingle ref="KNTKT#ID" />
                             </output>
                             <implementation>de.mainzelliste.paths.processor.CngClient</implementation>
                         </step>
@@ -58,7 +58,7 @@
                             <name>getDKTKId</name>
                             <parameters></parameters>
                             <input>
-                                <iosingle ref="KNTKT" />
+                                <iosingle ref="KNTKT#ID" />
                             </input>
                             <output>
                                 <iosingle ref="DKTK#ID" />
@@ -67,9 +67,68 @@
                         </step>
                     </multipath>
                 </case>
-<!--                <default>
-                      * TODO: Hier die Schritte für nicht eingewilligt (ROT) ergänzen.
-                </default>-->
+                <case value="false">
+                    <!--
+                       * Schritte 2,5,6,8 GRÜN in DSK
+                       * Teilpfade: /paths/getKNTKT
+                       *            /paths/getDKTKId
+                    -->
+                    <multipath>
+                        <name>getDKTKId</name>
+                        <parameters></parameters>
+                        <input>
+                            <iorecord ref="IDAT"/>
+                            <iosingle ref="Einwilligungsstatus"/>
+                        </input>
+                        <output>
+                            <iosingle ref="DKTK#ID"/>
+                        </output>
+                        <step>
+                            <!-- /paths/getKNTKT
+                             * Schritt 2,5 GRÜN in DSK
+                             * Zuständige Komponente: Zentraler KNE
+                            -->
+                            <name>getKNTKT</name>
+                            <input>
+                                <iorecord ref="IDAT"/>
+                            </input>
+                            <output>
+                                <iosingle ref="KN"/>
+                            </output>
+                            <implementation>de.mainzelliste.paths.processor.CngProcessor</implementation>
+                        </step>
+                        <step>
+                            <!-- /paths/generateId
+                             * Schritte 6,8 GRÜN in DSK
+                             * Zuständige Komponente: Mainzelliste (RL)
+                            -->
+                            <name>getDKTKId</name>
+                            <parameters></parameters>
+                            <input>
+                                <iosingle ref="KN"/>
+                            </input>
+                            <output>
+                                <iosingle ref="KNTKT#ID"/>
+                            </output>
+                            <implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
+                        </step>
+                        <step>
+                            <!-- /paths/generateId
+                             * Schritte 6,8 GRÜN in DSK
+                             * Zuständige Komponente: Mainzelliste (RL)
+                            -->
+                            <name>getDKTKId</name>
+                            <parameters></parameters>
+                            <input>
+                                <iosingle ref="KNTKT#ID"/>
+                            </input>
+                            <output>
+                                <iosingle ref="DKTK#ID"/>
+                            </output>
+                            <implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
+                        </step>
+                    </multipath>
+                </case>
             </switch>
         </path>
     </paths>
