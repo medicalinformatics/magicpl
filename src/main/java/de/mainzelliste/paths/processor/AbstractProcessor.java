@@ -58,6 +58,6 @@ public abstract class AbstractProcessor implements Function<Map<String, Object>,
 	 *         unmodifiable map.
 	 */
 	public ParameterMap getParameters() {
-		return (ParameterMap) Collections.unmodifiableMap(parameters);
+		return parameters;
 	}
 }

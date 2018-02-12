@@ -74,38 +74,44 @@
                        *            /paths/getDKTKId
                     -->
                     <multipath>
-                        <name>getDKTKId</name>
+                        <name>getLocalId</name>
                         <parameters/>
                         <input>
                             <iorecord ref="IDAT"/>
+                            <iosingle ref="IDType"/>
                             <iosingle ref="Einwilligungsstatus"/>
                         </input>
                         <output>
-                            <iosingle ref="DKTK#ID"/>
+                            <iosingle ref="S#ID"/>
                         </output>
                         <step>
                             <!-- /paths/getKNTKT
                              * Schritt 2,5 GRÜN in DSK
                              * Zuständige Komponente: Zentraler KNE
                             -->
-                            <name>getKNTKT</name>
+                            <name>getKN</name>
                             <input>
                                 <iorecord ref="IDAT"/>
+                                <!--<iosingle ref="IDType"/>-->
                             </input>
                             <output>
                                 <iosingle ref="KN"/>
                             </output>
-                            <implementation>de.mainzelliste.paths.processor.CngProcessor</implementation>
+                            <implementation>de.mainzelliste.paths.processor.CNGeneratorProcessor</implementation>
                         </step>
                         <step>
                             <!-- /paths/generateId
                              * Schritte 6,8 GRÜN in DSK
                              * Zuständige Komponente: Mainzelliste (RL)
                             -->
-                            <name>getDKTKId</name>
-                            <parameters/>
+                            <name>getKNTKT</name>
+                            <parameters>
+                                <parameter name="mainzellisteURL">localhost:8084/mainzelliste-dktk</parameter>
+                                <parameter name="mainzellisteApiKey">89708d51eda036b346a9ed46cd190a80</parameter>
+                            </parameters>
                             <input>
                                 <iosingle ref="KN"/>
+                                <iosingle ref="IDType"/>
                             </input>
                             <output>
                                 <iosingle ref="KNTKT#ID"/>
@@ -140,6 +146,7 @@
             <iosingle name="geburtsdatum"/>
         </iorecord>
         <iosingle name="Einwilligungsstatus" type="boolean"/>
+        <iosingle name="IDType"/>
         <iosingle name="DKTK#ID"/>
         <iosingle name="KNTKT" />
     </iodefinitions>

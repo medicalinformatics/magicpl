@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pathconfig xmlns="http://www.example.org/Pfade" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.example.org/Pfade paths.xsd ">
+
+    <paths>
+
+        <multipath>
+            <name>getLocalId</name>
+            <parameters/>
+            <input>
+                <iorecord ref="IDAT"/>
+            </input>
+            <output>
+                <iosingle ref="ControlNumbers"/>
+            </output>
+            <step>
+                <name>getCN</name>
+                <parameters>
+                    <parameter name="passphrase">"alrfigkja"</parameter>
+                </parameters>
+                <input>
+                    <iorecord ref="IDAT"/>
+                </input>
+                <output>
+                    <iorecord ref="ControlNumbers"/>
+                </output>
+                <implementation>CNGeneratorProcessor</implementation>
+            </step>
+            <!--<step>-->
+                <!--&lt;!&ndash; /paths/generateId-->
+                 <!--* Schritte 6,8 GRÜN in DSK-->
+                 <!--* Zuständige Komponente: Mainzelliste (RL)-->
+                <!--&ndash;&gt;-->
+                <!--<name>getKNTKT</name>-->
+                <!--<parameters/>-->
+                <!--<input>-->
+                    <!--<iosingle ref="KN"/>-->
+                    <!--<iosingle ref="IDType"/>-->
+                <!--</input>-->
+                <!--<output>-->
+                    <!--<iosingle ref="KNTKT#ID"/>-->
+                <!--</output>-->
+                <!--<implementation>de.mainzelliste.paths.processor.MainzellisteKNTicketClient</implementation>-->
+            <!--</step>-->
+            <!--<step>-->
+                <!--&lt;!&ndash; /paths/generateId-->
+                 <!--* Schritte 6,8 GRÜN in DSK-->
+                 <!--* Zuständige Komponente: Mainzelliste (RL)-->
+                <!--&ndash;&gt;-->
+                <!--<name>getDKTKId</name>-->
+                <!--<parameters/>-->
+                <!--<input>-->
+                    <!--<iosingle ref="KNTKT#ID"/>-->
+                <!--</input>-->
+                <!--<output>-->
+                    <!--<iosingle ref="DKTK#ID"/>-->
+                <!--</output>-->
+                <!--<implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>-->
+            <!--</step>-->
+        </multipath>
+
+    </paths>
+
+    <iodefinitions>
+        <iorecord name="IDAT">
+            <iosingle name="vorname"/>
+            <iosingle name="nachname"/>
+            <iosingle name="geburtsdatum"/>
+        </iorecord>
+        <iorecord name="ControlNumbers">
+            <iosingle name="vorname" type="ControlNumber"/>
+            <iosingle name="nachname" type="ControlNumber"/>
+            <iosingle name="geburtsdatum" type="ControlNumber"/>
+        </iorecord>
+    </iodefinitions>
+
+</pathconfig>

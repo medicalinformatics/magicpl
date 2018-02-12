@@ -114,6 +114,12 @@
 			<version>1.1.0</version>
 		</dependency>
 		<dependency>
+			<groupId>com.sun.jersey.jersey-test-framework</groupId>
+			<artifactId>jersey-test-framework-grizzly2</artifactId>
+			<version>1.17.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.glassfish.jersey.containers</groupId>
 			<artifactId>jersey-container-servlet-core</artifactId>
 			<!-- use the following artifactId if you don't need servlet 2.x compatibility -->
@@ -131,6 +137,11 @@
 			<artifactId>testng</artifactId>
 			<version>6.10</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>de.samply</groupId>
+			<artifactId>common-http</artifactId>
+			<version>3.0.0</version>
 		</dependency>
 	</dependencies>
 	<properties>
