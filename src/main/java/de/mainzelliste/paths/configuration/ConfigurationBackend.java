@@ -1,21 +1,29 @@
 package de.mainzelliste.paths.configuration;
 
+import de.samply.common.config.Configuration;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class for convenient access to path configurations.
+ * Class for convenient access to path and proxy configurations.
  */
 public class ConfigurationBackend {
 
 	private Pathconfig configuration;
+	private Configuration proxy;
 	
 	private HashMap<String, Iosingle> singleInputDefinitions = new HashMap<>();
 	private HashMap<String, Iorecord> recordInputDefinitions = new HashMap<>();
 	private HashMap<String, HashMap<String, Iosingle>> singleInputsByPath = new HashMap<>();
-	
-	public ConfigurationBackend(Pathconfig configuration) {
+
+	public Configuration getProxy() {
+		return proxy;
+	}
+
+	public ConfigurationBackend(Pathconfig configuration, Configuration proxy) {
 		this.configuration = configuration;
+		this.proxy = proxy;
 		for (Ioabstracttype ioDef : configuration.iodefinitions.iosingleOrIorecord) {
 			if (ioDef instanceof Iosingle) {
 				singleInputDefinitions.put(ioDef.getName(), (Iosingle) ioDef);

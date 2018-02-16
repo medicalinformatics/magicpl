@@ -7,6 +7,8 @@ import javax.xml.bind.JAXBContext;
 
 import de.mainzelliste.paths.configuration.ConfigurationBackend;
 import de.mainzelliste.paths.configuration.Pathconfig;
+import de.samply.common.config.Configuration;
+import de.samply.common.config.ObjectFactory;
 import de.samply.config.util.JAXBUtil;
 
 public enum Controller {
@@ -27,13 +29,16 @@ public enum Controller {
 				// "mainzelliste.paths", new File(".").getAbsolutePath());
 				// Zu Testzwecken kommt die Datei direkt aus der Applikation:
 			InputStream configStream = getClass().getClassLoader().getResourceAsStream("testMultipathConfig.xml");
-			
+			InputStream proxyStream = getClass().getClassLoader().getResourceAsStream("proxy.xml");
 			// XML wird in Java-Objekt gelesen -> einfacher Zugriff auf die
 			// Konfiguration
 			Pathconfig configuration = JAXBUtil.unmarshall(configStream,
 					JAXBContext.newInstance(de.mainzelliste.paths.configuration.ObjectFactory.class), Pathconfig.class);
 			this.pathBackend = new PathBackend(configuration);
-			this.configurationBackend = new ConfigurationBackend(configuration);
+
+			Configuration proxy = JAXBUtil.unmarshall(proxyStream, JAXBContext.newInstance(ObjectFactory.class),
+			                                         Configuration.class);
+			this.configurationBackend = new ConfigurationBackend(configuration, proxy);
 		} catch (Exception e) {
 			throw new WebApplicationException(e);
 		}

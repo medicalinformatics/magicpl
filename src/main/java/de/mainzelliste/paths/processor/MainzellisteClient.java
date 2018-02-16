@@ -6,9 +6,12 @@ import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 import de.mainzelliste.paths.adapters.Adapter;
 import de.mainzelliste.paths.adapters.AdapterFactory;
+import de.mainzelliste.paths.backend.Controller;
+import de.mainzelliste.paths.configuration.ConfigurationBackend;
 import de.mainzelliste.paths.configuration.Path;
 import de.pseudonymisierung.mainzelliste.client.*;
 import de.samply.common.http.HttpConnector;
+import de.samply.common.http.HttpConnectorException;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -39,12 +42,15 @@ public class MainzellisteClient extends AbstractProcessor {
         String mainzellisteApiKey = this.getParameters().get("mainzellisteApiKey").getValue();
 
         try {
-            HttpConnector httpConnector = new HttpConnector();
+            HttpConnector httpConnector = new HttpConnector(Controller.instance.getConfigurationBackend().getProxy());
             mainzellisteConnection = new MainzellisteConnection(mainzellisteUrl.toString(), mainzellisteApiKey, httpConnector.getHttpClient(mainzellisteUrl));
             webClient = httpConnector.getJerseyClientForHTTPS();
         } catch (URISyntaxException e) {
 //            logger.fatal("Invalid URI for Mainzelliste connection: " + mainzellisteUrl);
             throw new Error("Invalid URI for Mainzelliste connection: " + mainzellisteUrl);
+        } catch (HttpConnectorException e) {
+            e.printStackTrace();
+            throw new Error("Cannot connect to Mainzelliste");
         }
     }
 
