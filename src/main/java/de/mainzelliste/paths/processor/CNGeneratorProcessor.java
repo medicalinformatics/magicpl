@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CNGeneratorProcessor extends AbstractProcessor {
-    private ControlNumberGenerator controlNumberGenerator;
+    private EncryptedControlNumberGenerator controlNumberGenerator;
 
     public CNGeneratorProcessor(Path configuration) {
         super(configuration);
@@ -33,14 +33,21 @@ public class CNGeneratorProcessor extends AbstractProcessor {
 
     @Override
     public Map<String, Object> apply(Map<String, Object> input) {
-        HashMap<String, ControlNumber> output = new HashMap<>();
+        HashMap<String, Object> output = new HashMap<>();
 
 
         for (Map.Entry<String, Object> entry : input.entrySet()) {
             if (entry.getValue() == null) {
                 output.put(entry.getKey(), null);
             } else {
-                output.put(entry.getKey(), controlNumberGenerator.apply(entry.getValue().toString()));
+                if (entry.getKey().equals("locallyUniqueId")) {
+                    output.put("locallyUniqueIdEnc", controlNumberGenerator.encrypt(entry.getValue().toString()));
+                }else if (entry.getKey().equals("IDType")) {
+                    output.put(entry.getKey(), entry.getValue());
+                } else
+                {
+                    output.put(entry.getKey() + "CN", controlNumberGenerator.apply(entry.getValue().toString()));
+                }
             }
         }
 

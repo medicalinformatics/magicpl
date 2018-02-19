@@ -10,6 +10,7 @@ import de.mainzelliste.paths.backend.Controller;
 import de.mainzelliste.paths.configuration.ConfigurationBackend;
 import de.mainzelliste.paths.configuration.Path;
 import de.pseudonymisierung.mainzelliste.client.*;
+import de.samply.common.config.Configuration;
 import de.samply.common.http.HttpConnector;
 import de.samply.common.http.HttpConnectorException;
 import org.codehaus.jettison.json.JSONException;
@@ -42,15 +43,17 @@ public class MainzellisteClient extends AbstractProcessor {
         String mainzellisteApiKey = this.getParameters().get("mainzellisteApiKey").getValue();
 
         try {
-            HttpConnector httpConnector = new HttpConnector(Controller.instance.getConfigurationBackend().getProxy());
+            // TODO: Proxy hinzufügen
+//            HttpConnector httpConnector = new HttpConnector(proxy);
+            HttpConnector httpConnector = new HttpConnector();
             mainzellisteConnection = new MainzellisteConnection(mainzellisteUrl.toString(), mainzellisteApiKey, httpConnector.getHttpClient(mainzellisteUrl));
             webClient = httpConnector.getJerseyClientForHTTPS();
         } catch (URISyntaxException e) {
 //            logger.fatal("Invalid URI for Mainzelliste connection: " + mainzellisteUrl);
             throw new Error("Invalid URI for Mainzelliste connection: " + mainzellisteUrl);
-        } catch (HttpConnectorException e) {
-            e.printStackTrace();
-            throw new Error("Cannot connect to Mainzelliste");
+//        } catch (HttpConnectorException e) {
+//            e.printStackTrace();
+//            throw new Error("Cannot connect to Mainzelliste");
         }
     }
 
@@ -87,7 +90,9 @@ public class MainzellisteClient extends AbstractProcessor {
                 List<Map<String, Object>> responseList = response.getEntity(new GenericType<List<Map<String, Object>>>() {});
                 Map<String, Object> responseMap = responseList.get(0);
                 String id = responseMap.get("idString").toString();
-                output.put("S#ID", id);
+                String idType = responseMap.get("idType").toString();
+                output.put("idType", idType);
+                output.put("idString", id);
                 return output;
 
 //                for (Map<String, Object> thisId : responseList) {

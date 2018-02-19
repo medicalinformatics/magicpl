@@ -61,11 +61,16 @@ public class MainzellisteKNTicketClient extends AbstractProcessor {
                     token.addField("study", controlNumberType);
                     // Add ID Type to token
                     token.addIdType(fieldValue);
-                } else {
+                    // TODO: Schönere Lösung
+                } else if(fieldName.equals("locallyUniqueIdEnc")) {
+                    token.addField("locallyUniqueId", fieldValue);
+                } else
+                {
                     JSONObject thisControlNumber = new JSONObject();
-                    thisControlNumber.put("keyId", fieldName);
+                    // TODO: Schönere Lösung für Feldnamen
+                    thisControlNumber.put("keyId", fieldName.substring(0, fieldName.length()-2));
                     thisControlNumber.put("value", fieldValue);
-                    token.addField(fieldName, thisControlNumber.toString());
+                    token.addField(fieldName.substring(0, fieldName.length()-2), thisControlNumber.toString());
                 }
             }
 

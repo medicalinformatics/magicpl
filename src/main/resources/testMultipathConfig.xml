@@ -9,9 +9,11 @@
             <parameters/>
             <input>
                 <iorecord ref="IDAT"/>
+                <iosingle ref="locallyUniqueId"/>
+                <iosingle ref="IDType"/>
             </input>
             <output>
-                <iosingle ref="ControlNumbers"/>
+                <iorecord ref="S#ID"/>
             </output>
             <step>
                 <name>getCN</name>
@@ -20,9 +22,11 @@
                 </parameters>
                 <input>
                     <iorecord ref="IDAT"/>
+                    <iosingle ref="locallyUniqueId"/>
                 </input>
                 <output>
-                    <iorecord ref="ControlNumbers"/>
+                    <iorecord ref="KN"/>
+                    <iosingle ref="locallyUniqueIdEnc"/>
                 </output>
                 <implementation>de.mainzelliste.paths.processor.CNGeneratorProcessor</implementation>
             </step>
@@ -38,6 +42,7 @@
                 </parameters>
                 <input>
                     <iorecord ref="KN"/>
+                    <iosingle ref="locallyUniqueIdEnc"/>
                     <iosingle ref="IDType"/>
                 </input>
                 <output>
@@ -59,7 +64,7 @@
                     <iosingle ref="KNTKT"/>
                 </input>
                 <output>
-                    <iosingle ref="S#ID"/>
+                    <iorecord ref="S#ID"/>
                 </output>
                 <implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
             </step>
@@ -90,8 +95,13 @@
         </iorecord>
         <iosingle name="IDType"/>
         <iosingle name="DKTK#ID"/>
-        <iosingle name="S#ID"/>
+        <iorecord name="S#ID">
+            <iosingle name="idType"/>
+            <iosingle name="idString"/>
+        </iorecord>
         <iosingle name="KNTKT" />
+        <iosingle name="locallyUniqueId" />
+        <iosingle name="locallyUniqueIdEnc" />
     </iodefinitions>
 
 </pathconfig>
