@@ -3,6 +3,7 @@ package de.mainzelliste.paths.configuration;
 import de.samply.common.config.Configuration;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 /**
@@ -15,7 +16,7 @@ public class ConfigurationBackend {
 	
 	private HashMap<String, Iosingle> singleInputDefinitions = new HashMap<>();
 	private HashMap<String, Iorecord> recordInputDefinitions = new HashMap<>();
-	private HashMap<String, HashMap<String, Iosingle>> singleInputsByPath = new HashMap<>();
+	private HashMap<String, Map<String, Iosingle>> singleInputsByPath = new HashMap<>();
 
 	public Configuration getProxy() {
 		return proxy;
@@ -33,22 +34,43 @@ public class ConfigurationBackend {
 		}
 		
 		for (Path thisPath : this.configuration.getPaths().getPathOrMultipath()) {
-			HashMap<String, Iosingle> thisPathSingleInputs = new HashMap<>();
-			for (Ioabstractref thisIoRef : thisPath.getInput().getIosingleOrIorecord()) {
-				if (thisIoRef instanceof Iosingleref) {
-					thisPathSingleInputs.put(thisIoRef.getRef(), singleInputDefinitions.get(thisIoRef.getRef()));
-				} else if (thisIoRef instanceof Iorecordref) {
-					for (Iosingle thisIoSingle : recordInputDefinitions.get(thisIoRef.getRef()).getIosingle()) {
-						thisPathSingleInputs.put(thisIoSingle.getName(), thisIoSingle);
-					}
-				}
-			}
-			singleInputsByPath.put(thisPath.getName(), thisPathSingleInputs);
+			initPathInputs(thisPath);
 		}
 	}
 	
 	public Map<String, Iosingle> getPathInputs(String pathName) {
 		return singleInputsByPath.get(pathName);
 		
+	}
+	
+	private void initPathInputs(Path pathConfig) {
+		singleInputsByPath.put(pathConfig.getName(), getPathInputs(pathConfig));
+		if (pathConfig instanceof SimplePath) {
+			Switch switchConfig = ((SimplePath) pathConfig).getSwitch();
+			if (switchConfig != null) {
+				LinkedList<DefaultCaseType> allCases = new LinkedList<>(switchConfig.getCase());
+				allCases.add(switchConfig.getDefault());
+				for (DefaultCaseType thisCase : allCases) {
+					if (thisCase.getPath() != null)
+						initPathInputs(thisCase.getPath());
+					if (thisCase.getMultipath() != null)
+						initPathInputs(thisCase.getMultipath());
+				}
+			}
+		}
+	}
+	
+	private Map<String, Iosingle> getPathInputs(Path pathConfig) {
+		HashMap<String, Iosingle> thisPathSingleInputs = new HashMap<>();
+		for (Ioabstractref thisIoRef : pathConfig.getInput().getIosingleOrIorecord()) {
+			if (thisIoRef instanceof Iosingleref) {
+				thisPathSingleInputs.put(thisIoRef.getRef(), singleInputDefinitions.get(thisIoRef.getRef()));
+			} else if (thisIoRef instanceof Iorecordref) {
+				for (Iosingle thisIoSingle : recordInputDefinitions.get(thisIoRef.getRef()).getIosingle()) {
+					thisPathSingleInputs.put(thisIoSingle.getName(), thisIoSingle);
+				}
+			}
+		}
+		return thisPathSingleInputs;
 	}
 }
