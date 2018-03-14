@@ -17,7 +17,7 @@ public class LowerCase extends AbstractProcessor {
 	}
 
 	@Override
-	public Map<String, Object> apply(Map<String, Object> input) {
+	public Map<String, Object> process(Map<String, Object> input) {
 		HashMap<String, Object> output = new HashMap<>();
 		for (Entry<String, Object> entry : input.entrySet()) {
 			Object thisValue = entry.getValue();

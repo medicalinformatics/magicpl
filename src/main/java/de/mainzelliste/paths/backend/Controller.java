@@ -11,15 +11,13 @@ import de.samply.common.config.Configuration;
 import de.samply.common.config.ObjectFactory;
 import de.samply.config.util.JAXBUtil;
 
-public enum Controller {
+public class Controller {
 
-	instance;
-
-	private PathBackend pathBackend;
-	private ConfigurationBackend configurationBackend;
+	public static final PathBackend pathBackend;
+	public static final ConfigurationBackend configurationBackend;
 
 	// Initialize Application
-	private Controller() {
+	static {
 		// read configuration
 		try { // TODO Fehler speichern, Applikation starten und bei Zugriffen
 				// Fehlermeldung ausgeben (z.B. per Filter?)
@@ -28,27 +26,26 @@ public enum Controller {
 				// File file = FileFinderUtil.findFile("pathsExample.xml",
 				// "mainzelliste.paths", new File(".").getAbsolutePath());
 				// Zu Testzwecken kommt die Datei direkt aus der Applikation:
-			InputStream configStream = getClass().getClassLoader().getResourceAsStream("pathsDKTK.xml");
-			InputStream proxyStream = getClass().getClassLoader().getResourceAsStream("proxy.xml");
+			InputStream configStream = Controller.class.getClassLoader().getResourceAsStream("pathsDKTK.xml");
+			InputStream proxyStream = Controller.class.getClassLoader().getResourceAsStream("proxy.xml");
 			// XML wird in Java-Objekt gelesen -> einfacher Zugriff auf die
 			// Konfiguration
 			Pathconfig configuration = JAXBUtil.unmarshall(configStream,
 					JAXBContext.newInstance(de.mainzelliste.paths.configuration.ObjectFactory.class), Pathconfig.class);
-			this.pathBackend = new PathBackend(configuration);
-
 			Configuration proxy = JAXBUtil.unmarshall(proxyStream, JAXBContext.newInstance(ObjectFactory.class),
 			                                         Configuration.class);
-			this.configurationBackend = new ConfigurationBackend(configuration, proxy);
+			configurationBackend = new ConfigurationBackend(configuration, proxy);
+			pathBackend = new PathBackend(configuration);
 		} catch (Exception e) {
 			throw new WebApplicationException(e);
 		}
 	}
 
-	public PathBackend getPathBackend() {
+	public static PathBackend getPathBackend() {
 		return pathBackend;
 	}
 	
-	public ConfigurationBackend getConfigurationBackend() {
+	public static ConfigurationBackend getConfigurationBackend() {
 		return configurationBackend;
 	}
 }

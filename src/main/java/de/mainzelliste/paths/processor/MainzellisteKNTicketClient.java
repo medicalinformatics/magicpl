@@ -45,7 +45,7 @@ public class MainzellisteKNTicketClient extends AbstractProcessor {
     }
 
     @Override
-    public Map<String, Object> apply(Map<String, Object> stringObjectMap) {
+    public Map<String, Object> process(Map<String, Object> stringObjectMap) {
         AddPatientToken token = new AddPatientToken();
 
         try {

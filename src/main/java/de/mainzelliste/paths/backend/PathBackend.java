@@ -124,7 +124,7 @@ public class PathBackend {
 	
 	public Map<String, Object> filterPathInput(String pathName, Map<String, Object> allInput) {
 		HashMap<String, Object> result = new HashMap<>(allInput);
-		result.keySet().retainAll(Controller.instance.getConfigurationBackend().getPathInputs(pathName).keySet());
+		result.keySet().retainAll(Controller.getConfigurationBackend().getPathInputs(pathName).keySet());
 		return result;
 	}
 	

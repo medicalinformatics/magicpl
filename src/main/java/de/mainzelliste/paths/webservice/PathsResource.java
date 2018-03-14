@@ -20,7 +20,7 @@ import de.mainzelliste.paths.processor.AbstractProcessor;
 @Path("/paths")
 public class PathsResource {
 
-	private PathBackend backend = Controller.instance.getPathBackend();
+	private PathBackend backend = Controller.getPathBackend();
 	private Gson gson = new Gson();
 	
 	
@@ -54,6 +54,6 @@ public class PathsResource {
 		 * etc. Möglichst nur die anzeigen, die der zugreifende Client auch
 		 * benutzen darf.
 		 */
-		return Response.ok(Controller.instance.getPathBackend().getPathNames().toString()).build();
+		return Response.ok(Controller.getPathBackend().getPathNames().toString()).build();
 	}
 }

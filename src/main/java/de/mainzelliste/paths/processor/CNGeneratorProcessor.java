@@ -32,8 +32,8 @@ public class CNGeneratorProcessor extends AbstractProcessor {
     }
 
     @Override
-    public Map<String, Object> apply(Map<String, Object> input) {
-        HashMap<String, Object> output = new HashMap<>();
+    public Map<String, Object> process(Map<String, Object> input) {
+      HashMap<String, Object> output = new HashMap<>();
 
 
         for (Map.Entry<String, Object> entry : input.entrySet()) {

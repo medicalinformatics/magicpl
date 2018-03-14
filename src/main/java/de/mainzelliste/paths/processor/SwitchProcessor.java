@@ -55,7 +55,7 @@ public class SwitchProcessor extends AbstractProcessor {
 	}
 
 	@Override
-	public Map<String, Object> apply(Map<String, Object> t) {
+	public Map<String, Object> process(Map<String, Object> t) {
 		String value = evaluator.evaluate(t);
 		AbstractProcessor processor = processors.get(value);
 		if (processor == null) {

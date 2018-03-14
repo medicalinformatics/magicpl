@@ -4,6 +4,7 @@ import de.samply.common.config.Configuration;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -57,6 +58,11 @@ public class ConfigurationBackend {
 						initPathInputs(thisCase.getMultipath());
 				}
 			}
+		} else if (pathConfig instanceof MultiPath) {
+			MultiPath multiPathConfig = (MultiPath) pathConfig;
+			for (SimplePath thisStep : multiPathConfig.getStep()) {
+				initPathInputs(thisStep);
+			}
 		}
 	}
 	
@@ -66,11 +72,18 @@ public class ConfigurationBackend {
 			if (thisIoRef instanceof Iosingleref) {
 				thisPathSingleInputs.put(thisIoRef.getRef(), singleInputDefinitions.get(thisIoRef.getRef()));
 			} else if (thisIoRef instanceof Iorecordref) {
-				for (Iosingle thisIoSingle : recordInputDefinitions.get(thisIoRef.getRef()).getIosingle()) {
+				String ioRecRef = thisIoRef.getRef();
+				Iorecord ioRec = recordInputDefinitions.get(ioRecRef);
+				List<Iosingle> ioSingles = ioRec.getIosingle();
+				for (Iosingle thisIoSingle : ioSingles) {
 					thisPathSingleInputs.put(thisIoSingle.getName(), thisIoSingle);
 				}
 			}
 		}
 		return thisPathSingleInputs;
+	}
+		
+	public Pathconfig getConfiguration() {
+		return this.configuration;
 	}
 }

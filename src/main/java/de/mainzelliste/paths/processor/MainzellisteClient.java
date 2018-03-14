@@ -59,7 +59,7 @@ public class MainzellisteClient extends AbstractProcessor {
     }
 
     @Override
-    public Map<String, Object> apply(Map<String, Object> stringObjectMap) {
+    public Map<String, Object> process(Map<String, Object> stringObjectMap) {
         Map<String, Object> output = new HashMap<>();
         String uriString = mainzellisteConnection.getMainzellisteURI() + "patients?tokenId=" + stringObjectMap.get("KNTKT");
 
