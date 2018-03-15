@@ -8,12 +8,12 @@
             <name>getLocalId</name>
             <parameters/>
             <input>
-                <iorecord ref="IDAT"/>
-                <iosingle ref="locallyUniqueId"/>
-                <iosingle ref="IDType"/>
+                <iorecord ref="IDAT" name="IDAT"/>
+                <iosingle ref="locallyUniqueId" name="localId"/>
+                <iosingle ref="IDType" name="IDType"/>
             </input>
             <output>
-                <iorecord ref="S#ID"/>
+                <iorecord ref="S#ID" name="S#ID"/>
             </output>
             <step>
                 <name>getCN</name>
@@ -21,12 +21,12 @@
                     <parameter name="passphrase">"alrfigkja"</parameter>
                 </parameters>
                 <input>
-                    <iorecord ref="IDAT"/>
-                    <iosingle ref="locallyUniqueId"/>
+                    <iorecord ref="IDAT" name="IDAT"/>
+                    <iosingle ref="locallyUniqueId" name="localId"/>
                 </input>
                 <output>
-                    <iorecord ref="KN"/>
-                    <iosingle ref="locallyUniqueIdEnc"/>
+                    <iorecord ref="KN" name="KN"/>
+                    <iosingle ref="locallyUniqueIdEnc" name="localIdEnc"/>
                 </output>
                 <implementation>de.mainzelliste.paths.processor.CNGeneratorProcessor</implementation>
             </step>
@@ -41,12 +41,12 @@
                     <parameter name="mainzellisteApiKey">89708d51eda036b346a9ed46cd190a80</parameter>
                 </parameters>
                 <input>
-                    <iorecord ref="KN"/>
-                    <iosingle ref="locallyUniqueIdEnc"/>
-                    <iosingle ref="IDType"/>
+                    <iorecord ref="KN" name="KN"/>
+                    <iosingle ref="locallyUniqueIdEnc" name="localId"/>
+                    <iosingle ref="IDType" name="IDType"/>
                 </input>
                 <output>
-                    <iosingle ref="KNTKT"/>
+                    <iosingle ref="KNTKT" name="KNTKT"/>
                 </output>
                 <implementation>de.mainzelliste.paths.processor.MainzellisteKNTicketClient</implementation>
             </step>
@@ -61,10 +61,10 @@
                     <parameter name="mainzellisteApiKey">89708d51eda036b346a9ed46cd190a80</parameter>
                 </parameters>
                 <input>
-                    <iosingle ref="KNTKT"/>
+                    <iosingle ref="KNTKT" name="KNTKT"/>
                 </input>
                 <output>
-                    <iorecord ref="S#ID"/>
+                    <iorecord ref="S#ID" name="S#ID"/>
                 </output>
                 <implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
             </step>

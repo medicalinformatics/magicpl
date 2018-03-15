@@ -84,6 +84,7 @@
 	</element>
 
 	<complexType name="ioabstractref" abstract="true">
+		<attribute name="name" type="string" />
 		<attribute name="ref" type="string" />
 	</complexType>
 
