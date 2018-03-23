@@ -16,7 +16,7 @@ public class EqualEvaluator extends AbstractEvaluator {
 
     @Override
     public String evaluate(Map<String, Object> io) {
-        String key = getConfig().getParameters().getParameter().get(0).toString();
+        String key = getConfig().getParameters().getParameter().get(0).getValue();
         return io.get(key).toString();
     }
 }

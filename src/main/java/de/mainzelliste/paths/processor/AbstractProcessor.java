@@ -35,7 +35,7 @@ public abstract class AbstractProcessor implements Function<Map<String, Object>,
 				parameters.put(thisParam.getName(), thisParam);
 			}
 		}
-		inputs = Controller.getConfigurationBackend().getPathInputs(pathName).keySet();;
+		inputs = Controller.getConfigurationBackend().getPathInputs(pathName).keySet();
 	}
 
 	/**
@@ -48,6 +48,7 @@ public abstract class AbstractProcessor implements Function<Map<String, Object>,
 	public final Map<String, Object> apply(Map<String, Object> t) {
 		HashMap<String, Object> filteredInput = new HashMap<>(t);
 		filteredInput.keySet().retainAll(this.inputs);
+
 		return process(filteredInput);
 	}
 

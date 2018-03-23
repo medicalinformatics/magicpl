@@ -1,11 +1,8 @@
 package de.mainzelliste.paths.processor;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import de.mainzelliste.paths.backend.Controller;
 import de.mainzelliste.paths.configuration.Path;
 import jersey.repackaged.com.google.common.collect.ImmutableMap;
 
@@ -30,6 +27,7 @@ public class MultiPathProcessor extends AbstractProcessor {
 			AbstractProcessor... steps) {
 		super(configuration);
 		this.steps = Arrays.asList(steps);
+		this.outputs = Controller.getConfigurationBackend().getPathOutputs(getPathName()).keySet();
 	}
 
 	/**
@@ -42,15 +40,19 @@ public class MultiPathProcessor extends AbstractProcessor {
 	public MultiPathProcessor(Path configuration) {
 		super(configuration);
 		this.steps = new LinkedList<>();
+		this.outputs = Controller.getConfigurationBackend().getPathOutputs(getPathName()).keySet();
 	}
+
+	private Set<String> outputs;
 
 	@Override
 	public Map<String, Object> process(Map<String, Object> t) {
-	Map<String, Object> result = new HashMap<String, Object>();
+	Map<String, Object> result = new HashMap<String, Object>(t);
 		for (AbstractProcessor thisProcessor : steps) {
-			result = thisProcessor.apply(result);
+			result.putAll(thisProcessor.apply(result));
 		}
 
+		result.keySet().retainAll(this.outputs);
 		return ImmutableMap.copyOf(result);
 	}
 
