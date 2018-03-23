@@ -5,7 +5,8 @@
 	<element name="pathconfig">
 		<complexType>
 			<sequence>
-				<element ref="tns:paths" />
+				<element ref="tns:paths">
+				</element>
 				<element ref="tns:iodefinitions" />
 			</sequence>
 		</complexType>
@@ -81,6 +82,17 @@
 				</choice>
 			</sequence>
 		</complexType>
+		<unique name="uniquePath">
+			<!-- Only //tns:path/tns:name is not sufficient, <path> elements nested 
+				in other <path> elements via <switch> would not be checked for uniqueness. -->
+			<selector
+				xpath=".//tns:path/tns:name | 
+			.//tns:multipath/tns:name | 
+			.//tns:switch/tns:case/tns:path/tns:name |
+			.//tns:switch/tns:default/tns:path/tns:name |
+			.//tns:step/tns:name" />
+			<field xpath="."></field>
+		</unique>
 	</element>
 
 	<complexType name="ioabstractref" abstract="true">
@@ -106,7 +118,7 @@
 		</annotation>
 		<sequence>
 			<element name="name" type="string"></element>
-			<element name="parameters" minOccurs="0" type="tns:parameters"/>
+			<element name="parameters" minOccurs="0" type="tns:parameters" />
 			<element name="input">
 				<complexType>
 					<sequence maxOccurs="unbounded">
@@ -167,9 +179,10 @@
 			<element name="evaluator">
 				<complexType>
 					<sequence>
-						<element name="parameters" type="tns:parameters" minOccurs="0"/>
+						<element name="parameters" type="tns:parameters"
+							minOccurs="0" />
 					</sequence>
-					<attribute name="name" type="string" use="required"/>
+					<attribute name="name" type="string" use="required" />
 				</complexType>
 			</element>
 			<element name="case" maxOccurs="unbounded" type="tns:guardedCaseType">
