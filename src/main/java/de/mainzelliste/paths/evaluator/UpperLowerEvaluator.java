@@ -1,5 +1,7 @@
 package de.mainzelliste.paths.evaluator;
 
+import de.mainzelliste.paths.configuration.Switch;
+
 import java.util.Arrays;
 import java.util.Map;
 
@@ -8,6 +10,9 @@ import java.util.Map;
  * characters ("lower"), only upper case characters ("upper") or both ("mixed").
  */
 public class UpperLowerEvaluator extends AbstractEvaluator {
+	public UpperLowerEvaluator(Switch.Evaluator config) {
+		super(config);
+	}
 
 	@Override
 	public boolean isValidResult(String result) {

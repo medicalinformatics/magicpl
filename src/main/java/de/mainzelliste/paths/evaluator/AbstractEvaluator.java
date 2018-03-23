@@ -1,5 +1,7 @@
 package de.mainzelliste.paths.evaluator;
 
+import de.mainzelliste.paths.configuration.Switch;
+
 import java.util.Map;
 
 /**
@@ -8,6 +10,17 @@ import java.util.Map;
  * in a switch-case XML.
  */
 public abstract class AbstractEvaluator {
+    private Switch.Evaluator config;
+
+    protected Switch.Evaluator getConfig() {
+        return config;
+    }
+
+    public AbstractEvaluator(Switch.Evaluator config) {
+
+        this.config = config;
+    }
+
     /**
      * Checks if the given string is a valid evaluation result of this Evaluator.
      *

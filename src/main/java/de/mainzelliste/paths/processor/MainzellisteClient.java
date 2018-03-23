@@ -16,6 +16,7 @@ import de.samply.common.http.HttpConnectorException;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import javax.ws.rs.ProcessingException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -68,7 +69,7 @@ public class MainzellisteClient extends AbstractProcessor {
             idUri = new URI(uriString);
         } catch (URISyntaxException e) {
 //            logger.error("Invalid URI for ID request: " + uriString, e);
-            throw new Error("A request used an invalid URI. See log for details.");
+            throw new ProcessingException("A request used an invalid URI. See log for details.", e);
         }
 
         if (idUri != null) {

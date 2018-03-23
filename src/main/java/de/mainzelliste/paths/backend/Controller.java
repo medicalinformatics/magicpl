@@ -28,7 +28,7 @@ public enum Controller {
 				// File file = FileFinderUtil.findFile("pathsExample.xml",
 				// "mainzelliste.paths", new File(".").getAbsolutePath());
 				// Zu Testzwecken kommt die Datei direkt aus der Applikation:
-			InputStream configStream = getClass().getClassLoader().getResourceAsStream("testMultipathConfig.xml");
+			InputStream configStream = getClass().getClassLoader().getResourceAsStream("pathsDKTK.xml");
 			InputStream proxyStream = getClass().getClassLoader().getResourceAsStream("proxy.xml");
 			// XML wird in Java-Objekt gelesen -> einfacher Zugriff auf die
 			// Konfiguration

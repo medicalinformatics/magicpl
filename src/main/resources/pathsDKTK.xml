@@ -12,15 +12,17 @@
             <parameters/>
             <input>
                 <iorecord ref="IDAT" />
-                <iosingle ref="Einwilligungsstatus" />
+                <iosingle ref="IdType" />
             </input>
             <output>
                 <iosingle/>
                 <iorecord/>
             </output>
             <switch>
-                <evaluator name="IsConsentedEvaluator"/>
-                <case value="true">
+                <evaluator name="de.mainzelliste.paths.evaluator.EqualEvaluator">
+                    <parameters><parameter name="key">IdType</parameter></parameters>
+                </evaluator>
+                <case value="DKTK">
                     <!--
                        * Schritte 2,5,6,8 GRÜN in DSK
                        * Teilpfade: /paths/getKNTKT
@@ -37,18 +39,22 @@
                             <iosingle ref="DKTK#ID" />
                         </output>
                         <step>
+
                             <!-- /paths/getKNTKT
                              * Schritt 2,5 GRÜN in DSK
                              * Zuständige Komponente: Zentraler KNE
                             -->
                             <name>getKNTKT</name>
+                            <parameters>
+                                <parameter name="passphrase">"alrfigkja"</parameter>
+                            </parameters>
                             <input>
                                 <iorecord ref="IDAT" />
                             </input>
                             <output>
                                 <iosingle ref="KNTKT#ID" />
                             </output>
-                            <implementation>de.mainzelliste.paths.processor.CngClient</implementation>
+                            <implementation>de.mainzelliste.paths.processor.CNGeneratorProcessor</implementation>
                         </step>
                         <step>
                             <!-- /paths/generateId
@@ -56,7 +62,10 @@
                              * Zuständige Komponente: Mainzelliste (RL)
                             -->
                             <name>getDKTKId</name>
-                            <parameters/>
+                            <parameters>
+                                <parameter name="mainzellisteURL">http://localhost:8080/mainzelliste-dktk</parameter>
+                                <parameter name="mainzellisteApiKey">89708d51eda036b346a9ed46cd190a80</parameter>
+                            </parameters>
                             <input>
                                 <iosingle ref="KNTKT#ID" />
                             </input>
@@ -67,73 +76,77 @@
                         </step>
                     </multipath>
                 </case>
-                <case value="false">
+                <case value="Mainz">
                     <!--
                        * Schritte 2,5,6,8 GRÜN in DSK
                        * Teilpfade: /paths/getKNTKT
                        *            /paths/getDKTKId
                     -->
                     <multipath>
-                        <name>getLocalId</name>
-                        <parameters/>
+                    <name>getLocalId</name>
+                    <parameters/>
+                    <input>
+                        <iorecord ref="IDAT" name="IDAT"/>
+                        <iosingle ref="locallyUniqueId" name="localId"/>
+                        <iosingle ref="IDType" name="IDType"/>
+                    </input>
+                    <output>
+                        <iorecord ref="S#ID" name="S#ID"/>
+                    </output>
+                    <step>
+                        <name>getCN</name>
+                        <parameters>
+                            <parameter name="passphrase">"alrfigkja"</parameter>
+                        </parameters>
                         <input>
-                            <iorecord ref="IDAT"/>
-                            <iosingle ref="IDType"/>
-                            <iosingle ref="Einwilligungsstatus"/>
+                            <iorecord ref="IDAT" name="IDAT"/>
+                            <iosingle ref="locallyUniqueId" name="localId"/>
                         </input>
                         <output>
-                            <iosingle ref="S#ID"/>
+                            <iorecord ref="KN" name="KN"/>
+                            <iosingle ref="locallyUniqueIdEnc" name="localIdEnc"/>
                         </output>
-                        <step>
-                            <!-- /paths/getKNTKT
-                             * Schritt 2,5 GRÜN in DSK
-                             * Zuständige Komponente: Zentraler KNE
-                            -->
-                            <name>getKN</name>
-                            <input>
-                                <iorecord ref="IDAT"/>
-                                <!--<iosingle ref="IDType"/>-->
-                            </input>
-                            <output>
-                                <iosingle ref="KN"/>
-                            </output>
-                            <implementation>de.mainzelliste.paths.processor.CNGeneratorProcessor</implementation>
-                        </step>
-                        <step>
-                            <!-- /paths/generateId
-                             * Schritte 6,8 GRÜN in DSK
-                             * Zuständige Komponente: Mainzelliste (RL)
-                            -->
-                            <name>getKNTKT</name>
-                            <parameters>
-                                <parameter name="mainzellisteURL">localhost:8084/mainzelliste-dktk</parameter>
-                                <parameter name="mainzellisteApiKey">89708d51eda036b346a9ed46cd190a80</parameter>
-                            </parameters>
-                            <input>
-                                <iosingle ref="KN"/>
-                                <iosingle ref="IDType"/>
-                            </input>
-                            <output>
-                                <iosingle ref="KNTKT#ID"/>
-                            </output>
-                            <implementation>de.mainzelliste.paths.processor.MainzellisteKNTicketClient</implementation>
-                        </step>
-                        <step>
-                            <!-- /paths/generateId
-                             * Schritte 6,8 GRÜN in DSK
-                             * Zuständige Komponente: Mainzelliste (RL)
-                            -->
-                            <name>getDKTKId</name>
-                            <parameters/>
-                            <input>
-                                <iosingle ref="KNTKT#ID"/>
-                            </input>
-                            <output>
-                                <iosingle ref="DKTK#ID"/>
-                            </output>
-                            <implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
-                        </step>
-                    </multipath>
+                        <implementation>de.mainzelliste.paths.processor.CNGeneratorProcessor</implementation>
+                    </step>
+                    <step>
+                        <!-- /paths/generateId
+                         * Schritte 6,8 GRÜN in DSK
+                         * Zuständige Komponente: Mainzelliste (RL)
+                        -->
+                        <name>getKNTKT</name>
+                        <parameters>
+                            <parameter name="mainzellisteURL">http://localhost:8080/mainzelliste-dktk</parameter>
+                            <parameter name="mainzellisteApiKey">89708d51eda036b346a9ed46cd190a80</parameter>
+                        </parameters>
+                        <input>
+                            <iorecord ref="KN" name="KN"/>
+                            <iosingle ref="locallyUniqueIdEnc" name="localId"/>
+                            <iosingle ref="IDType" name="IDType"/>
+                        </input>
+                        <output>
+                            <iosingle ref="KNTKT" name="KNTKT"/>
+                        </output>
+                        <implementation>de.mainzelliste.paths.processor.MainzellisteKNTicketClient</implementation>
+                    </step>
+                    <step>
+                        <!-- /paths/generateId
+                         * Schritte 6,8 GRÜN in DSK
+                         * Zuständige Komponente: Mainzelliste (RL)
+                        -->
+                        <name>getId</name>
+                        <parameters>
+                            <parameter name="mainzellisteURL">http://localhost:8080/mainzelliste-dktk</parameter>
+                            <parameter name="mainzellisteApiKey">89708d51eda036b346a9ed46cd190a80</parameter>
+                        </parameters>
+                        <input>
+                            <iosingle ref="KNTKT" name="KNTKT"/>
+                        </input>
+                        <output>
+                            <iorecord ref="S#ID" name="S#ID"/>
+                        </output>
+                        <implementation>de.mainzelliste.paths.processor.MainzellisteClient</implementation>
+                    </step>
+                </multipath>
                 </case>
             </switch>
         </path>
