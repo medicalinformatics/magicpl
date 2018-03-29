@@ -55,7 +55,7 @@ public class MainzellisteKNTicketClient extends AbstractProcessor {
 
                 if (fieldValue == null || fieldValue.equals("")) {
                     token.addField(fieldName, "");
-                }else if(fieldName.equals("IDType")){
+                }else if(fieldName.equals("idType")){
                     // Add study identifier (=ID type) to fields
                     String controlNumberType = fieldValue.split("_")[0];
                     token.addField("study", controlNumberType);
