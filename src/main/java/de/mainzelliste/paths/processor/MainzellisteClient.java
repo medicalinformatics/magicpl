@@ -44,9 +44,7 @@ public class MainzellisteClient extends AbstractProcessor {
         String mainzellisteApiKey = this.getParameters().get("mainzellisteApiKey").getValue();
 
         try {
-            // TODO: Proxy hinzufügen
-//            HttpConnector httpConnector = new HttpConnector(proxy);
-            HttpConnector httpConnector = new HttpConnector();
+            HttpConnector httpConnector = Controller.getHttpConnector();
             mainzellisteConnection = new MainzellisteConnection(mainzellisteUrl.toString(), mainzellisteApiKey, httpConnector.getHttpClient(mainzellisteUrl));
             webClient = httpConnector.getJerseyClientForHTTPS();
         } catch (URISyntaxException e) {

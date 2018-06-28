@@ -47,7 +47,7 @@ public class PathClient extends AbstractProcessor {
     @Override
     public Map<String, Object> process(Map<String, Object> stringObjectMap) {
         String json = Controller.getPathBackend().marshal(stringObjectMap);
-        HttpConnector hc = new HttpConnector();
+        HttpConnector hc = Controller.getHttpConnector();
         HashMap<String, Object> data = null;
         try {
             data = hc.doActionHashMap(method, url, null, null, "application/json", json, false,

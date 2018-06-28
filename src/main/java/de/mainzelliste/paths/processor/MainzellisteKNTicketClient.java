@@ -2,6 +2,7 @@ package de.mainzelliste.paths.processor;
 
 import de.mainzelliste.paths.adapters.Adapter;
 import de.mainzelliste.paths.adapters.AdapterFactory;
+import de.mainzelliste.paths.backend.Controller;
 import de.mainzelliste.paths.configuration.Path;
 import de.mainzelliste.paths.utils.StringNormalizer;
 import de.pseudonymisierung.mainzelliste.client.*;
@@ -36,7 +37,7 @@ public class MainzellisteKNTicketClient extends AbstractProcessor {
         String mainzellisteApiKey = this.getParameters().get("mainzellisteApiKey").getValue();
 
         try {
-            HttpConnector httpConnector = new HttpConnector();
+            HttpConnector httpConnector = Controller.getHttpConnector();
             mainzellisteConnection = new MainzellisteConnection(mainzellisteUrl.toString(), mainzellisteApiKey, httpConnector.getHttpClient(mainzellisteUrl));
         } catch (URISyntaxException e) {
 //            logger.fatal("Invalid URI for Mainzelliste connection: " + mainzellisteUrl);
