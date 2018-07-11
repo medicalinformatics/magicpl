@@ -184,5 +184,10 @@
         <iosingle name="locallyUniqueId"/>
         <iosingle name="locallyUniqueIdEnc"/>
     </iodefinitions>
-
+	<authentication>
+		<client>
+			<apiKey>test1234</apiKey>
+			<permissions>getId</permissions>
+		</client>
+	</authentication>
 </pathconfig>

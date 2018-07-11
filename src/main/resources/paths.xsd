@@ -5,9 +5,9 @@
 	<element name="pathconfig">
 		<complexType>
 			<sequence>
-				<element ref="tns:paths">
-				</element>
+				<element ref="tns:paths" />
 				<element ref="tns:iodefinitions" />
+				<element ref="tns:authentication" />
 			</sequence>
 		</complexType>
 	</element>
@@ -24,6 +24,14 @@
 				<choice>
 					<group ref="tns:ioDefChoice" />
 				</choice>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="authentication">
+		<complexType>
+			<sequence>
+				<element name="client" type="tns:client" maxOccurs="unbounded"></element>
 			</sequence>
 		</complexType>
 	</element>
@@ -241,4 +249,15 @@
 			<element name="iorecord" type="tns:iorecordref" /> <!-- TODO: Hier soll tatsächlich referenziert werden! -->
 		</choice>
 	</group>
+
+	<complexType name="client">
+		<sequence>
+			<element name="apiKey" type="token" />
+			<element name="permissions">
+				<simpleType>
+					<list itemType="string"></list>
+				</simpleType>
+			</element>
+		</sequence>
+	</complexType>
 </schema>
