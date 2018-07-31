@@ -30,8 +30,27 @@
 
 	<element name="authentication">
 		<complexType>
+			<!-- Mit folgender Variante ist sichergestellt, dass mindestens ein <client> 
+				oder <anonymous> definiert ist. Leider produziert diese Variante schlecht 
+				nutzbare JAXB-Klassen. Ursache ist wohl, dass der Name "anonymous" doppelt 
+				vorkommt, auch wenn es eigentlich das gleiche Element ist und wegen des <choice> 
+				auch nur eine Definition gleichzeitig benutzt wird. -->
+			<!-- <choice> -->
+			<!-- <sequence> -->
+			<!-- <element name="client" type="tns:client" maxOccurs="unbounded"></element> -->
+			<!-- <element name="anonymous" type="tns:anonymousClient" -->
+			<!-- minOccurs="0"></element> -->
+			<!-- </sequence> -->
+			<!-- <sequence> -->
+			<!-- <element name="anonymous" type="tns:anonymousClient"> -->
+			<!-- </element> -->
+			<!-- </sequence> -->
+			<!-- </choice> -->
 			<sequence>
-				<element name="client" type="tns:client" maxOccurs="unbounded"></element>
+				<element name="client" type="tns:client" minOccurs="0"
+					maxOccurs="unbounded"></element>
+				<element name="anonymous" type="tns:anonymousClient"
+					minOccurs="0"></element>
 			</sequence>
 		</complexType>
 	</element>
@@ -250,14 +269,31 @@
 		</choice>
 	</group>
 
-	<complexType name="client">
-		<sequence>
-			<element name="apiKey" type="token" />
+	<!-- Element to configure anonymous access. Defines permissions but obviously 
+		no api key. -->
+	<complexType name="anonymousClient">
+		<choice>
+			<element name="allPermissions">
+				<complexType></complexType>
+			</element>
 			<element name="permissions">
 				<simpleType>
 					<list itemType="string"></list>
 				</simpleType>
 			</element>
-		</sequence>
+		</choice>
+	</complexType>
+
+	<!-- Definition of an authenticated client. Based on <anonymous> with the 
+		addition of the api key (or, in the future, a choice of different authentication 
+		methods). -->
+	<complexType name="client">
+		<complexContent>
+			<extension base="tns:anonymousClient">
+				<sequence>
+					<element name="apiKey" type="token" />
+				</sequence>
+			</extension>
+		</complexContent>
 	</complexType>
 </schema>
