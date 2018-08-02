@@ -64,7 +64,7 @@ public class Authenticator {
 	 */
 	public void checkPermission(HttpServletRequest req, String permission) {
 		// First, check if anonymous access is possible for the requested permission
-		if (this.anonymousClient.allPermissions || this.anonymousClient.permissions.contains(permission))
+		if (this.anonymousClient.allPermissions || (this.anonymousClient.permissions != null && this.anonymousClient.permissions.contains(permission)))
 			return;
 
 		@SuppressWarnings("unchecked")
