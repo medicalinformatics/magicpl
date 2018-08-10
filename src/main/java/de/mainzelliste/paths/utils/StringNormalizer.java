@@ -84,7 +84,7 @@ public class StringNormalizer {
 	 * 	<li> removal of leading and trailing delimiters,
 	 *  <li> conversion of Umlauts.
 	 * 	<li> conversion to upper case,
-	 * <ul>
+	 * </ul>
 	 * @param input
 	 */
 	public String transform(String input)
