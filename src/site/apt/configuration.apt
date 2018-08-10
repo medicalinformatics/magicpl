@@ -1,0 +1,76 @@
+Configuration
+
+* General structure
+
+	The configuration file consists of a single top level element <pathconfig>, which contains the following child elements:
+	
+	[<\<paths\>>]  Definition of paths, i.e. services offered by the running instance.
+	
+	[<\<iodefinitions>\>>]: Definition of input elements (single fields and records).
+
+	[<\<authentication\>>]: Definition of authentication and authorization.
+	
+	
+* Path definitions
+
+	(TODO)
+	
+* IO definitions
+
+	(TODO)
+
+* Authentication and authorization
+
+	The <\<authentication\>> element configures the instance's authentication and authorization mechanism. It defines an 
+	arbitrary number of clients (<\<client\>> elements), to each of which a set of permissions can be assigned. Optionally, 
+	anonymous access can be defined for use cases where authentication is not necessary (specifically during development
+	or when running the application only for localhost access).
+	
+**Clients
+
+	A <\<client\>> element has the following structure:
+	
++--
+<client>
+    <apiKey>test1234</apiKey>
+    <permissions>getId getIdToken</permissions>
+</client>
++--
+
+		[<\<apiKey\>>] defines the passphrase by which this client identifies itselft (the authentication part).
+	
+		[<\<permissions\>>] lists all paths that the client is allowed to call, referenced by the path's name and separated 
+		by white space.
+
+	As a shortcut, <\<permissions\>> can be replaced by the emtpy element <<\<allPermissions /\>>>, meaning that the 
+	respective client can call all paths defined for this instance:
+	
++--
+<client>
+    <apiKey>test5678</apiKey>
+    <allPermissions />
+</client>
++--
+
+** Anonymous access
+
+	In some use cases, it may be acceptable and/or desirable to allow omit authentication and allow anonymous access for some or all paths. Examples for this case are:
+
+    	* During development and testing of a configuration file
+    
+    	* When running the application locally or in a strictly controlled environment.
+    
+    	* When using the application for a public web service.
+
+	Anonymous access is granted by including an <<\<anonymous\>>> element in the authentication block. The structure is 
+	the same as of <\<client\>> with the only (obvious) difference that there is no <\<apiKey\>> element.
+	
++--
+<anonymous>
+    <permissions>getId getIdToken</permissions>
+</anonymous>
++--
+
+	Again, <\<allPermissions /\>> would give access to all configured paths. While useful for development, 
+	the combination of <\<anonymous\>> and <\<allPermissions\>> should be used with care as it allows completely 
+	unrestricted access to the instance.

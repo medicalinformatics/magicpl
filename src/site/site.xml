@@ -13,6 +13,7 @@
 			<item name="Overview" href="index.html" />
 		</menu>
 		<menu name="documentation">
+			<item name="Configuration" href="configuration.html" />
 			<item name="Javadoc" href="apidocs/index.html" />
 		</menu>
 		<menu name="Generated content" ref="reports" />
