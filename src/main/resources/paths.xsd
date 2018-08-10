@@ -30,22 +30,10 @@
 
 	<element name="authentication">
 		<complexType>
-			<!-- Mit folgender Variante ist sichergestellt, dass mindestens ein <client> 
-				oder <anonymous> definiert ist. Leider produziert diese Variante schlecht 
-				nutzbare JAXB-Klassen. Ursache ist wohl, dass der Name "anonymous" doppelt 
-				vorkommt, auch wenn es eigentlich das gleiche Element ist und wegen des <choice> 
-				auch nur eine Definition gleichzeitig benutzt wird. -->
-			<!-- <choice> -->
-			<!-- <sequence> -->
-			<!-- <element name="client" type="tns:client" maxOccurs="unbounded"></element> -->
-			<!-- <element name="anonymous" type="tns:anonymousClient" -->
-			<!-- minOccurs="0"></element> -->
-			<!-- </sequence> -->
-			<!-- <sequence> -->
-			<!-- <element name="anonymous" type="tns:anonymousClient"> -->
-			<!-- </element> -->
-			<!-- </sequence> -->
-			<!-- </choice> -->
+			<!-- It would be desirable to enforce, that at least one of <client> and 
+				<anonymous> is present. This can be done by using <choice> and <sequence> 
+				(compare https://stackoverflow.com/questions/100228/xml-schema-construct-for-any-one-or-more-of-these-elements-but-must-be-at-least), 
+				but would lead to problems in the generated JAXB classes (compare https://stackoverflow.com/questions/2716916/xml-schema-to-java-classes-with-xjc). -->
 			<sequence>
 				<element name="client" type="tns:client" minOccurs="0"
 					maxOccurs="unbounded"></element>
