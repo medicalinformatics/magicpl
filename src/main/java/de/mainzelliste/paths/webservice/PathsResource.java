@@ -33,7 +33,10 @@ public class PathsResource {
 			throw new WebApplicationException(
 					Response.status(Status.NOT_IMPLEMENTED).entity("Path " + pathName + " not implemented!").build());
 		
-		Map<String, Object> inputMap = backend.unmarshal(data);
+		// Unmarshal input data and check if restrictions on input are met
+		Map<String, String> rawInput = backend.unmarshalToStrings(data);
+		Controller.authenticator.checkRestrictions(req, pathName, rawInput);		
+		Map<String, Object> inputMap = backend.unmarshal(rawInput);
 		inputMap = backend.filterPathInput(pathName, inputMap);
 		
 		Map<String, Object> outputMap = implementation.apply(inputMap);

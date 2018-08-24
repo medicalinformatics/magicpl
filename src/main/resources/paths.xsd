@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/Pfade"
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.example.org/Pfade"
 	xmlns:tns="http://www.example.org/Pfade" elementFormDefault="qualified">
 
 	<element name="pathconfig">
@@ -63,7 +64,8 @@
 		<complexContent>
 			<extension base="tns:ioabstracttype">
 				<sequence>
-					<element name="iosingle" type="tns:iosingle" maxOccurs="unbounded" /> <!-- TODO: Soll ein bestehendes iosingle referenzieren! -->
+					<element name="iosingle" type="tns:iosingle"
+						maxOccurs="unbounded" /> <!-- TODO: Soll ein bestehendes iosingle referenzieren! -->
 				</sequence>
 			</extension>
 		</complexContent>
@@ -133,7 +135,8 @@
 		</annotation>
 		<sequence>
 			<element name="name" type="string"></element>
-			<element name="parameters" minOccurs="0" type="tns:parameters" />
+			<element name="parameters" minOccurs="0"
+				type="tns:parameters" />
 			<element name="input">
 				<complexType>
 					<sequence maxOccurs="unbounded">
@@ -183,7 +186,8 @@
 		<complexContent>
 			<extension base="tns:path">
 				<sequence>
-					<element name="step" type="tns:simplePath" maxOccurs="unbounded"></element>
+					<element name="step" type="tns:simplePath"
+						maxOccurs="unbounded"></element>
 				</sequence>
 			</extension>
 		</complexContent>
@@ -200,7 +204,8 @@
 					<attribute name="name" type="string" use="required" />
 				</complexType>
 			</element>
-			<element name="case" maxOccurs="unbounded" type="tns:guardedCaseType">
+			<element name="case" maxOccurs="unbounded"
+				type="tns:guardedCaseType">
 			</element>
 			<element name="default" minOccurs="0" maxOccurs="1"
 				type="tns:defaultCaseType" />
@@ -260,16 +265,20 @@
 	<!-- Element to configure anonymous access. Defines permissions but obviously 
 		no api key. -->
 	<complexType name="anonymousClient">
-		<choice>
-			<element name="allPermissions">
-				<complexType></complexType>
-			</element>
-			<element name="permissions">
-				<simpleType>
-					<list itemType="string"></list>
-				</simpleType>
-			</element>
-		</choice>
+		<sequence>
+			<choice>
+				<element name="allPermissions">
+					<complexType></complexType>
+				</element>
+				<element name="permissions">
+					<simpleType>
+						<list itemType="string"></list>
+					</simpleType>
+				</element>
+			</choice>
+			<element name="restrictions" type="tns:restrictions"
+				minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
 	</complexType>
 
 	<!-- Definition of an authenticated client. Based on <anonymous> with the 
@@ -283,5 +292,36 @@
 				</sequence>
 			</extension>
 		</complexContent>
+	</complexType>
+
+	<!-- Restrictions on paths, e.g. which values are allowed for a specific 
+		combination of client, path and input field. -->
+	<complexType name="restrictions">
+		<sequence>
+			<element name="restriction">
+				<complexType>
+					<sequence>
+						<element name="inputRestriction" minOccurs="0"
+							maxOccurs="unbounded">
+							<complexType>
+								<choice>
+									<element name="permissibleValues">
+										<complexType>
+											<sequence>
+												<element name="value" type="string"
+													maxOccurs="unbounded" />
+											</sequence>
+										</complexType>
+									</element>
+									<element name="regex" type="string" />
+								</choice>
+								<attribute name="input" type="token" use="required" />
+							</complexType>
+						</element>
+					</sequence>
+					<attribute name="path" type="token" use="required" />
+				</complexType>
+			</element>
+		</sequence>
 	</complexType>
 </schema>
