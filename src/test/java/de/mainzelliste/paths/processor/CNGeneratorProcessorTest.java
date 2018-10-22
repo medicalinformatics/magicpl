@@ -21,25 +21,26 @@ public class CNGeneratorProcessorTest {
     private static String testData;
 
     @BeforeClass
-    public void init() throws Exception{
+    public void init() throws Exception {
         InputStream testConfiguration = this.getClass().getResourceAsStream(testConfig);
-        testData = new String(Files.readAllBytes(java.nio.file.Paths.get(this.getClass().getResource(testFile).toURI())));
+        testData = new String(
+                Files.readAllBytes(java.nio.file.Paths.get(this.getClass().getResource(testFile).toURI())));
         if (testConfiguration == null)
             fail("Test configuration file " + testConfig + " not found.");
 
         try {
-            configuration = JAXBUtil.unmarshall(testConfiguration, JAXBContext.newInstance(de.mainzelliste.paths.configuration.ObjectFactory.class), Pathconfig.class);
+            configuration = JAXBUtil.unmarshall(testConfiguration,
+                    JAXBContext.newInstance(de.mainzelliste.paths.configuration.ObjectFactory.class), Pathconfig.class);
         } catch (Exception e) {
             fail("Error while unmarshalling configuration file", e);
         }
     }
 
-
     @Test
-    public void testCNGenerator() throws Exception{
+    public void testCNGenerator() throws Exception {
         Path path = null;
 
-        //Finding the needed path
+        // Finding the needed path
         for (Path configPath : configuration.getPaths().getPathOrMultipath()) {
             // Just for testing as this is the only path implemented yet.
             if ("getCN".equals(configPath.getName())) {
@@ -48,15 +49,15 @@ public class CNGeneratorProcessorTest {
             }
         }
 
-        if(path == null) {
+        if (path == null) {
             fail("Path not found");
         }
 
-        //TODO support for multipath missing
-        AbstractProcessor processor = ProcessorFactory.getProcessor((SimplePath)path);
+        // TODO support for multipath missing
+        AbstractProcessor processor = ProcessorFactory.getProcessor((SimplePath) path);
 
-        //TODO multiple inputs
-        //Finding the iorecord of the input.
+        // TODO multiple inputs
+        // Finding the iorecord of the input.
         Iorecord iorecord = null;
         for (Object io : path.getInput().getIosingleOrIorecord()) {
             if (io instanceof Iorecordref) {
@@ -70,7 +71,7 @@ public class CNGeneratorProcessorTest {
             }
         }
 
-        if(iorecord == null) {
+        if (iorecord == null) {
             fail("No record found");
         }
 
@@ -78,8 +79,8 @@ public class CNGeneratorProcessorTest {
 
         Object output = processor.apply(adapter.unmarshal(testData));
 
-        //TODO multiple outputs
-        //Finding the iorecord of the output.
+        // TODO multiple outputs
+        // Finding the iorecord of the output.
         for (Object io : path.getOutput().getIosingleOrIorecord()) {
             if (io instanceof Iorecordref) {
                 Iorecordref iorecordref = (Iorecordref) io;

@@ -10,24 +10,24 @@ import java.util.Map;
  * characters ("lower"), only upper case characters ("upper") or both ("mixed").
  */
 public class UpperLowerEvaluator extends AbstractEvaluator {
-	public UpperLowerEvaluator(Switch.Evaluator config) {
-		super(config);
-	}
+    public UpperLowerEvaluator(Switch.Evaluator config) {
+        super(config);
+    }
 
-	@Override
-	public boolean isValidResult(String result) {
-		return Arrays.asList("upper", "lower", "mixed").contains(result);
-	}
+    @Override
+    public boolean isValidResult(String result) {
+        return Arrays.asList("upper", "lower", "mixed").contains(result);
+    }
 
-	@Override
-	public String evaluate(Map<String, Object> io) {
-		String input = io.get(0).toString();
-		if (input.equals(input.toUpperCase()))
-			return "upper";
-		else if (input.equals(input.toLowerCase()))
-			return "lower";
-		else
-			return "mixed";
-	}
+    @Override
+    public String evaluate(Map<String, Object> io) {
+        String input = io.get(0).toString();
+        if (input.equals(input.toUpperCase()))
+            return "upper";
+        else if (input.equals(input.toLowerCase()))
+            return "lower";
+        else
+            return "mixed";
+    }
 
 }

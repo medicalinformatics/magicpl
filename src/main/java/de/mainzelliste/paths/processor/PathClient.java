@@ -33,14 +33,16 @@ public class PathClient extends AbstractProcessor {
      * parameter map (see {@link #getParameters()}) from the given
      * configuration.
      *
-     * @param configuration Configuration of this path.
+     * @param configuration
+     *            Configuration of this path.
      */
     public PathClient(Path configuration) {
         super(configuration);
 
         url = this.getParameters().get("url").getValue();
         method = this.getParameters().get("method").getValue();
-        //        String mainzellisteApiKey = this.getParameters().get("mainzellisteApiKey").getValue();
+        // String mainzellisteApiKey =
+        // this.getParameters().get("mainzellisteApiKey").getValue();
 
     }
 
@@ -51,7 +53,7 @@ public class PathClient extends AbstractProcessor {
         HashMap<String, Object> data = null;
         try {
             data = hc.doActionHashMap(method, url, null, null, "application/json", json, false,
-                                                              false);
+                    false);
         } catch (HttpConnectorException e) {
             e.printStackTrace();
             throw new WebApplicationException(e);
@@ -61,8 +63,8 @@ public class PathClient extends AbstractProcessor {
     }
 
     /**
-     * Get the Mainzelliste session for this instance. The session will be recreated if invalid (i.e.
-     * due to timing out).
+     * Get the Mainzelliste session for this instance. The session will be
+     * recreated if invalid (i.e. due to timing out).
      *
      * @return The Mainzelliste session.
      * @throws MainzellisteNetworkException

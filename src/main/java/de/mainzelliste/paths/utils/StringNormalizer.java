@@ -38,90 +38,96 @@ import java.util.Set;
 
 public class StringNormalizer {
 
-	/** Delimiters to remove from start and end.
-	 * 
-	 */
-	private static char delimiterChars[] = {' ', '.', ':', ',', ';', '-', '\''};
+    /**
+     * Delimiters to remove from start and end.
+     * 
+     */
+    private static char delimiterChars[] = { ' ', '.', ':', ',', ';', '-', '\'' };
 
-	/** Characters which to replace (umlauts) 
-	 * {ä, Ä, ö, Ö, ü, Ü, ß}
-	 * */
-	private static char umlauts[] = {'\u00e4', '\u00c4', '\u00f6', '\u00d6', '\u00fc', '\u00dc', '\u00df'};
+    /**
+     * Characters which to replace (umlauts) {ä, Ä, ö, Ö, ü, Ü, ß}
+     * */
+    private static char umlauts[] = { '\u00e4', '\u00c4', '\u00f6', '\u00d6', '\u00fc', '\u00dc', '\u00df' };
 
-	/** Replacement for umlauts */
-	private static String umlautReplacement[] = {"ae", "AE", "oe", "OE", "ue", "UE", "ss"};  
-	
-	/** Delimiters to recognize when decomposing Names as Set.
-	 * Used internally for efficient access to delimiters.
-	 */
-	private Set<Character> delimiters;
-	
-	/** Mapping between umlauts and their replacement */
-	private Map<Character, String> umlautReplacementMap;
+    /** Replacement for umlauts */
+    private static String umlautReplacement[] = { "ae", "AE", "oe", "OE", "ue", "UE", "ss" };
 
+    /**
+     * Delimiters to recognize when decomposing Names as Set. Used internally
+     * for efficient access to delimiters.
+     */
+    private Set<Character> delimiters;
 
-	public StringNormalizer()
-	{
-		int i;
-		this.delimiters = new HashSet<Character>();
-		for (i = 0; i < delimiterChars.length; i++)
-		{
-			delimiters.add(new Character(delimiterChars[i]));
-		}
-		
-		this.umlautReplacementMap = new HashMap<Character, String>();
-		for (i = 0; i < umlauts.length; i++ )
-		{
-			umlautReplacementMap.put(new Character(umlauts[i]), umlautReplacement[i]);
-		}
-	}
-	
+    /** Mapping between umlauts and their replacement */
+    private Map<Character, String> umlautReplacementMap;
 
-	/**
-	 * Normalize a String. Normalization includes:
-	 * <ul>
-	 *  <li> conversion to NFC via java.text.Normalizer
-	 * 	<li> removal of leading and trailing delimiters,
-	 *  <li> conversion of Umlauts.
-	 * 	<li> conversion to upper case,
-	 * </ul>
-	 * @param input
-	 */
-	public String transform(String input)
-	{
-		if (input == null) return null;
-		if (input.length() == 0) return "";
-		
-		// TODO: ungültige Zeichen filtern
-		String inputStr = java.text.Normalizer.normalize(input, Form.NFC);
-		StringBuffer resultString;
-		
-		// Copy into new String, omitting leading and trainling delimiters
-		int start, end;
-		for (start = 0; start < inputStr.length() && delimiters.contains(inputStr.charAt(start)); start++);
-		for (end = inputStr.length() - 1; end >= start && delimiters.contains(inputStr.charAt(end)); end--);
-		
-		resultString = new StringBuffer(inputStr.substring(start,  end + 1));
-		
-		// if resultString is empty, nothing more to do 
-		if (resultString.length() == 0) return "";
+    public StringNormalizer()
+    {
+        int i;
+        this.delimiters = new HashSet<Character>();
+        for (i = 0; i < delimiterChars.length; i++)
+        {
+            delimiters.add(new Character(delimiterChars[i]));
+        }
 
-		// convert umlauts
-		Character thisChar;
-		for (int pos = 0; pos < resultString.length(); pos++)
-		{
-			thisChar = new Character(resultString.charAt(pos));
-			if (umlautReplacementMap.containsKey(thisChar))
-			{
-				resultString.replace(pos,  pos + 1, umlautReplacementMap.get(thisChar));
-			}
-		}
-		// remove other kinds of accents
-		String output = java.text.Normalizer.normalize(resultString.toString(), Form.NFD)
-				.replaceAll("[\\p{M}]", "")
-				.toUpperCase();
-		// convert to uppercase
-		return output;
-		
-	}
+        this.umlautReplacementMap = new HashMap<Character, String>();
+        for (i = 0; i < umlauts.length; i++)
+        {
+            umlautReplacementMap.put(new Character(umlauts[i]), umlautReplacement[i]);
+        }
+    }
+
+    /**
+     * Normalize a String. Normalization includes:
+     * <ul>
+     * <li>conversion to NFC via java.text.Normalizer
+     * <li>removal of leading and trailing delimiters,
+     * <li>conversion of Umlauts.
+     * <li>conversion to upper case,
+     * </ul>
+     * 
+     * @param input
+     */
+    public String transform(String input)
+    {
+        if (input == null)
+            return null;
+        if (input.length() == 0)
+            return "";
+
+        // TODO: ungültige Zeichen filtern
+        String inputStr = java.text.Normalizer.normalize(input, Form.NFC);
+        StringBuffer resultString;
+
+        // Copy into new String, omitting leading and trainling delimiters
+        int start, end;
+        for (start = 0; start < inputStr.length() && delimiters.contains(inputStr.charAt(start)); start++)
+            ;
+        for (end = inputStr.length() - 1; end >= start && delimiters.contains(inputStr.charAt(end)); end--)
+            ;
+
+        resultString = new StringBuffer(inputStr.substring(start, end + 1));
+
+        // if resultString is empty, nothing more to do
+        if (resultString.length() == 0)
+            return "";
+
+        // convert umlauts
+        Character thisChar;
+        for (int pos = 0; pos < resultString.length(); pos++)
+        {
+            thisChar = new Character(resultString.charAt(pos));
+            if (umlautReplacementMap.containsKey(thisChar))
+            {
+                resultString.replace(pos, pos + 1, umlautReplacementMap.get(thisChar));
+            }
+        }
+        // remove other kinds of accents
+        String output = java.text.Normalizer.normalize(resultString.toString(), Form.NFD)
+                .replaceAll("[\\p{M}]", "")
+                .toUpperCase();
+        // convert to uppercase
+        return output;
+
+    }
 }

@@ -35,7 +35,8 @@ public class MainzellisteClient extends AbstractProcessor {
      * parameter map (see {@link #getParameters()}) from the given
      * configuration.
      *
-     * @param configuration Configuration of this path.
+     * @param configuration
+     *            Configuration of this path.
      */
     public MainzellisteClient(Path configuration) {
         super(configuration);
@@ -45,14 +46,16 @@ public class MainzellisteClient extends AbstractProcessor {
 
         try {
             HttpConnector httpConnector = Controller.getHttpConnector();
-            mainzellisteConnection = new MainzellisteConnection(mainzellisteUrl.toString(), mainzellisteApiKey, httpConnector.getHttpClient(mainzellisteUrl));
+            mainzellisteConnection = new MainzellisteConnection(mainzellisteUrl.toString(), mainzellisteApiKey,
+                    httpConnector.getHttpClient(mainzellisteUrl));
             webClient = httpConnector.getJerseyClientForHTTPS();
         } catch (URISyntaxException e) {
-//            logger.fatal("Invalid URI for Mainzelliste connection: " + mainzellisteUrl);
+            // logger.fatal("Invalid URI for Mainzelliste connection: " +
+            // mainzellisteUrl);
             throw new Error("Invalid URI for Mainzelliste connection: " + mainzellisteUrl);
-//        } catch (HttpConnectorException e) {
-//            e.printStackTrace();
-//            throw new Error("Cannot connect to Mainzelliste");
+            // } catch (HttpConnectorException e) {
+            // e.printStackTrace();
+            // throw new Error("Cannot connect to Mainzelliste");
         }
     }
 
@@ -111,10 +114,9 @@ public class MainzellisteClient extends AbstractProcessor {
         }
     }
 
-
     /**
-     * Get the Mainzelliste session for this instance. The session will be recreated if invalid (i.e.
-     * due to timing out).
+     * Get the Mainzelliste session for this instance. The session will be
+     * recreated if invalid (i.e. due to timing out).
      *
      * @return The Mainzelliste session.
      * @throws MainzellisteNetworkException

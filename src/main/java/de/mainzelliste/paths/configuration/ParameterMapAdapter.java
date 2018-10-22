@@ -10,16 +10,16 @@ import de.mainzelliste.paths.configuration.Parameters.Parameter;
 
 public class ParameterMapAdapter extends XmlAdapter<Parameters, ParameterMap> {
 
-	@Override
-	public ParameterMap unmarshal(Parameters v) throws Exception {
-		ParameterMap result = new ParameterMap();
-		for (Parameter p : v.parameter) {
-			result.put(p.name, p);
-		}
-		return result;
-	}
+    @Override
+    public ParameterMap unmarshal(Parameters v) throws Exception {
+        ParameterMap result = new ParameterMap();
+        for (Parameter p : v.parameter) {
+            result.put(p.name, p);
+        }
+        return result;
+    }
 
-	@Override
+    @Override
 	public Parameters marshal(ParameterMap v) throws Exception {
 		Parameters result = new Parameters();
 		result.parameter = new LinkedList<>();
@@ -31,5 +31,4 @@ public class ParameterMapAdapter extends XmlAdapter<Parameters, ParameterMap> {
 		}
 		return result;
 	}
-
 }
