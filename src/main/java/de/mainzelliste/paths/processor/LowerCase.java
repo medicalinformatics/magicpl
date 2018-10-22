@@ -12,11 +12,11 @@ import jersey.repackaged.com.google.common.collect.ImmutableMap;
 /** Example implementation of a path. Converts input to lower case. */
 public class LowerCase extends AbstractProcessor {
 
-	public LowerCase(Path configuration) {
-		super(configuration);
-	}
+    public LowerCase(Path configuration) {
+        super(configuration);
+    }
 
-	@Override
+    @Override
 	public Map<String, Object> process(Map<String, Object> input) {
 		HashMap<String, Object> output = new HashMap<>();
 		for (Entry<String, Object> entry : input.entrySet()) {

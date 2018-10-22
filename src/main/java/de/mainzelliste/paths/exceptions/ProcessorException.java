@@ -12,7 +12,8 @@ public class ProcessorException extends WebApplicationException {
     /**
      * Instantiates a new exception with the given message.
      *
-     * @param message the message
+     * @param message
+     *            the message
      */
     public ProcessorException(String message) {
         super(message);
@@ -21,8 +22,10 @@ public class ProcessorException extends WebApplicationException {
     /**
      * Instantiates a new exception with the given message and cause.
      *
-     * @param message the message
-     * @param cause   the underlying cause for this exception
+     * @param message
+     *            the message
+     * @param cause
+     *            the underlying cause for this exception
      */
     public ProcessorException(String message, Throwable cause) {
         super(message, cause);
@@ -31,7 +34,8 @@ public class ProcessorException extends WebApplicationException {
     /**
      * Instantiates a new exception with the given cause.
      *
-     * @param cause the underlying cause for this exception
+     * @param cause
+     *            the underlying cause for this exception
      */
     public ProcessorException(Throwable cause) {
         super(cause);

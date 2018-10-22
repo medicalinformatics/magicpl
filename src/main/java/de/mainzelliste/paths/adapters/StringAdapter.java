@@ -1,6 +1,6 @@
 package de.mainzelliste.paths.adapters;
 
-public class StringAdapter implements Adapter<String>{
+public class StringAdapter implements Adapter<String> {
     @Override
     public String unmarshal(String data) {
         return data;

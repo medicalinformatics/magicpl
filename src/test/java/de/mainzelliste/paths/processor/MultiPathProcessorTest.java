@@ -35,19 +35,20 @@ public class MultiPathProcessorTest extends JerseyTest {
     private static final String configFile = "";
 
     @BeforeClass
-    public void init() throws Exception{
+    public void init() throws Exception {
         InputStream testConfiguration = this.getClass().getResourceAsStream(testConfig);
-        testData = new String(Files.readAllBytes(java.nio.file.Paths.get(this.getClass().getResource(testFile).toURI())));
+        testData = new String(
+                Files.readAllBytes(java.nio.file.Paths.get(this.getClass().getResource(testFile).toURI())));
         if (testConfiguration == null)
             fail("Test configuration file " + testConfig + " not found.");
 
         try {
-            configuration = JAXBUtil.unmarshall(testConfiguration, JAXBContext.newInstance(de.mainzelliste.paths.configuration.ObjectFactory.class), Pathconfig.class);
+            configuration = JAXBUtil.unmarshall(testConfiguration,
+                    JAXBContext.newInstance(de.mainzelliste.paths.configuration.ObjectFactory.class), Pathconfig.class);
         } catch (Exception e) {
             fail("Error while unmarshalling configuration file", e);
         }
     }
-
 
     @Test
     public void testApply() throws Exception {
@@ -68,9 +69,10 @@ public class MultiPathProcessorTest extends JerseyTest {
      *
      * @return should given the super constructor of an jersy test
      */
-    public static AppDescriptor setUpTest () {
+    public static AppDescriptor setUpTest() {
         System.setProperty("derby.stream.error.field", "java.lang.System.err");
-        return new WebAppDescriptor.Builder(packagePath).contextParam(configPackagePath, configFile).contextPath("/paths/paths/getLocalId").build();
+        return new WebAppDescriptor.Builder(packagePath).contextParam(configPackagePath, configFile)
+                .contextPath("/paths/paths/getLocalId").build();
     }
 
 }
