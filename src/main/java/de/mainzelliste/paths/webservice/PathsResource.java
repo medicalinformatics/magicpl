@@ -1,13 +1,14 @@
 package de.mainzelliste.paths.webservice;
 
-import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -25,13 +26,17 @@ public class PathsResource {
 
     @POST
     @Path("/{pathName}")
-    public Response executePath(@PathParam("pathName") String pathName, String data) {
+    public Response executePath(@Context HttpServletRequest req, @PathParam("pathName") String pathName, String data) {
+        Controller.authenticator.checkPermission(req, pathName);
         AbstractProcessor implementation = backend.getPathImplementation(pathName);
         if (implementation == null)
             throw new WebApplicationException(
                     Response.status(Status.NOT_IMPLEMENTED).entity("Path " + pathName + " not implemented!").build());
 
-        Map<String, Object> inputMap = backend.unmarshal(data);
+        // Unmarshal input data and check if restrictions on input are met
+        Map<String, String> rawInput = backend.unmarshalToStrings(data);
+        Controller.authenticator.checkRestrictions(req, pathName, rawInput);
+        Map<String, Object> inputMap = backend.unmarshal(rawInput);
         inputMap = backend.filterPathInput(pathName, inputMap);
 
         Map<String, Object> outputMap = implementation.apply(inputMap);

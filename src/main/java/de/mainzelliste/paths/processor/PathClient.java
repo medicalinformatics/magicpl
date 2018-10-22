@@ -56,6 +56,7 @@ public class PathClient extends AbstractProcessor {
                     false);
         } catch (HttpConnectorException e) {
             e.printStackTrace();
+            throw new WebApplicationException(e);
         }
         Map<String, Object> result = Controller.getPathBackend().unmarshal(data.get("body").toString());
         return result;
