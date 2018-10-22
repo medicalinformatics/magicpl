@@ -18,7 +18,7 @@ public class ProcessorFactory {
         Constructor<?> constructor = clazz.getConstructor(Path.class);
         Object object = constructor.newInstance(config);
 
-        if (! (object instanceof AbstractProcessor)) {
+        if (!(object instanceof AbstractProcessor)) {
             throw new IllegalArgumentException("The class" + config.getImplementation() + " is not a processor");
         }
 

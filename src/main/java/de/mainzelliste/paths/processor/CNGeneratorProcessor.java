@@ -16,16 +16,16 @@ public class CNGeneratorProcessor extends AbstractProcessor {
     public CNGeneratorProcessor(Path configuration) {
         super(configuration);
         final String passphrase = "passphrase";
-        if(configuration.getParameters().getParameter().size() != 1){
+        if (configuration.getParameters().getParameter().size() != 1) {
             throw new IllegalArgumentException("This processor requires exactly one parameter called " + passphrase
-                                               + ". Please check your path config.");
+                    + ". Please check your path config.");
         }
 
         Parameters.Parameter parameter = configuration.getParameters().getParameter().get(0);
 
-        if(! passphrase.equals(parameter.getName())){
+        if (!passphrase.equals(parameter.getName())) {
             throw new IllegalArgumentException("Paratername is wrong. It should be " + passphrase
-                                               + " Please check your path config.");
+                    + " Please check your path config.");
         }
 
         this.controlNumberGenerator = EncryptedControlNumberGenerator.builder(parameter.getValue()).build();

@@ -17,16 +17,18 @@ public class AdapterTest {
     private static final String testConfig = "/testAdapterConfig.xml";
 
     @Test
-    public void testAdapter() throws Exception{
+    public void testAdapter() throws Exception {
         InputStream testConfiguration = this.getClass().getResourceAsStream(testConfig);
-        String test = new String(Files.readAllBytes(java.nio.file.Paths.get(this.getClass().getResource(testFile).toURI())));
+        String test = new String(Files.readAllBytes(java.nio.file.Paths.get(this.getClass().getResource(testFile)
+                .toURI())));
         if (testConfiguration == null)
             fail("Test configuration file " + testConfig + " not found.");
 
         Pathconfig configuration;
 
         try {
-            configuration = JAXBUtil.unmarshall(testConfiguration, JAXBContext.newInstance(de.mainzelliste.paths.configuration.ObjectFactory.class), Pathconfig.class);
+            configuration = JAXBUtil.unmarshall(testConfiguration,
+                    JAXBContext.newInstance(de.mainzelliste.paths.configuration.ObjectFactory.class), Pathconfig.class);
         } catch (Exception e) {
             fail("Error while unmarshalling configuration file", e);
             return;
@@ -34,17 +36,17 @@ public class AdapterTest {
 
         for (Path path : configuration.getPaths().getPathOrMultipath()) {
             for (Object io : path.getInput().getIosingleOrIorecord()) {
-                if(io instanceof Iorecordref){
+                if (io instanceof Iorecordref) {
                     Iorecordref iorecordref = (Iorecordref) io;
 
-                    if(!"IDAT".equals(iorecordref.getRef())){
+                    if (!"IDAT".equals(iorecordref.getRef())) {
                         continue;
                     }
 
                     Iorecord iorecord = null;
 
                     for (Object o : configuration.getIodefinitions().getIosingleOrIorecord()) {
-                        if(o instanceof Iorecord && ((Iorecordref) io).getRef().equals(((Iorecord) o).getName())){
+                        if (o instanceof Iorecord && ((Iorecordref) io).getRef().equals(((Iorecord) o).getName())) {
                             iorecord = (Iorecord) o;
                             break;
                         }
@@ -53,11 +55,9 @@ public class AdapterTest {
                     ImmutableMapAdapter adapter = (ImmutableMapAdapter) AdapterFactory.getAdapter(iorecord);
                     ImmutableMap<String, Object> map = adapter.unmarshal(test);
 
-
-
-                    assertTrue("Klaus".equals(map.get("vorname")) && "Klausson".equals(map.get("nachname")) && "12.12.1212".equals(
-                            map.get("geburtsdatum")));
-
+                    assertTrue("Klaus".equals(map.get("vorname")) && "Klausson".equals(map.get("nachname"))
+                            && "12.12.1212".equals(
+                                    map.get("geburtsdatum")));
 
                     String test2 = adapter.marshal(map);
 

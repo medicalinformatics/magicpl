@@ -10,11 +10,11 @@ import jersey.repackaged.com.google.common.collect.ImmutableMap;
 /** Example implementation of a path. Converts input to upper case. */
 public class UpperCase extends AbstractProcessor {
 
-	public UpperCase(Path configuration) {
-		super(configuration);
-	}
+    public UpperCase(Path configuration) {
+        super(configuration);
+    }
 
-	@Override
+    @Override
 	public Map<String, Object> process(Map<String, Object> input) {
 		HashMap<String, Object> output = new HashMap<>();
 		for (Entry<String, Object> entry : input.entrySet()) {
