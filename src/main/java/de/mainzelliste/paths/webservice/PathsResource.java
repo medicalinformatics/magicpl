@@ -1,13 +1,14 @@
 package de.mainzelliste.paths.webservice;
 
-import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -22,11 +23,11 @@ public class PathsResource {
 
 	private PathBackend backend = Controller.getPathBackend();
 	private Gson gson = new Gson();
-	
-	
+
 	@POST
 	@Path("/{pathName}")
-	public Response executePath(@PathParam("pathName") String pathName, String data) {
+	public Response executePath(@Context HttpServletRequest req,  @PathParam("pathName") String pathName, String data) {
+		Controller.authenticator.checkPermission(req, pathName);
 		AbstractProcessor implementation = backend.getPathImplementation(pathName);
 		if (implementation == null)
 			throw new WebApplicationException(
@@ -50,9 +51,8 @@ public class PathsResource {
 	public Response getPathInformation() {
 		/*
 		 * Perspektivisch sollten hier genauere, strukturierte Informationen
-		 * zurückgegeben werden, z.B. welche Ein- und Ausgaben die Pfade haben
-		 * etc. Möglichst nur die anzeigen, die der zugreifende Client auch
-		 * benutzen darf.
+		 * zurückgegeben werden, z.B. welche Ein- und Ausgaben die Pfade haben etc.
+		 * Möglichst nur die anzeigen, die der zugreifende Client auch benutzen darf.
 		 */
 		return Response.ok(Controller.getPathBackend().getPathNames().toString()).build();
 	}
