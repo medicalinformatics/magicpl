@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pathconfig [
+  <!ENTITY mainzellisteUrl "http://localhost:8080">
+ ]>
 <pathconfig xmlns="http://www.example.org/Pfade" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.example.org/Pfade paths.xsd ">
 
@@ -65,7 +68,7 @@
                             -->
 							<name>getDKTKIdFinal</name>
 							<parameters>
-								<parameter name="mainzellisteURL">http://localhost:8080</parameter>
+								<parameter name="mainzellisteURL">&mainzellisteUrl;</parameter>
 								<parameter name="mainzellisteApiKey">89708d51eda036b346a9ed46cd190a80</parameter>
 							</parameters>
 							<input>
@@ -117,7 +120,7 @@
                         -->
 							<name>getKNTKT</name>
 							<parameters>
-								<parameter name="mainzellisteURL">http://localhost:8080</parameter>
+								<parameter name="mainzellisteURL">&mainzellisteUrl;</parameter>
 								<parameter name="mainzellisteApiKey">89708d51eda036b346a9ed46cd190a80</parameter>
 							</parameters>
 							<input>
@@ -137,7 +140,7 @@
                         -->
 							<name>generateId</name>
 							<parameters>
-								<parameter name="mainzellisteURL">http://localhost:8080</parameter>
+								<parameter name="mainzellisteURL">&mainzellisteUrl;</parameter>
 								<parameter name="mainzellisteApiKey">89708d51eda036b346a9ed46cd190a80</parameter>
 							</parameters>
 							<input>
