@@ -17,4 +17,12 @@
 		<servlet-name>Jersey Web Application</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
+	<filter>
+		<filter-name>CORSFilter</filter-name>
+		<filter-class>de.mainzelliste.paths.webservice.filter.CorsResponseFilter</filter-class>
+	</filter>
+    <filter-mapping>
+		<filter-name>CORSFilter</filter-name>
+		<servlet-name>Jersey Web Application</servlet-name>
+	</filter-mapping>
 </web-app>
