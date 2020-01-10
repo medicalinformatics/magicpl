@@ -1,5 +1,6 @@
 package de.mainzelliste.paths.webservice.filter;
 
+import com.google.common.net.HttpHeaders;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
@@ -29,6 +30,10 @@ public class CorsResponseFilter implements Filter {
                 if (origin.equals(thisHostAndScheme) || System.getenv("MAGICPL_ALLOWED_ORIGINS").contains(origin)) {
                     logger.debug("Allowing cross domain request from origin " + origin);
                     httpResponse.addHeader("Access-Control-Allow-Origin", origin);
+                    String allowedHeaders = System.getenv("MAGICPL_ALLOWED_CORS_HEADERS");
+                    if (allowedHeaders != null) {
+                        httpResponse.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, allowedHeaders);
+                    }
                 } else {
                     logger.info("Rejecting cross domain request from origin " + origin);
                     // For illegal origin, cancel request with 403 Forbidden.
