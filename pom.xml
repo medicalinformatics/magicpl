@@ -140,7 +140,7 @@
 		<dependency>
 			<groupId>de.samply</groupId>
 			<artifactId>common-config</artifactId>
-			<version>2.3.0</version>
+			<version>3.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.testng</groupId>
@@ -151,7 +151,7 @@
 		<dependency>
 			<groupId>de.samply</groupId>
 			<artifactId>common-http</artifactId>
-			<version>3.0.0</version>
+			<version>6.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
