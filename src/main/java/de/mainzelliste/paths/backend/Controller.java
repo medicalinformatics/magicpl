@@ -29,7 +29,7 @@ public class Controller {
               // File file = FileFinderUtil.findFile("pathsExample.xml",
               // "mainzelliste.paths", new File(".").getAbsolutePath());
               // Zu Testzwecken kommt die Datei direkt aus der Applikation:
-            InputStream configStream = Controller.class.getClassLoader().getResourceAsStream("pathsDKTK.xml");
+            InputStream configStream = Controller.class.getClassLoader().getResourceAsStream("paths.xml");
             InputStream proxyStream = Controller.class.getClassLoader().getResourceAsStream("proxy.xml");
             // XML wird in Java-Objekt gelesen -> einfacher Zugriff auf die
             // Konfiguration
