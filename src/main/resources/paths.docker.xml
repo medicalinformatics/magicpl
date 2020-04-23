@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pathconfig [
+        <!ENTITY pathsApiKey "paths_API_KEY">
+        <!ENTITY passphrase "paths_PASSPHRASE">
+ ]>
+<pathconfig xmlns="http://www.example.org/Pfade" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.example.org/Pfade paths.xsd ">
+    <paths>
+        <!-- /paths/getId
+          ** Generate control numbers from IDAT
+        -->
+        <multipath>
+            <name>getId</name>
+            <parameters/>
+            <input>
+                <iorecord ref="IDAT" name="IDAT"/>
+            </input>
+            <output>
+                <iorecord ref="KN" name="KN"/>
+            </output>
+            <step>
+                <name>getCN</name>
+                <parameters>
+                    <parameter name="passphrase">&passphrase;</parameter>
+                </parameters>
+                <input>
+                    <iorecord ref="IDAT" name="IDAT"/>
+                </input>
+                <output>
+                    <iorecord ref="KN" name="KN"/>
+                </output>
+                <implementation>de.mainzelliste.paths.processor.CNGeneratorProcessor</implementation>
+            </step>
+        </multipath>
+    </paths>
+
+    <iodefinitions>
+        <iorecord name="IDAT">
+            <iosingle name="vorname"/>
+            <iosingle name="nachname"/>
+            <iosingle name="geburtsname"/>
+            <iosingle name="geburtstag"/>
+            <iosingle name="geburtsmonat"/>
+            <iosingle name="geburtsjahr"/>
+            <iosingle name="geburtsort"/>
+        </iorecord>
+        <iorecord name="KN">
+            <iosingle name="vornameCN" type="ControlNumber"/>
+            <iosingle name="nachnameCN" type="ControlNumber"/>
+            <iosingle name="geburtstagCN" type="ControlNumber"/>
+            <iosingle name="geburtsmonatCN" type="ControlNumber"/>
+            <iosingle name="geburtsjahrCN" type="ControlNumber"/>
+            <iosingle name="geburtsortCN" type="ControlNumber"/>
+        </iorecord>
+    </iodefinitions>
+
+    <authentication>
+        <client>
+            <permissions>getIdToken</permissions>
+            <apiKey>&pathsApiKey;</apiKey>
+        </client>
+    </authentication>
+</pathconfig>
