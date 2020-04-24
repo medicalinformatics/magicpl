@@ -56,7 +56,7 @@
 
     <authentication>
         <client>
-            <permissions>getIdToken</permissions>
+            <permissions>getId</permissions>
             <apiKey>&pathsApiKey;</apiKey>
         </client>
     </authentication>
