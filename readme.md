@@ -44,7 +44,10 @@ With the WAR File build, it now should be possible to build a new tomcat contain
 curl https://bitbucket.org/brennert/docker.common/raw/9b8f6b559076a97caec544f7e65f9a2433be5d65/tomcat/Dockerfile | docker build -t paths:latest --build-arg COMPONENT=paths --build-arg COMMIT_HASH=9b8f6b559076a97caec544f7e65f9a2433be5d65 -f - $(pwd)/target
 ```
 
-TODO: Test if the system is running
+To run the docker container you can now use:
+```shell script
+docker run -p 8080:8080 --rm -it paths:latest
+```
 
 ## Running the tests
 
@@ -70,7 +73,19 @@ Give an example
 
 ## Deployment
 
-TODO: Add additional notes about how to deploy this on a live system
+> Note: Currently there is now downloadable version of the docker container, so you will need to build it yourself using the steps described above.
+
+The image for 
+> Please note that currently only a standardized version of paths is available via docker image. The passing of configuration is still in testing.
+
+The component image currently supports following environment variables:
+
+|variable name|description|default value|
+|-------------|-----------|-------------|
+|paths_API_KEY|the api key used to access paths interface|paths_API_KEY|
+|paths_PASSPHRASE|the passphrase used to generate controllnumbers|paths_PASSPHRASE|
+
+
 
 ## Built With
 
