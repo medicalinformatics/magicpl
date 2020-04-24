@@ -41,7 +41,7 @@ docker run -it --rm --name paths-build -v /$(pwd)/://usr/src/paths-build/ -w //u
 
 With the WAR File build, it now should be possible to build a new tomcat container with following command:
 ```shell script
-curl https://bitbucket.org/brennert/docker.common/raw/9b8f6b559076a97caec544f7e65f9a2433be5d65/tomcat/Dockerfile | docker build -t paths:latest --build-arg COMPONENT=paths --build-arg COMMIT_HASH=9b8f6b559076a97caec544f7e65f9a2433be5d65 -f - $(pwd)/target
+curl https://bitbucket.org/brennert/docker.common/raw/16071188a5d85d1a630d43ca274b99f230ea7b14/tomcat/Dockerfile | docker build -t paths:latest --build-arg COMPONENT=paths --build-arg COMMON_REPOSITORY_URN=https://bitbucket.org/brennert/docker.common/raw/16071188a5d85d1a630d43ca274b99f230ea7b14 -f - ~/IdeaProjects/mainzelliste.paths/target
 ```
 
 To run the docker container you can now use:
@@ -85,7 +85,16 @@ The component image currently supports following environment variables:
 |paths_API_KEY|the api key used to access paths interface|paths_API_KEY|
 |paths_PASSPHRASE|the passphrase used to generate controllnumbers|paths_PASSPHRASE|
 
+For tomcat the following environment variables are supported by the image:
 
+|variable name|description|default value|
+|-------------|-----------|-------------|
+|DEBUG|if set to "true", the container will start with remote debugging enabled on port 1099| - |
+|TOMCAT_REVERSEPROXY_FQDN|Fully-qualified domain name to be used for access to this container, e.g. patientlist.example.org|-|
+|TOMCAT_REVERSEPROXY_PORT|The corresponding port number|80 or 443 according to TOMCAT_REVERSEPROXY_SSL|
+|TOMCAT_REVERSEPROXY_SSL|Set to true if container is accessed via SSL/TLS; false otherwise|false|
+
+TODO: move this to docker.common readme.md 
 
 ## Built With
 
