@@ -41,26 +41,6 @@
 					<generateDirectory>${project.build.directory}/generated-sources/jaxb</generateDirectory>
 				</configuration>
 			</plugin>
-			<!-- <plugin> -->
-			<!-- <groupId>org.codehaus.mojo</groupId> -->
-			<!-- <artifactId>jaxb2-maven-plugin</artifactId> -->
-			<!-- <version>2.2</version> -->
-			<!-- <executions> -->
-			<!-- <execution> -->
-			<!-- <id>xjc</id> -->
-			<!-- <goals> -->
-			<!-- <goal>xjc</goal> -->
-			<!-- </goals> -->
-			<!-- </execution> -->
-			<!-- </executions> -->
-			<!-- <configuration> -->
-			<!-- <packageName>de.mainzelliste.paths.configuration</packageName> -->
-			<!-- <sources> -->
-			<!-- <source>src/main/resources/paths.xsd</source> -->
-			<!-- </sources> -->
-			<!-- <xjbSources>src/main/resources/bindings.xjb</xjbSources> -->
-			<!-- </configuration> -->
-			<!-- </plugin> -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
@@ -138,11 +118,6 @@
 		<!-- uncomment this to get JSON support <dependency> <groupId>org.glassfish.jersey.media</groupId> 
 			<artifactId>jersey-media-moxy</artifactId> </dependency> -->
 		<dependency>
-			<groupId>de.samply</groupId>
-			<artifactId>common-config</artifactId>
-			<version>3.1.0</version>
-		</dependency>
-		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
 			<version>6.10</version>
@@ -152,13 +127,6 @@
 			<groupId>de.samply</groupId>
 			<artifactId>common-http</artifactId>
 			<version>6.1.1</version>
-			<exclusions>
-				<!-- Causes java.lang.NoSuchMethodError: javax.ws.rs.core.Response$Status$Family.familyOf(I)Ljavax/ws/rs/core/Response$Status$Family; -->
-				<exclusion>
-					<groupId>javax.ws.rs</groupId>
-					<artifactId>jsr311-api</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
