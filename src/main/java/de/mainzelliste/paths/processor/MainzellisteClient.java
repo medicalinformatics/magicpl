@@ -22,21 +22,24 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 public class MainzellisteClient extends AbstractProcessor {
+    private final String SURENESS_FLAG = "sureness";
     private final Client webClient;
     private final String mainzellisteUrl;
 
     /**
-     * Default constructor. Initializes name (see {@link #getPathName()}) and parameter map (see
-     * {@link #getParameters()}) from the given configuration.
+     * Default constructor. Initializes name (see {@link #getPathName()}) and
+     * parameter map (see {@link #getParameters()}) from the given
+     * configuration.
      *
-     * @param configuration Configuration of this path.
+     * @param configuration
+     *            Configuration of this path.
      */
     public MainzellisteClient(Path configuration) {
         super(configuration);
 
         String mainzellisteUrlParam = this.getParameters().get("mainzellisteURL").getValue();
         this.mainzellisteUrl =
-            mainzellisteUrlParam + (mainzellisteUrlParam.endsWith("/") ? "" : "/");
+                mainzellisteUrlParam + (mainzellisteUrlParam.endsWith("/") ? "" : "/");
         // check url of maizelliste
         try {
             new URI(mainzellisteUrl);
@@ -66,6 +69,11 @@ public class MainzellisteClient extends AbstractProcessor {
                 .collect(Collectors.toMap(Map.Entry::getKey,
                     e -> createJsonFrom(e.getKey(), (ControlNumber) e.getValue())))
         );
+        // add sureness flag if exist
+        if(stringObjectMap.containsKey(SURENESS_FLAG) &&
+            Boolean.parseBoolean((String)stringObjectMap.get(SURENESS_FLAG))) {
+            formData.add(SURENESS_FLAG, "true");
+        }
 
         WebResource idResource = webClient.resource(idUri);
         ClientResponse response = idResource
@@ -74,7 +82,13 @@ public class MainzellisteClient extends AbstractProcessor {
                 this.getParameters().get("mainzellisteApiVersion").getValue())
             .type(MediaType.APPLICATION_FORM_URLENCODED)
             .post(ClientResponse.class, formData);
-        if (response.getStatus() >= 400) {
+        if (response.getStatus() == 409) {
+            throw new WebApplicationException(
+                Response.status(response.getStatus())
+                    .entity(response.getEntity(String.class))
+                    .build());
+        }
+        else if (response.getStatus() >= 400) {
             throw new WebApplicationException(
                 Response.status(response.getStatus())
                     .entity(
@@ -100,7 +114,7 @@ public class MainzellisteClient extends AbstractProcessor {
         }
     }
 
-    private String createJsonFrom(String key, ControlNumber value){
+    private String createJsonFrom(String key, ControlNumber value) {
         try {
             JSONObject json = new JSONObject();
             json.put("keyId", key.substring(0, key.length() - 2));
