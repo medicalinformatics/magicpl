@@ -41,7 +41,7 @@ docker run -it --rm --name paths-build -v /$(pwd)/://usr/src/paths-build/ -w //u
 
 With the WAR File build, it now should be possible to build a new tomcat container with following command:
 ```shell script
-curl https://bitbucket.org/brennert/docker.common/raw/16071188a5d85d1a630d43ca274b99f230ea7b14/tomcat/Dockerfile | docker build -t paths:latest --build-arg COMPONENT=paths --build-arg COMMON_REPOSITORY_URN=https://bitbucket.org/brennert/docker.common/raw/16071188a5d85d1a630d43ca274b99f230ea7b14 -f - ~/IdeaProjects/mainzelliste.paths/target
+curl https://bitbucket.org/brennert/docker.common/raw/027e064f4f6832b0405886a298a9e6305015a027/tomcat/Dockerfile | docker build -t paths:latest --build-arg COMPONENT=paths --build-arg COMMON_REPOSITORY_URN=https://bitbucket.org/brennert/docker.common/raw/027e064f4f6832b0405886a298a9e6305015a027 -f - ~/IdeaProjects/mainzelliste.paths/target
 ```
 
 To run the docker container you can now use:
@@ -82,8 +82,8 @@ The component image currently supports following environment variables:
 
 |variable name|description|default value|
 |-------------|-----------|-------------|
-|paths_API_KEY|the api key used to access paths interface|paths_API_KEY|
-|paths_PASSPHRASE|the passphrase used to generate controllnumbers|paths_PASSPHRASE|
+|PATHS_API_KEY|the api key used to access paths interface|PATHS_API_KEY|
+|PATHS_PASSPHRASE|the passphrase used to generate controllnumbers|PATHS_PASSPHRASE|
 
 For tomcat the following environment variables are supported by the image:
 

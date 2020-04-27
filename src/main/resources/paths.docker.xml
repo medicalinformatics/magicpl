@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pathconfig [
-        <!ENTITY pathsApiKey "paths_API_KEY">
-        <!ENTITY passphrase "paths_PASSPHRASE">
+        <!ENTITY pathsApiKey "PATHS_API_KEY">
+        <!ENTITY passphrase "PATHS_PASSPHRASE">
  ]>
 <pathconfig xmlns="http://www.example.org/Pfade" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://www.example.org/Pfade paths.xsd ">
