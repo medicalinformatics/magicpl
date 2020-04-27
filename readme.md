@@ -84,6 +84,8 @@ The component image currently supports following environment variables:
 |-------------|-----------|-------------|
 |PATHS_API_KEY|the api key used to access paths interface|PATHS_API_KEY|
 |PATHS_PASSPHRASE|the passphrase used to generate controllnumbers|PATHS_PASSPHRASE|
+|PATHS_ALLOWED_ORIGINS|sets the [**Access-Control-Allow-Origin**](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin) Header of the Responses|-|
+|PATHS_ALLOWED_CORS_HEADERS|sets the [**Access-Control-Allow-Headers**](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers) Header of the Response. Needs PATHS_ALLOWED_ORIGINS to be defined.|-|
 
 For tomcat the following environment variables are supported by the image:
 

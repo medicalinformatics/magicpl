@@ -26,10 +26,10 @@ public class CorsResponseFilter implements Filter {
             String thisHostAndScheme = httpRequest.getScheme() + "://" + httpRequest.getHeader("Host");
             if (origin != null) {
                 // TODO: Change this to part of config !!! Really fast solution
-                if (origin.equals(thisHostAndScheme) || System.getenv("MAGICPL_ALLOWED_ORIGINS").contains(origin)) {
+                if (origin.equals(thisHostAndScheme) || System.getenv("PATHS_ALLOWED_ORIGINS").contains(origin)) {
                     logger.debug("Allowing cross domain request from origin " + origin);
                     httpResponse.addHeader("Access-Control-Allow-Origin", origin);
-                    String allowedHeaders = System.getenv("MAGICPL_ALLOWED_CORS_HEADERS");
+                    String allowedHeaders = System.getenv("PATHS_ALLOWED_CORS_HEADERS");
                     if (allowedHeaders != null) {
                         httpResponse.addHeader("Access-Control-Allow-Headers", allowedHeaders);
                     }
