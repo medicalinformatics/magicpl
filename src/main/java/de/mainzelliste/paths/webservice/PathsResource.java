@@ -1,7 +1,11 @@
 package de.mainzelliste.paths.webservice;
 
+import de.mainzelliste.paths.backend.Controller;
+import de.mainzelliste.paths.backend.PathBackend;
+import de.mainzelliste.paths.processor.AbstractProcessor;
+import java.net.URI;
+import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
@@ -12,17 +16,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import com.google.gson.Gson;
-
-import de.mainzelliste.paths.backend.Controller;
-import de.mainzelliste.paths.backend.PathBackend;
-import de.mainzelliste.paths.processor.AbstractProcessor;
-
 @Path("/paths")
 public class PathsResource {
 
-    private PathBackend backend = Controller.getPathBackend();
-    private Gson gson = new Gson();
+    private final PathBackend backend = Controller.getPathBackend();
 
     @POST
     @Path("/{pathName}")
@@ -39,7 +36,16 @@ public class PathsResource {
         Map<String, Object> inputMap = backend.unmarshal(rawInput);
         inputMap = backend.filterPathInput(pathName, inputMap);
 
-        Map<String, Object> outputMap = implementation.apply(inputMap);
+        Map<String, Object> outputMap;
+        try {
+            outputMap = implementation.apply(inputMap);
+        } catch (WebApplicationException wae) {
+            return Response.status(wae.getResponse().getStatus()).entity(wae.getMessage()).build();
+        }
+        //Note: workaround to redirect the response
+        if (outputMap.get("redirect") != null) {
+            return Response.seeOther(URI.create(((List<String>) outputMap.get("redirect")).get(0))).build();
+        }
         String outputData = backend.marshal(outputMap);
 
         return Response.ok(outputData).build();
