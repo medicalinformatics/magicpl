@@ -41,7 +41,7 @@ docker run -it --rm --name paths-build -v /$(pwd)/://usr/src/paths-build/ -w //u
 
 With the WAR File build, it now should be possible to build a new tomcat container with following command:
 ```shell script
-curl https://bitbucket.org/brennert/docker.common/raw/027e064f4f6832b0405886a298a9e6305015a027/tomcat/Dockerfile | docker build -t paths:latest --build-arg COMPONENT=paths --build-arg COMMON_REPOSITORY_URN=https://bitbucket.org/brennert/docker.common/raw/027e064f4f6832b0405886a298a9e6305015a027 -f - ~/IdeaProjects/mainzelliste.paths/target
+curl https://bitbucket.org/brennert/docker.common/raw/a765bb9c221eb350842c7737920ea8d50e7d8a4d/tomcat/Dockerfile | docker build -t paths:latest --build-arg COMPONENT=paths --build-arg COMMON_REPOSITORY_URN=https://bitbucket.org/brennert/docker.common/raw/a765bb9c221eb350842c7737920ea8d50e7d8a4d -f - ./target
 ```
 
 To run the docker container you can now use:
