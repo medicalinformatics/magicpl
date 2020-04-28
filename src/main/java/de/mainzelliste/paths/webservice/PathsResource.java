@@ -3,8 +3,6 @@ package de.mainzelliste.paths.webservice;
 import de.mainzelliste.paths.backend.Controller;
 import de.mainzelliste.paths.backend.PathBackend;
 import de.mainzelliste.paths.processor.AbstractProcessor;
-import java.net.URI;
-import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.OPTIONS;
@@ -37,15 +35,8 @@ public class PathsResource {
         inputMap = backend.filterPathInput(pathName, inputMap);
 
         Map<String, Object> outputMap;
-        try {
-            outputMap = implementation.apply(inputMap);
-        } catch (WebApplicationException wae) {
-            return Response.status(wae.getResponse().getStatus()).entity(wae.getMessage()).build();
-        }
-        //Note: workaround to redirect the response
-        if (outputMap.get("redirect") != null) {
-            return Response.seeOther(URI.create(((List<String>) outputMap.get("redirect")).get(0))).build();
-        }
+        outputMap = implementation.apply(inputMap);
+
         String outputData = backend.marshal(outputMap);
 
         return Response.ok(outputData).build();
@@ -53,7 +44,7 @@ public class PathsResource {
 
     /**
      * Output information on which paths are provided by this instance.
-     * 
+     *
      * @return Information on paths (currently only names).
      */
     @OPTIONS
