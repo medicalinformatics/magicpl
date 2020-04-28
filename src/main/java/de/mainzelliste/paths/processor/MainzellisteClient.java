@@ -4,6 +4,9 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.json.JSONConfiguration;
 import de.mainzelliste.paths.configuration.Path;
 import de.pseudonymisierung.controlnumbers.ControlNumber;
 import java.net.URI;
@@ -47,7 +50,10 @@ public class MainzellisteClient extends AbstractProcessor {
             throw new WebApplicationException("Invalid Mainzelliste Url: " + mainzellisteUrl);
         }
 
-        webClient = Client.create();
+        // POJO JSON support client configuration
+        ClientConfig clientConfig = new DefaultClientConfig();
+        clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+        webClient = Client.create(clientConfig);
         webClient.setFollowRedirects(false);
     }
 
