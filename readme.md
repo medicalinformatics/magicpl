@@ -25,11 +25,7 @@ mvn clean install
 
 First you will need to build the builder container:
 ```shell script
-docker build -t samply-builder -<<EOF
-ARG MAVEN_CONTAINER_VERSION=3.6.3-jdk-8-openj9
-FROM maven:3.6.3-jdk-8-openj9
-RUN apt-get update && apt-get install -y git
-EOF
+curl https://bitbucket.org/brennert/docker.common/raw/11df911fc47f212d89d6bf4ff92434cf3380fdbc/maven-git/Dockerfile | docker build -t samply-builder -
 ```
 
 After building the builder container you can run this to build the WAR File.
@@ -41,7 +37,7 @@ docker run -it --rm --name paths-build -v /$(pwd)/://usr/src/paths-build/ -w //u
 
 With the WAR File build, it now should be possible to build a new tomcat container with following command:
 ```shell script
-curl https://bitbucket.org/brennert/docker.common/raw/a765bb9c221eb350842c7737920ea8d50e7d8a4d/tomcat/Dockerfile | docker build -t paths:latest --build-arg COMPONENT=paths --build-arg COMMON_REPOSITORY_URN=https://bitbucket.org/brennert/docker.common/raw/a765bb9c221eb350842c7737920ea8d50e7d8a4d -f - ./target
+curl https://bitbucket.org/brennert/docker.common/raw/11df911fc47f212d89d6bf4ff92434cf3380fdbc/tomcat/Dockerfile | docker build -t paths:latest --build-arg COMPONENT=paths --build-arg COMMON_REPOSITORY_URN=https://bitbucket.org/brennert/docker.common/raw/11df911fc47f212d89d6bf4ff92434cf3380fdbc -f - ./target
 ```
 
 To run the docker container you can now use:
