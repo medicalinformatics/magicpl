@@ -1,6 +1,7 @@
 package de.mainzelliste.paths.processor;
 
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.config.ClientConfig;
@@ -42,17 +43,17 @@ public class MainzellisteClient extends AbstractProcessor {
      *            Configuration of this path.
      */
     public MainzellisteClient(Path configuration) {
-      super(configuration);
+        super(configuration);
 
-      String mainzellisteUrlParam = this.getParameters().get(ML_URL_PARAM).getValue();
-      this.mainzellisteUrl =
-          mainzellisteUrlParam + (mainzellisteUrlParam.endsWith("/") ? "" : "/");
-      // check url of maizelliste
-      try {
-        new URI(mainzellisteUrl);
-      } catch (URISyntaxException e) {
-        throw new WebApplicationException("Invalid Mainzelliste Url: " + mainzellisteUrl);
-      }
+        String mainzellisteUrlParam = this.getParameters().get(ML_URL_PARAM).getValue();
+        this.mainzellisteUrl =
+                mainzellisteUrlParam + (mainzellisteUrlParam.endsWith("/") ? "" : "/");
+        // check url of maizelliste
+        try {
+            new URI(mainzellisteUrl);
+        } catch (URISyntaxException e) {
+            throw new WebApplicationException("Invalid Mainzelliste Url: " + mainzellisteUrl);
+        }
 
         // POJO JSON support client configuration
         ClientConfig clientConfig = new DefaultClientConfig();
@@ -62,59 +63,62 @@ public class MainzellisteClient extends AbstractProcessor {
     }
 
     @Override
-  public Map<String, Object> process(Map<String, Object> stringObjectMap) {
-    // add token id to maizelliste url
-    URI mainzellisteUri;
-    try {
-      mainzellisteUri = new URI(mainzellisteUrl + "patients?tokenId=" + stringObjectMap.get("tokenId"));
-    } catch (URISyntaxException e) {
-      throw new ProcessingException("Invalid Mainzelliste uri", e);
-    }
+    public Map<String, Object> process(Map<String, Object> stringObjectMap) {
+        // add token id to maizelliste url
+        URI mainzellisteUri;
+        try {
+            mainzellisteUri = new URI(mainzellisteUrl + "patients?tokenId=" + stringObjectMap.get("tokenId"));
+        } catch (URISyntaxException e) {
+            throw new ProcessingException("Invalid Mainzelliste uri", e);
+        }
 
-    // prepare form data
-    MultivaluedMap<String, String> formData = new MultivaluedHashMap<>(
-        stringObjectMap.entrySet().stream()
-            .filter(e -> e.getValue() instanceof ControlNumber)
-            .collect(Collectors.toMap(Map.Entry::getKey,
-                e -> createJsonFrom(e.getKey(), (ControlNumber) e.getValue())))
-    );
-    // add sureness flag if exist
-    if (stringObjectMap.containsKey(SURENESS_FLAG) &&
-        Boolean.parseBoolean((String) stringObjectMap.get(SURENESS_FLAG))) {
-      formData.add(SURENESS_FLAG, "true");
-    }
+        // prepare form data
+        MultivaluedMap<String, String> formData = new MultivaluedHashMap<>(
+                stringObjectMap.entrySet().stream()
+                        .filter(e -> e.getValue() instanceof ControlNumber)
+                        .collect(Collectors.toMap(Map.Entry::getKey,
+                                e -> createJsonFrom(e.getKey(), (ControlNumber) e.getValue())))
+        );
+        // add sureness flag if exist
+        if (stringObjectMap.containsKey(SURENESS_FLAG) &&
+                Boolean.parseBoolean((String) stringObjectMap.get(SURENESS_FLAG))) {
+            formData.add(SURENESS_FLAG, "true");
+        }
 
-    // execute http request
-    ClientResponse response = webClient
-        .resource(mainzellisteUri)
-        .accept(MediaType.APPLICATION_JSON)
-        .header(ML_API_VERSION_PARAM,
-            this.getParameters().get(ML_API_VERSION_PARAM).getValue())
-        .type(MediaType.APPLICATION_FORM_URLENCODED)
-        .post(ClientResponse.class, formData);
+        // execute http request
+        ClientResponse response;
+        try {
+            response = webClient
+                    .resource(mainzellisteUri)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .header(ML_API_VERSION_PARAM, this.getParameters().get(ML_API_VERSION_PARAM).getValue())
+                    .type(MediaType.APPLICATION_FORM_URLENCODED)
+                    .post(ClientResponse.class, formData);
+        } catch (ClientHandlerException exception) {
+            throw new WebApplicationException("Failed to create patient in mainzelliste. Cause: " + exception.getMessage());
+        }
 
-    // redirect error response
-    if (response.getStatus() >= 400) {
-      throw new WebApplicationException(HttpUtils.convertToResponse(response));
-    } else if (response.getStatus() == 303) {
-      throw new RedirectionException(HttpUtils.convertToResponse(response));
-    }
+        // redirect error response
+        if (response.getStatus() >= 400) {
+            throw new WebApplicationException(HttpUtils.convertToResponse(response));
+        } else if (response.getStatus() == 303) {
+            throw new RedirectionException(HttpUtils.convertToResponse(response));
+        }
 
-    // prepare result
-    try {
-      Map<String, Object> output = new HashMap<>();
-      List<Map<String, Object>> responseList = response
-          .getEntity(new GenericType<List<Map<String, Object>>>(){});
-      Map<String, Object> responseMap = responseList.get(0);
-      output.put("idType", responseMap.get("idType").toString());
-      output.put("idString", responseMap.get("idString").toString());
-      return output;
-    } catch (RuntimeException exception) {
-      throw new WebApplicationException("Invalid Mainzelliste response body", exception);
-    } finally {
-      response.close();
+        // prepare result
+        try {
+            Map<String, Object> output = new HashMap<>();
+            List<Map<String, Object>> responseList = response.getEntity(new GenericType<List<Map<String, Object>>>() {});
+            Map<String, Object> responseMap = responseList.get(0);
+            output.put("idType", responseMap.get("idType").toString());
+            output.put("idString", responseMap.get("idString").toString());
+            return output;
+        } catch (RuntimeException exception) {
+            throw new WebApplicationException("Invalid Mainzelliste response body", exception);
+        } finally {
+            response.close();
+        }
     }
-  }
 
     private String createJsonFrom(String key, ControlNumber value) {
         try {
