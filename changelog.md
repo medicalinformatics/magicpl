@@ -5,6 +5,7 @@
 - Support redirect response of mainzelliste
 - Support conflict response of Mainzelliste (unsure cases) 
 - Support the creation of tentative patients (sureness flag)
+- Map web application exception without entity to HTTP error response in JSON format
 ### Changed
 - Default config file name from pathsDKTK.xml to paths.xml
 - Updated dependency de.samply.common-config from 2.3.0 to 3.1.0
