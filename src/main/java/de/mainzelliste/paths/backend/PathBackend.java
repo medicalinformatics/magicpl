@@ -1,5 +1,6 @@
 package de.mainzelliste.paths.backend;
 
+import de.mainzelliste.paths.exceptions.UndefinedFieldException;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,6 +29,8 @@ import de.mainzelliste.paths.configuration.Pathconfig;
 import de.mainzelliste.paths.processor.AbstractProcessor;
 import de.mainzelliste.paths.processor.MultiPathProcessor;
 import de.mainzelliste.paths.processor.SwitchProcessor;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import jersey.repackaged.com.google.common.collect.ImmutableMap;
 
 /** Backend for managing path processor. */
@@ -116,6 +119,9 @@ public class PathBackend {
 
 		for (Map.Entry<String, String> entry : stringMap.entrySet()) {
 			Adapter<?> adapter = adapters.get(entry.getKey());
+			if(adapter == null) {
+				throw new UndefinedFieldException(entry.getKey());
+			}
 			output.put(entry.getKey(), adapter.unmarshal(entry.getValue()));
 		}
 

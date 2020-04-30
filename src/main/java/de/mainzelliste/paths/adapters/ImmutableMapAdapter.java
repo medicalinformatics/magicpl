@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import de.mainzelliste.paths.configuration.Iorecord;
 import de.mainzelliste.paths.configuration.Iosingle;
+import de.mainzelliste.paths.exceptions.UndefinedFieldException;
 import jersey.repackaged.com.google.common.collect.ImmutableMap;
 
 import java.lang.reflect.Type;
@@ -23,6 +24,9 @@ public class ImmutableMapAdapter implements Adapter<ImmutableMap<String, Object>
 
         for (Map.Entry<String, String> entry : stringMap.entrySet()) {
             Adapter adapter = adapters.get(entry.getKey());
+            if(adapter == null) {
+                throw new UndefinedFieldException(entry.getKey());
+            }
             contentMap.put(entry.getKey(), adapter.unmarshal(entry.getValue()));
         }
 
