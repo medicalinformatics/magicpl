@@ -1,4 +1,6 @@
 ## [Unreleased]
+
+## [0.0.1] - 2020-05-07
 ### Added
 - docker support - see readme.md for more information about docker
 - Support for CORS Requests. The CORS access can be specified by using PATHS_ALLOWED_ORIGINS and PATHS_ALLOWED_CORS_HEADERS environment variables.
