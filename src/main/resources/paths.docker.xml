@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pathconfig [
-        <!ENTITY pathsApiKey "PATHS_API_KEY">
-        <!ENTITY passphrase "PATHS_PASSPHRASE">
+        <!ENTITY pathsApiKey "MAGICPL_API_KEY">
+        <!ENTITY passphrase "MAGICPL_PASSPHRASE">
  ]>
 <pathconfig xmlns="http://www.example.org/Pfade" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.example.org/Pfade paths.xsd ">
+            xsi:schemaLocation="http://www.example.org/Pfade magicpl.xsd ">
     <paths>
         <!-- /paths/getId
           ** Generate control numbers from IDAT
         -->
         <multipath>
-            <name>getId</name>
+            <name>getKN</name>
             <parameters/>
             <input>
                 <iorecord ref="IDAT" name="IDAT"/>
@@ -56,7 +56,7 @@
 
     <authentication>
         <client>
-            <permissions>getId</permissions>
+            <permissions>getKN</permissions>
             <apiKey>&pathsApiKey;</apiKey>
         </client>
     </authentication>
