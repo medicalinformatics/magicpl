@@ -104,7 +104,7 @@ secrets:
 It is possible to define your own environment variables in your custom configuration, by writting the environment variable name in your configuration.
 All custom environment variables must be prefixed with "MAGICPL_". You can review the default [docker configuration](./src/main/resources/paths.docker.xml) for an example. 
 
-For further information on how to configure MagicPL, please refer to the [Documentation](./docs/magicpl-documentation-0.1.0.pdf).
+For further information on how to configure MagicPL, please refer to the Documentation. For each release in the [releases page](https://github.com/medicalinformatics/magicpl/releases)
 
 ## Roadmap
 
