@@ -110,13 +110,6 @@ For further information on how to configure MagicPL, please refer to the Documen
 
 Also refer to [open issues](https://github.com/medicalinformatics/magicpl/issues) for a list of proposed features (and known issues).
 
-## Built With
-
-* [Java](https://www.java.com/de/) - The programming language used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [Docker](https://www.docker.com/) - Tool for building and running containers 
-* [Docker Hub](https://hub.docker.com/) - Used for automatic builds and delivery of images
-
 ## Contributing
 
 Please read [Contributing](./docs/contributing.md) for details on our code of conduct, and the process for submitting pull requests to us.
@@ -143,6 +136,13 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0)
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+## Built With
+
+* [Java](https://www.java.com/de/) - The programming language used
+* [Maven](https://maven.apache.org/) - Dependency Management
+* [Docker](https://www.docker.com/) - Tool for building and running containers
+* [Docker Hub](https://hub.docker.com/) - Used for automatic builds and delivery of images
 
 ## Acknowledgments
 
