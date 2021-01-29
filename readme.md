@@ -39,12 +39,12 @@ This command is nearly equivalent to running the maven build locally. Only the l
 
 Now with the exploded WAR beeing located in "./target/paths/", we can build the docker image with following command:
 ```shell script
-docker build -t magicpl:test -f ../../Dockerfile ./target/paths/
+docker build -t magicpl:test -f ./Dockerfile ./target/paths/
 ```
 
 To run the docker container you can now use:
 ```shell script
-docker run -p 8080:8080 --rm -it magicpl:test
+docker run -p 8080:8080 --rm -it -e MAGICPL_API_KEY=pleaseChangeMe -e MAGICPL_PASSPHRASE=youShouldReallyChangeMe magicpl:test
 ```
 
 The image will also be available at [medicalinformatics/magicpl](https://hub.docker.com/repository/docker/medicalinformatics/magicpl) in Docker Hub.
@@ -53,7 +53,8 @@ The [basic configuration](./src/main/resources/paths.docker.xml), which is also 
 You can test your installation by running following curl command:
 ```shell
 curl --header "Content-Type: application/json" \
-     --request POST \
+     --header "apiKey: pleaseChangeMe" \
+     -X POST \
      --data '{"vorname":"Max","nachname":"Mustermann", "geburtsname": "", "geburtstag": 01, "geburtsmonat": 01, "geburtsjahr": 2000, "geburtsort": "Musterstadt"}' \
      http://localhost:8080/paths/getKN
 ```
